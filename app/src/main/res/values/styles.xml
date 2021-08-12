@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/design_default_color_primary</item>
+        <item name="colorPrimaryDark">@color/design_default_color_primary_dark</item>
+        <item name="colorAccent">@color/design_default_color_secondary_variant</item>
+    </style>
+    <!-- STYLE SIGN-IN ACTIVITY -->
+    <style name="LoginTheme" parent="AppTheme">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/darker_gray</item>
+        <item name="colorControlHighlight">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/darker_gray</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+    </style>
+</resources>
