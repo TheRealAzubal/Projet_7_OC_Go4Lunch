@@ -44,4 +44,7 @@ dependencies {
     // Add the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics'
 
+    // FIREBASE U
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+
 }
