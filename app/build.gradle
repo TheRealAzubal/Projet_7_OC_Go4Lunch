@@ -4,13 +4,14 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 30
     buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "com.azubal.go4lunch"
         minSdkVersion 19
-        targetSdkVersion 31
+        //noinspection OldTargetApi
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 

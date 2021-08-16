@@ -53,11 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            ToastUtil.displayToastLong("Sign In or Login Successfully , Please try again",context);
             // ...
         } else {
             // Failed signed in
             ToastUtil.displayToastLong("Sign In or Login Failed , Please try again",context);
+            finish();
         }
     }
 
