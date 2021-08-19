@@ -1,10 +1,11 @@
-package com.azubal.go4lunch;
+package com.azubal.go4lunch.ui.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.manager.UserManager;
 
 public class SplashScreenActivity extends AppCompatActivity {

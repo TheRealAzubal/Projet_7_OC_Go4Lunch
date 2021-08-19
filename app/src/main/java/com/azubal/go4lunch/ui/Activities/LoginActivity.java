@@ -1,4 +1,4 @@
-package com.azubal.go4lunch;
+package com.azubal.go4lunch.ui.Activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.utils.ToastUtil;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
