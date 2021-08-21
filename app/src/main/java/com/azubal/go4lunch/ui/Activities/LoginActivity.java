@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         startSignIn();
+        startActivityMain();
+
 
     }
 
@@ -61,6 +63,11 @@ public class LoginActivity extends AppCompatActivity {
             ToastUtil.displayToastLong("Sign In or Login Failed , Please try again",context);
             finish();
         }
+    }
+
+    private void startActivityMain(){
+        Intent MainActivity = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(MainActivity);
     }
 
 }

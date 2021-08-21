@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mapView"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/mapView"
+        android:name="com.azubal.go4lunch.ui.Fragments.MapViewFragment"
+        android:label="fragment_mapView"
+        tools:layout="@layout/fragment_map_view" >
+        <action
+            android:id="@+id/action_mapView_to_listView"
+            app:destination="@id/listView" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/listView"
+        android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
+        android:label="fragment_listView"
+        tools:layout="@layout/fragment_list_view" >
+        <action
+            android:id="@+id/action_listView_to_workmates"
+            app:destination="@id/workmates" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/workmates"
+        android:name="com.azubal.go4lunch.ui.Fragments.WorkmatesFragment"
+        android:label="fragment_workmates"
+        tools:layout="@layout/fragment_workmates" >
+    </fragment>
+
+</navigation>

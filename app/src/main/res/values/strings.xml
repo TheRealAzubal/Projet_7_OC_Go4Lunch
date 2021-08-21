@@ -2,4 +2,9 @@
     <string name="app_name">Go4Lunch</string>
     <string name="facebook_application_id">205701438038321</string>
     <string name="fb_login_protocol_scheme">fb205701438038321</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home">MapView</string>
+    <string name="explore">ListView</string>
+    <string name="more">Workmates</string>
+    <string name="todo">TODO</string>
 </resources>
