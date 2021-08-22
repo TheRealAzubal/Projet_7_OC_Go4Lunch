@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.Activities.MainActivity"
+            android:theme="@style/AppTheme"
             android:exported="true" />
         <activity
             android:name=".ui.Activities.SplashScreenActivity"
@@ -23,8 +24,8 @@
         </activity>
         <activity
             android:name=".ui.Activities.LoginActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="true">
         </activity>
     </application>
 
