@@ -2,6 +2,7 @@ package com.azubal.go4lunch.ui.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
@@ -20,10 +21,17 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigation();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
+
     public void setUpNavigation(){
         bottomNavigationView =findViewById(R.id.bttm_nav);
         NavHostFragment navHostFragment =       (NavHostFragment)getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navHostFragment.getNavController().getGraph()).build();
     }
 }
