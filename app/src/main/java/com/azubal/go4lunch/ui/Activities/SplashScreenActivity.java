@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.manager.UserManager;
 
@@ -22,9 +24,12 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void verifyIfIsCurrentUserLogged(){
         if(userManager.isCurrentUserLogged()) {
             startActivityMain();
+            Log.e("Verify","main");
         }else {
             startActivityLogin();
+            Log.e("Verify","login");
         }
+        finish();
     }
 
     private void startActivityLogin(){

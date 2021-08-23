@@ -1,5 +1,7 @@
 package com.azubal.go4lunch.manager;
 
+import android.util.Log;
+
 import com.azubal.go4lunch.repository.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,6 +32,7 @@ public class UserManager {
     }
 
     public Boolean isCurrentUserLogged(){
+        Log.e("isCurrentUser",""+getCurrentUser());
         return (this.getCurrentUser() != null);
     }
 

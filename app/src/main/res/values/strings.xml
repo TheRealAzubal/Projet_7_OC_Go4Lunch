@@ -7,6 +7,6 @@
     <string name="explore">ListView</string>
     <string name="more">Workmates</string>
     <string name="todo">TODO</string>
-    <string name="ToastLoginSuccessfully">Sign In or Login Successfully , Please try again</string>
+    <string name="ToastLoginSuccessfully">Sign In or Login Successfully</string>
     <string name="ToastLoginFailed">Sign In or Login Failed , Please try again</string>
 </resources>

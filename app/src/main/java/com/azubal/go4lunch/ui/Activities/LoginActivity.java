@@ -13,8 +13,6 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,9 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         startSignIn();
-        startActivityMain();
-
-
     }
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -57,11 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
             ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),context);
+            startActivityMain();
+            finish();
             // ...
         } else {
             // Failed signed in
             ToastUtil.displayToastLong(getString(R.string.ToastLoginFailed),context);
-            finish();
         }
     }
 
