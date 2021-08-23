@@ -56,11 +56,11 @@ public class LoginActivity extends AppCompatActivity {
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
-            ToastUtil.displayToastLong("Sign In or Login Successfully , Please try again",context);
+            ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),context);
             // ...
         } else {
             // Failed signed in
-            ToastUtil.displayToastLong("Sign In or Login Failed , Please try again",context);
+            ToastUtil.displayToastLong(getString(R.string.ToastLoginFailed),context);
             finish();
         }
     }
