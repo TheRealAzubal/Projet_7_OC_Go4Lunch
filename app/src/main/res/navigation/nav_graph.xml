@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/mapView"
         android:name="com.azubal.go4lunch.ui.Fragments.MapViewFragment"
-        android:label="fragment_mapView"
         tools:layout="@layout/fragment_map_view" >
         <action
             android:id="@+id/action_mapView_to_listView"
@@ -18,7 +17,6 @@
     <fragment
         android:id="@+id/listView"
         android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
-        android:label="fragment_listView"
         tools:layout="@layout/fragment_list_view" >
         <action
             android:id="@+id/action_listView_to_workmates"
@@ -28,8 +26,19 @@
     <fragment
         android:id="@+id/workmates"
         android:name="com.azubal.go4lunch.ui.Fragments.WorkmatesFragment"
-        android:label="fragment_workmates"
         tools:layout="@layout/fragment_workmates" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/yourLunch"
+        android:name="com.azubal.go4lunch.ui.Fragments.YourLunchFragment"
+        tools:layout="@layout/fragment_your_lunch" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.azubal.go4lunch.ui.Fragments.SettingsFragment"
+        tools:layout="@layout/fragment_settings" >
     </fragment>
 
 </navigation>

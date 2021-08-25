@@ -4,20 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/mapView"
-        android:title="@string/home"
+        android:title="@string/mapView"
         app:showAsAction="ifRoom"
         android:orderInCategory="1"
         android:icon="@drawable/outline_map_24" />
 
     <item android:id="@+id/listView"
-        android:title="@string/explore"
+        android:title="@string/listView"
         app:showAsAction="always"
         android:orderInCategory="2"
         android:icon="@drawable/outline_format_list_bulleted_24"/>
 
 
     <item android:id="@+id/workmates"
-        android:title="@string/more"
+        android:title="@string/workmates"
         app:showAsAction="always"
         android:orderInCategory="2"
         android:icon="@drawable/outline_group_24"/>
