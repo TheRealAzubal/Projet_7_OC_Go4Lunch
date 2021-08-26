@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="192dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@drawable/lunch"
     android:padding="30dp">
 
     <ImageView
@@ -12,25 +12,34 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:src="@drawable/shape_user_image"
-        app:layout_constraintBottom_toTopOf="@id/textViewUserName"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textViewEmail"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="-20dp"
-        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="@id/imageView"
+        app:layout_constraintLeft_toRightOf="@id/imageView"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="" />
 
     <TextView
         android:id="@+id/textViewUserName"
         app:layout_constraintBottom_toTopOf="@id/textViewEmail"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/imageView"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text=""/>
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:text="@string/go4lunch" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,4 +14,5 @@
     <string name="ToastLoginFailed">Sign In or Login Failed , Please try again</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go4lunch">Go4Lunch</string>
 </resources>
