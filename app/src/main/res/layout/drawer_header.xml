@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/shape_user_image"
         app:layout_constraintBottom_toTopOf="@id/textViewUserName"
         app:layout_constraintLeft_toLeftOf="parent"
