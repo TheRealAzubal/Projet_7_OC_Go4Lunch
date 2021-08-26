@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpNavigation();
+
     }
 
     @Override
@@ -56,5 +57,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         NavigationUI.setupWithNavController(navView,navController);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+    }
+
+    public void setToolbarTitle(String title){
+        toolbar.setTitle(title);
     }
 }

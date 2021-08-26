@@ -7,10 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class WorkmatesFragment extends Fragment {
+
+    MainActivity mainActivity;
 
     public WorkmatesFragment() {
         // Required empty public constructor
@@ -19,6 +23,8 @@ public class WorkmatesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getMainActivity();
+        mainActivity.setToolbarTitle("Available workmates");
     }
 
     @Override
@@ -26,5 +32,10 @@ public class WorkmatesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_workmates, container, false);
+
+    }
+
+    public void getMainActivity() {
+        mainActivity = (MainActivity) getActivity();
     }
 }
