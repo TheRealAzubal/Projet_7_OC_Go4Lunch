@@ -23,7 +23,7 @@ public class ListViewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMainActivity();
-        mainActivity.setToolbarTitle("I'm Hungry!");
+        mainActivity.setToolbarTitle(getString(R.string.toolbarTitleFragmentMapViewListView));
     }
 
     @Override

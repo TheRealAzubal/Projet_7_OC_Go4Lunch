@@ -24,10 +24,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void verifyIfIsCurrentUserLogged(){
         if(userManager.isCurrentUserLogged()) {
             startActivityMain();
-            Log.e("Verify","main");
         }else {
             startActivityLogin();
-            Log.e("Verify","login");
         }
         finish();
     }

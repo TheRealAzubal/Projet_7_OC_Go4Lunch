@@ -24,7 +24,7 @@ public class WorkmatesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getMainActivity();
-        mainActivity.setToolbarTitle("Available workmates");
+        mainActivity.setToolbarTitle(getString(R.string.toolbarTitleFragmentWorkmates));
     }
 
     @Override
