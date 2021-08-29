@@ -2,6 +2,7 @@ package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,11 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.databinding.FragmentListViewBinding;
+import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class ListViewFragment extends Fragment {
 
     MainActivity mainActivity;
+    private FragmentListViewBinding binding;
+    View view;
+
+
 
     public ListViewFragment() {
         // Required empty public constructor
@@ -27,10 +34,18 @@ public class ListViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_view, container, false);
+        binding = FragmentListViewBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
+        return view;
     }
 
     public void getMainActivity() {

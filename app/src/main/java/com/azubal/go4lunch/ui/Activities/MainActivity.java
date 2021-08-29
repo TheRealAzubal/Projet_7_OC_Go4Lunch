@@ -11,12 +11,16 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
 
     BottomNavigationView bottomNavigationView;
     NavHostFragment navHostFragment;
@@ -25,13 +29,17 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navView;
     Toolbar toolbar;
+    View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setUpNavigation();
-
+        setBinding();
+        setContentView(view);
+        setUpView();
+        setUpNavHostFragmentAndNavController();
+        setUpBottomNavigation();
+        setUpDrawerNavigation();
     }
 
     @Override
@@ -41,20 +49,29 @@ public class MainActivity extends AppCompatActivity {
                 || super.onOptionsItemSelected(item);
     }
 
+    private void setBinding(){
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        view = binding.getRoot();
+    }
 
-    public void setUpNavigation(){
-        toolbar = findViewById(R.id.topAppBar);
+    private void setUpView(){
+        toolbar = binding.topAppBar;
+        drawerLayout = binding.drawerLayout;
+        bottomNavigationView =binding.bttmNav;
+        navView =binding.navView;
+    }
+
+    private void setUpNavHostFragmentAndNavController(){
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        bottomNavigationView =findViewById(R.id.bttm_nav);
-        navView =findViewById(R.id.nav_view);
         navController = navHostFragment.getNavController();
+    }
 
-
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawerLayout).build();
-
-
+    public void setUpBottomNavigation(){
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+    }
+
+    private void setUpDrawerNavigation(){
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawerLayout).build();
         NavigationUI.setupWithNavController(navView,navController);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
     }

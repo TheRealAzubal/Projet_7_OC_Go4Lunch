@@ -2,6 +2,7 @@ package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,11 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.databinding.FragmentSettingsBinding;
+import com.azubal.go4lunch.databinding.FragmentYourLunchBinding;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class SettingsFragment extends Fragment {
 
     MainActivity mainActivity;
+    private FragmentSettingsBinding binding;
+    View view;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -24,14 +29,21 @@ public class SettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         getMainActivity();
         mainActivity.setToolbarTitle(getString(R.string.settings));
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
+        return view;
     }
 
     public void getMainActivity() {

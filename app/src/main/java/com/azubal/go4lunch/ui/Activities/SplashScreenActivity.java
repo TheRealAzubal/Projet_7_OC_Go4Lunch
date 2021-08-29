@@ -5,20 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.databinding.ActivitySplashScreenBinding;
 import com.azubal.go4lunch.manager.UserManager;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
     private final UserManager userManager = UserManager.getInstance();
+    private ActivitySplashScreenBinding binding;
+    View view;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        setBinding();
+        setContentView(view);
         verifyIfIsCurrentUserLogged();
+    }
+
+    private void setBinding(){
+        binding = ActivitySplashScreenBinding.inflate(getLayoutInflater());
+        view = binding.getRoot();
     }
 
     private void verifyIfIsCurrentUserLogged(){
