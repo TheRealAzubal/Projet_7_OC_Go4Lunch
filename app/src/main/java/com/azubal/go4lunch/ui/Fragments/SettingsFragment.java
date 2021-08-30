@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentSettingsBinding;
-import com.azubal.go4lunch.databinding.FragmentYourLunchBinding;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class SettingsFragment extends Fragment {

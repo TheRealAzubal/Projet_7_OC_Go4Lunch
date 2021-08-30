@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentListViewBinding;
-import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class ListViewFragment extends Fragment {
