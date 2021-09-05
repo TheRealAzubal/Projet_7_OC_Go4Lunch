@@ -7,7 +7,7 @@
     <string name="mapView">Carte</string>//
     <string name="listView">Restaurants</string>
     <string name="workmates">Collaborateurs</string>
-    <string name="yourLunch">VOS REPAS</string>
+    <string name="yourLunch">TON REPAS</string>
     <string name="settings">PARAMETRES</string>
     <string name="logout">DECONNEXION</string>
     <string name="ToastLoginSuccessfully">Inscription ou Connexion Réussi</string>

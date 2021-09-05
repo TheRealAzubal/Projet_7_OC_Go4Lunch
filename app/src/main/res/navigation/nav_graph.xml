@@ -40,5 +40,10 @@
         android:name="com.azubal.go4lunch.ui.Fragments.SettingsFragment"
         tools:layout="@layout/fragment_settings" >
     </fragment>
+    <fragment
+        android:id="@+id/logout"
+        android:name="com.azubal.go4lunch.ui.Fragments.LogOutFragment"
+        tools:layout="@layout/fragment_log_out" >
+    </fragment>
 
 </navigation>
