@@ -12,6 +12,7 @@ android {
         minSdkVersion 19
         //noinspection OldTargetApi
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
 
@@ -58,4 +59,8 @@ dependencies {
     //Navigation
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'android.arch.navigation:navigation-ui:1.0.0'
+
+    //MultiDex
+    implementation "androidx.multidex:multidex:2.0.1"
+
 }
