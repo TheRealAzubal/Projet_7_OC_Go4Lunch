@@ -15,7 +15,6 @@ import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class YourLunchFragment extends Fragment {
 
-    MainActivity mainActivity;
     private FragmentYourLunchBinding binding;
     View view;
 
@@ -26,8 +25,6 @@ public class YourLunchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMainActivity();
-        mainActivity.setToolbarTitle(getString(R.string.yourLunch));
     }
 
     @Override
@@ -43,9 +40,5 @@ public class YourLunchFragment extends Fragment {
         binding = FragmentYourLunchBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         return view;
-    }
-
-    public void getMainActivity() {
-        mainActivity = (MainActivity) getActivity();
     }
 }

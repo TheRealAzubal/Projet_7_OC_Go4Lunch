@@ -4,11 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/bg_gradient.xml" value="0.3796875" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_radius_accent_color.xml" value="0.10555555555555556" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_radius_orange.xml" value="0.3796875" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_radius_red.xml" value="0.3796875" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_format_list_bulleted_24.xml" value="0.3796875" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_group_24.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_map_24.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_menu_24.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_power_settings_new_24.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_restaurant_24.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_search_24.xml" value="0.3796875" />
+        <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_settings_24.xml" value="0.3796875" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/shape_user_image.xml" value="0.3796875" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/Users/Azubal/AndroidStudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/layout/activity_splash_screen.xml" value="0.1377245508982036" />

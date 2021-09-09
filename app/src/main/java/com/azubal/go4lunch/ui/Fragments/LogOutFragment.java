@@ -26,8 +26,6 @@ public class LogOutFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMainActivity();
-        mainActivity.setToolbarTitle(getString(R.string.logout));
     }
 
     @Override
@@ -44,7 +42,5 @@ public class LogOutFragment extends Fragment {
         view = binding.getRoot();
         return view;
     }
-
-    public void getMainActivity() { mainActivity = (MainActivity) getActivity(); }
 
 }

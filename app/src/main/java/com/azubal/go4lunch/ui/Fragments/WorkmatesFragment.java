@@ -27,8 +27,6 @@ public class WorkmatesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMainActivity();
-        mainActivity.setToolbarTitle(getString(R.string.toolbarTitleFragmentWorkmates));
     }
 
     @Override
@@ -44,9 +42,5 @@ public class WorkmatesFragment extends Fragment {
         binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         return view;
-    }
-
-    public void getMainActivity() {
-        mainActivity = (MainActivity) getActivity();
     }
 }

@@ -15,7 +15,6 @@ import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class ListViewFragment extends Fragment {
 
-    MainActivity mainActivity;
     private FragmentListViewBinding binding;
     View view;
 
@@ -28,8 +27,6 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getMainActivity();
-        mainActivity.setToolbarTitle(getString(R.string.toolbarTitleFragmentMapViewListView));
     }
 
     @Override
@@ -47,7 +44,4 @@ public class ListViewFragment extends Fragment {
         return view;
     }
 
-    public void getMainActivity() {
-        mainActivity = (MainActivity) getActivity();
-    }
 }
