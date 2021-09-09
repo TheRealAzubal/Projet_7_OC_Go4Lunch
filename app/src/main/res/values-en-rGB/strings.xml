@@ -12,7 +12,9 @@
     <string name="ToastLoginSuccessfully">Sign In or Login Successfully</string>
     <string name="ToastLoginFailed">Sign In or Login Failed , Please try again</string>
     <string name="go4lunch">Go4Lunch</string>
+    <string name="textButtonDeleteAccount">DELETE ACCOUNT</string>
     <string name="toolbarTitleFragmentMapViewListView">I\'m Hungry!</string>
     <string name="toolbarTitleFragmentWorkmates">Available workmates</string>
     <string name="textLogout">Are you sure you want to log out? Press to continue</string>
+    <string name="textDeleteAccount">If you want to permanently delete your account press the next button, this action is irreversible</string>
 </resources>

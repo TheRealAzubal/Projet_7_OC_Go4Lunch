@@ -12,7 +12,9 @@
     <string name="ToastLoginSuccessfully">Inscription ou Connexion Réussi</string>
     <string name="ToastLoginFailed">Inscription ou Connexion Echoué , Please try again</string>
     <string name="go4lunch">Go4Lunch</string>
+    <string name="textButtonDeleteAccount">SUPPRIMER COMPTE</string>
     <string name="toolbarTitleFragmentMapViewListView">J\'ai Faim!</string>
     <string name="toolbarTitleFragmentWorkmates">Collaborateurs Disponibles</string>
     <string name="textLogout">Voulez vous vraiment vous déconnecter ? Appuyer pour continuer</string>
+    <string name="textDeleteAccount">Si vous souhaitez supprimer definitivement votre compte appuyer sur le bouton suivant , cette action est irréversible</string>
 </resources>
