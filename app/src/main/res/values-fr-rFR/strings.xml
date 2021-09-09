@@ -3,7 +3,6 @@
     <string name="app_name">Go4Lunch</string>
     <string name="facebook_application_id">205701438038321</string>
     <string name="fb_login_protocol_scheme">fb205701438038321</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="mapView">Carte</string>//
     <string name="listView">Restaurants</string>
     <string name="workmates">Collaborateurs</string>
@@ -12,8 +11,8 @@
     <string name="logout">DECONNEXION</string>
     <string name="ToastLoginSuccessfully">Inscription ou Connexion Réussi</string>
     <string name="ToastLoginFailed">Inscription ou Connexion Echoué , Please try again</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="go4lunch">Go4Lunch</string>
     <string name="toolbarTitleFragmentMapViewListView">J\'ai Faim!</string>
     <string name="toolbarTitleFragmentWorkmates">Collaborateurs Disponibles</string>
+    <string name="textLogout">Voulez vous vraiment vous déconnecter ? Appuyer pour continuer</string>
 </resources>

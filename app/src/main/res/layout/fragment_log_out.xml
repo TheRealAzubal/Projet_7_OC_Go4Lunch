@@ -5,4 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.Fragments.LogOutFragment">
 
+    <!-- BUTTON SIGN OUT -->
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:text="@string/textLogout"
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginTop="75dp" />
+
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="54dp"
+        android:text="@string/logout"
+        android:textColor="@color/white"
+        android:background="@drawable/button_radius_accent_color"
+        style="?android:attr/borderlessButtonStyle" />
+
+
 </FrameLayout>
