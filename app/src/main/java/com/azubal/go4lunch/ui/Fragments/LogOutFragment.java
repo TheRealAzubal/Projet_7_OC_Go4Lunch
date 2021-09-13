@@ -1,32 +1,24 @@
 package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentLogOutBinding;
-import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
-import com.azubal.go4lunch.ui.Activities.MainActivity;
+import com.azubal.go4lunch.manager.UserManager;
 
 public class LogOutFragment extends Fragment {
 
-    MainActivity mainActivity;
     private FragmentLogOutBinding binding;
-    View view;
+    UserManager userManager;
 
-    public LogOutFragment() {
-        // Required empty public constructor
-    }
+    public LogOutFragment(){}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public void onDestroyView() {
@@ -35,12 +27,39 @@ public class LogOutFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentLogOutBinding.inflate(inflater, container, false);
-        view = binding.getRoot();
-        return view;
+        logOutButtonListener();
+        deleteAccountButtonListener();
+        return binding.getRoot();
+    }
+
+    private void logOutButtonListener(){
+        binding.LogOutButton.setOnClickListener(view -> {
+            userManager.signOut(getContext()).addOnSuccessListener(aVoid -> {
+                requireActivity().finish();
+
+            });
+        });
+    }
+
+    private void deleteAccountButtonListener(){
+        binding.deleteAccountButton.setOnClickListener(view -> {
+            new AlertDialog.Builder(requireContext())
+                    .setMessage("Voulez vous vraiment supprimer votre compte")
+                    .setPositiveButton("Confirmer", (dialogInterface, i) ->
+                            userManager.deleteUser(getContext())
+                                    .addOnSuccessListener(aVoid -> {
+                                                requireActivity().finish();
+                                            }
+                                    )
+                    )
+                    .setNegativeButton("Annuler", null)
+                    .show();
+
+        });
     }
 
 }
