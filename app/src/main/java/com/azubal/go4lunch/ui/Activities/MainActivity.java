@@ -1,5 +1,6 @@
 package com.azubal.go4lunch.ui.Activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -9,6 +10,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.manager.UserManager;
 
 import java.util.Objects;
 
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     NavHostFragment navHostFragment;
     AppBarConfiguration appBarConfiguration;
+    private UserManager userManager = UserManager.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +52,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void setBinding(){
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+    }
+
+    public void logOutUser(){
+        userManager.signOut(this).addOnSuccessListener(aVoid -> {
+             finish();
+        });
+    }
+    public void deleteUserAccount(){
+        new AlertDialog.Builder(this)
+                .setMessage("Voulez vous vraiment supprimer votre compte")
+                .setPositiveButton("Confirmer", (dialogInterface, i) ->
+                        userManager.deleteUser(this)
+                                .addOnSuccessListener(aVoid -> {
+                                             finish();
+                                        }
+                                )
+                )
+                .setNegativeButton("Annuler", null)
+                .show();
+
     }
 }

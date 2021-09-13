@@ -18,12 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getApplicationContext();
         startSignIn();
     }
 
@@ -51,13 +49,13 @@ public class LoginActivity extends AppCompatActivity {
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
-            ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),context);
+            ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),getApplicationContext());
             startActivityMain();
             finish();
             // ...
         } else {
             // Failed signed in
-            ToastUtil.displayToastLong(getString(R.string.ToastLoginFailed),context);
+            ToastUtil.displayToastLong(getString(R.string.ToastLoginFailed),getApplicationContext());
         }
     }
 

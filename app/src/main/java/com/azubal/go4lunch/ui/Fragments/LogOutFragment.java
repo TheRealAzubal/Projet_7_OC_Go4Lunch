@@ -9,11 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.azubal.go4lunch.databinding.FragmentLogOutBinding;
 import com.azubal.go4lunch.manager.UserManager;
+import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class LogOutFragment extends Fragment {
 
     private FragmentLogOutBinding binding;
-    UserManager userManager;
+    MainActivity mainActivity;
 
     public LogOutFragment(){}
 
@@ -31,34 +32,25 @@ public class LogOutFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentLogOutBinding.inflate(inflater, container, false);
+        getMainActivity();
         logOutButtonListener();
         deleteAccountButtonListener();
         return binding.getRoot();
     }
 
+    public void getMainActivity() {
+        mainActivity = (MainActivity) getActivity();
+    }
+
     private void logOutButtonListener(){
         binding.LogOutButton.setOnClickListener(view -> {
-            userManager.signOut(getContext()).addOnSuccessListener(aVoid -> {
-                requireActivity().finish();
-
-            });
+              mainActivity.logOutUser();
         });
     }
 
     private void deleteAccountButtonListener(){
         binding.deleteAccountButton.setOnClickListener(view -> {
-            new AlertDialog.Builder(requireContext())
-                    .setMessage("Voulez vous vraiment supprimer votre compte")
-                    .setPositiveButton("Confirmer", (dialogInterface, i) ->
-                            userManager.deleteUser(getContext())
-                                    .addOnSuccessListener(aVoid -> {
-                                                requireActivity().finish();
-                                            }
-                                    )
-                    )
-                    .setNegativeButton("Annuler", null)
-                    .show();
-
+              mainActivity.deleteUserAccount();
         });
     }
 
