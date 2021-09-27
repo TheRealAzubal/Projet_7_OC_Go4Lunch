@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.azubal.go4lunch.databinding.FragmentLogOutBinding;
-import com.azubal.go4lunch.manager.UserManager;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class LogOutFragment extends Fragment {

@@ -1,28 +1,33 @@
 package com.azubal.go4lunch.ui.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.azubal.go4lunch.manager.UserManager;
+import android.util.Log;
+
+import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private final UserManager userManager = UserManager.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        verifyIfIsCurrentUserLogged();
-    }
+        AuthAppViewModel authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
 
-    private void verifyIfIsCurrentUserLogged(){
-        if(userManager.isCurrentUserLogged()) {
-            startActivityMain();
-        }else {
-            startActivityLogin();
-        }
-        finish();
+                 authAppViewModel.getUserLiveData().observe(this, firebaseUser -> {
+                     if(firebaseUser != null) {
+                         startActivityMain();
+                     }else {
+                         startActivityLogin();
+                     }
+                     finish();
+                 });
     }
 
     private void startActivityLogin(){
