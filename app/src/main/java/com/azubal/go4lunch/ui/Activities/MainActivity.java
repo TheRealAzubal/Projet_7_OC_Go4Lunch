@@ -2,14 +2,18 @@ package com.azubal.go4lunch.ui.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import android.content.Intent;
 import android.os.Bundle;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
 
 
 import java.util.Objects;
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     NavHostFragment navHostFragment;
     AppBarConfiguration appBarConfiguration;
-
+    AuthAppViewModel authAppViewModel;
 
 
     @Override
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         NavigationUI.setupWithNavController(binding.navViewDrawer, navController);
 
-
+        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
     }
 
     @Override
@@ -55,8 +59,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOutUser(){
-
+        authAppViewModel.signOut();
+        startActivityLogin();
+        finish();
     }
-    public void deleteUserAccount(){}
+    public void deleteUserAccount(){
+        authAppViewModel.deleteUser();
+        startActivityLogin();
+        finish();
+    }
+
+    private void startActivityLogin(){
+        Intent LoginActivity = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(LoginActivity);
+    }
 
 }

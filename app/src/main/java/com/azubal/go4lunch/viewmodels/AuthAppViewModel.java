@@ -26,4 +26,12 @@ public class AuthAppViewModel extends AndroidViewModel {
         return userLiveData;
     }
 
+    public void signOut(){
+        authAppRepository.signOut();
+    }
+
+    public void deleteUser(){
+        authAppRepository.deleteUser();
+    }
+
 }
