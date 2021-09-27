@@ -1,21 +1,17 @@
 package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.azubal.go4lunch.R;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.azubal.go4lunch.databinding.FragmentSettingsBinding;
-import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class SettingsFragment extends Fragment {
 
-    MainActivity mainActivity;
     private FragmentSettingsBinding binding;
     View view;
 
@@ -43,7 +39,4 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    public void getMainActivity() {
-        mainActivity = (MainActivity) getActivity();
-    }
 }
