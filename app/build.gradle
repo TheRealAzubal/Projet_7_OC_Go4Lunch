@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 apply plugin: 'com.google.gms.google-services'
 
@@ -62,5 +63,7 @@ dependencies {
 
     //MultiDex
     implementation "androidx.multidex:multidex:2.0.1"
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
 
 }

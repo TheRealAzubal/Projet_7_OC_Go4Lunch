@@ -7,37 +7,39 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.azubal.go4lunch.databinding.FragmentListViewBinding;
+import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.ui.ListViewAdapter;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListViewFragment extends Fragment {
 
-    private FragmentListViewBinding binding;
-    View view;
+    List<Restaurant> listRestaurants = new ArrayList<>() ;
 
+    public ListViewFragment() {}
 
-
-    public ListViewFragment() {
-        // Required empty public constructor
+    @Override
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list_view, container, false);
+        Restaurant restaurant1 = new Restaurant("Test", "Test","Test",3,true,300);
+        listRestaurants.add(restaurant1);
+        listRestaurants.add(restaurant1);
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentListViewBinding.inflate(inflater, container, false);
-        view = binding.getRoot();
+        RecyclerView rvRestaurants = view.findViewById(R.id.recycler_view_list_view);
+        rvRestaurants.setAdapter(new ListViewAdapter(listRestaurants));
+        rvRestaurants.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
         return view;
     }
 
