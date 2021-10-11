@@ -2,34 +2,45 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.azubal.go4lunch">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo_go4lunch"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_go4lunch"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:supportsRtl="true">
+        >
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
         <activity
+            android:name=".ui.Activities.DetailActivity"
+            android:exported="false" />
+        
+        <activity
             android:name=".ui.Activities.MainActivity"
             android:exported="true" />
         <activity
-            android:theme="@style/SplashTheme"
             android:name=".ui.Activities.SplashScreenActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.Activities.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

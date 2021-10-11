@@ -1,24 +1,92 @@
 package com.azubal.go4lunch.models;
 
-public class Restaurant {
+import android.os.Parcel;
+import android.os.Parcelable;
+import com.azubal.go4lunch.models.ApiDetails.OpeningHours;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.Map;
+
+public class Restaurant implements Parcelable {
 
        private String id;
          String name;
          String address;
-         int rating;
-         Boolean open;
-         int distance;
+         double rating;
+         String open;
+         String distance;
+         String formatted_address;
+         String formatted_phone_number;
+         LatLng latLng;
+         OpeningHours openingHours ;
+         String photoUrl ;
+         String website;
 
-        public Restaurant(String id, String name, String address, int rating, boolean open, int distance) {
+
+
+         public Restaurant(String id, String name, String address, double rating, String open, String distance, String formatted_address, String formatted_phone_number, LatLng latLng, OpeningHours openingHours, String photoUrl,String website){
             this.id = id;
             this.name = name;
             this.address = address;
             this.rating = rating;
             this.open = open ;
             this.distance = distance;
+            this.formatted_address = formatted_address;
+            this.formatted_phone_number = formatted_address;
+            this.latLng = latLng;
+            this.openingHours = openingHours;
+            this.photoUrl = photoUrl;
+            this.website = website;
         }
 
-        public String getId() {
+
+    protected Restaurant(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        address = in.readString();
+        rating = in.readDouble();
+        open = in.readString();
+        distance = in.readString();
+        formatted_address = in.readString();
+        formatted_phone_number = in.readString();
+        latLng = in.readParcelable(LatLng.class.getClassLoader());
+        photoUrl = in.readString();
+        website = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeDouble(rating);
+        dest.writeString(open);
+        dest.writeString(distance);
+        dest.writeString(formatted_address);
+        dest.writeString(formatted_phone_number);
+        dest.writeParcelable(latLng, flags);
+        dest.writeString(photoUrl);
+        dest.writeString(website);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
+
+    public String getId() {
             return id;
         }
 
@@ -38,17 +106,32 @@ public class Restaurant {
             return address;
         }
 
-
-        public int getRating() {
+        public double getRating() {
             return rating;
         }
 
-        public Boolean getOpen() {
+        public String getOpen() {
             return open;
         }
 
-        public int getDistance() {
+        public String getDistance() {
             return distance;
         }
+
+        public String getFormatted_address(){return formatted_address;}
+
+        public void setFormatted_address(String formatted_address){this.formatted_address = formatted_address;}
+
+        public String getFormatted_phone_number(){return  formatted_phone_number;}
+
+        public void setFormatted_phone_number(String formatted_phone_number){this.formatted_phone_number = formatted_phone_number;}
+
+        public LatLng getLatLng(){return latLng;}
+
+        public OpeningHours getOpeningHours(){return openingHours;}
+
+        public String getPhotoUrl(){return photoUrl;}
+
+        public String getWebsite(){return website;}
 
 }

@@ -2,24 +2,31 @@ package com.azubal.go4lunch.ui.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.utils.ToastUtil;
+import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-
 import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    AuthAppViewModel authAppViewModel;
+    List<Restaurant> restaurantListLocal;
+    List<Restaurant> restaurantListLike;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
+
         startSignIn();
     }
 
@@ -42,19 +49,22 @@ public class LoginActivity extends AppCompatActivity {
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
+
     }
 
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
             ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),getApplicationContext());
+            authAppViewModel.createUser();
             startActivityMain();
             finish();
-            // ...
-        } else {
-            // Failed signed in
+        } else if(response == null) {
+            finish();
+        }else if (result.getResultCode() == RESULT_CANCELED){
             ToastUtil.displayToastLong(getString(R.string.ToastLoginFailed),getApplicationContext());
-            startSignIn();
+            finish();
         }
     }
 

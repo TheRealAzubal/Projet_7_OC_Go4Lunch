@@ -4,23 +4,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.ui.ListViewAdapter;
-
-
-import java.util.ArrayList;
+import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import java.util.List;
 
 public class ListViewFragment extends Fragment {
 
-    List<Restaurant> listRestaurants = new ArrayList<>() ;
+    View view;
+    RestaurantViewModel restaurantViewModel;
+    AuthAppViewModel authAppViewModel;
 
     public ListViewFragment() {}
 
@@ -30,17 +30,26 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_view, container, false);
-        Restaurant restaurant1 = new Restaurant("Test", "Test","Test",3,true,300);
-        listRestaurants.add(restaurant1);
-        listRestaurants.add(restaurant1);
+        view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
+        restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
+        authAppViewModel = new ViewModelProvider(requireActivity()).get(AuthAppViewModel.class);
 
-        RecyclerView rvRestaurants = view.findViewById(R.id.recycler_view_list_view);
-        rvRestaurants.setAdapter(new ListViewAdapter(listRestaurants));
-        rvRestaurants.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        restaurantViewModel.getListRestaurant().observe(this, this::setUpRecyclerView);
+
+        authAppViewModel.getUserData().observe(this, user -> {
+
+        });
+
 
         return view;
     }
 
+
+
+    public void setUpRecyclerView(List<Restaurant> restaurantList){
+        RecyclerView rvRestaurants = view.findViewById(R.id.recycler_view_list_view);
+        rvRestaurants.setAdapter(new ListViewAdapter(restaurantList,this.getContext()));
+        rvRestaurants.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    }
 }
