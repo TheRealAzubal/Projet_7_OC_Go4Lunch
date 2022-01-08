@@ -1,11 +1,13 @@
 package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +37,15 @@ public class ListViewFragment extends Fragment {
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
         authAppViewModel = new ViewModelProvider(requireActivity()).get(AuthAppViewModel.class);
 
-        restaurantViewModel.getListRestaurant().observe(this, this::setUpRecyclerView);
+        authAppViewModel.getListRestaurant().observe(this, list -> {
 
-        authAppViewModel.getUserData().observe(this, user -> {
+            if (list != null) {
+                setUpRecyclerView(list);
+            }else{
+                restaurantViewModel.getListRestaurant().observe(this, this::setUpRecyclerView);
+            }
 
         });
-
 
         return view;
     }

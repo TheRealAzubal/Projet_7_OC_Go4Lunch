@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
@@ -98,10 +99,19 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
         map.setMyLocationEnabled(true);
 
-        restaurantViewModel.getListRestaurant().observe(this, restaurantList -> {
-            setMarkers(restaurantList);
-            prepareDetailActivity(restaurantList);
-            convertListBeforeJava8(restaurantList);
+        authAppViewModel.getListRestaurant().observe(this, list -> {
+
+            if (list != null){
+                setMarkers(list);
+                prepareDetailActivity(list);
+            }else{
+                restaurantViewModel.getListRestaurant().observe(this, restaurantList -> {
+                    setMarkers(restaurantList);
+                    prepareDetailActivity(restaurantList);
+                    authAppViewModel.updateListRestaurant(restaurantList);
+                });
+            }
+
         });
 
         restaurantViewModel.getPosition().observe(this, this::moveCamera);
@@ -111,19 +121,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         map.setOnInfoWindowClickListener(marker -> launchDetailRestaurant(restaurantList.get((int) marker.getZIndex()),requireContext()));
     }
 
-    public void convertListBeforeJava8(List<Restaurant> list) {
-        Map<String, Restaurant> map = new HashMap<>();
-        for (Restaurant restaurant : list) {
-            map.put(restaurant.getId(),restaurant);
-        }
-        authAppViewModel.updateMap(map);
-    }
+
 
     public void setMarkers(List<Restaurant> restaurantList){
         if(restaurantList != null) {
 
             for (int i = 0; i < restaurantList.size(); i++) {
-                LatLng latLng = restaurantList.get(i).getLatLng();
+                LatLng latLng = new LatLng(restaurantList.get(i).getLatitude(),restaurantList.get(i).getLongitude());
                 map.addMarker(new MarkerOptions().position(latLng).title(restaurantList.get(i).getName()).zIndex(i));
             }
         }

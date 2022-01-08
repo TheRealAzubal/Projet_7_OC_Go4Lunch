@@ -119,13 +119,11 @@
                         android:id="@+id/like_button"
                         app:layout_column="1"
                         app:layout_row="0"
+                        android:background="@drawable/button_like_selector"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         app:layout_gravity="center"
-                        app:srcCompat="@drawable/outline_star_24_detail"
-                        app:layout_columnWeight="1"
-                        android:background="@null"
-                        tools:ignore="VectorDrawableCompat" />
+                        app:layout_columnWeight="1" />
                     <TextView
                         app:layout_column="1"
                         app:layout_row="1"

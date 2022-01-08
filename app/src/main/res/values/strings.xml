@@ -16,4 +16,5 @@
     <string name="toolbarTitleFragmentWorkmates">Available workmates</string>
     <string name="textLogout">Are you sure you want to log out? Press to continue</string>
     <string name="textDeleteAccount">If you want to permanently delete your account press the next button, this action is irreversible</string>
+    <string name="todo">TODO</string>
 </resources>

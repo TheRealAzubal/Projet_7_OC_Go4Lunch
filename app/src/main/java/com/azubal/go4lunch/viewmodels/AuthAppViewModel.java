@@ -9,12 +9,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.repository.AuthAppRepository;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.List;
-import java.util.Map;
 
 public class AuthAppViewModel extends AndroidViewModel {
     AuthAppRepository authAppRepository;
@@ -44,8 +41,15 @@ public class AuthAppViewModel extends AndroidViewModel {
         return authAppRepository.getUserData();
     }
 
-    public void updateMap(Map<String, Restaurant> map){
-        authAppRepository.updateMap(map);
+    public  MutableLiveData<List<Restaurant>> getListRestaurant(){
+        return authAppRepository.getListRestaurant();
     }
+
+    public  MutableLiveData<List<User>> getAllUsers(){
+        return authAppRepository.getAllUsers();
+    }
+
+
+    public void updateListRestaurant(List<Restaurant> listRestaurant){ authAppRepository.updateListRestaurant(listRestaurant);}
 
 }

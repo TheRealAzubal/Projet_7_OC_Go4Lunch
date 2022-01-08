@@ -61,7 +61,16 @@ public class DetailActivity extends AppCompatActivity {
             requestPermissionPhone();
             });
 
-            activityDetailBinding.likeButton.setOnClickListener(view -> {
+
+        activityDetailBinding.likeButton.setOnClickListener(view -> {
+            view.setSelected(!view.isSelected());
+
+            if (view.isSelected()) {
+                //Handle selected state change
+            } else {
+                //Handle de-select state change
+            }
+
 
             });
 

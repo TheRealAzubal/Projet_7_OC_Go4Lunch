@@ -5,8 +5,6 @@ import android.os.Parcelable;
 import com.azubal.go4lunch.models.ApiDetails.OpeningHours;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.Map;
-
 public class Restaurant implements Parcelable {
 
        private String id;
@@ -21,10 +19,12 @@ public class Restaurant implements Parcelable {
          OpeningHours openingHours ;
          String photoUrl ;
          String website;
+         Double latitude;
+         Double longitude;
 
 
 
-         public Restaurant(String id, String name, String address, double rating, String open, String distance, String formatted_address, String formatted_phone_number, LatLng latLng, OpeningHours openingHours, String photoUrl,String website){
+         public Restaurant(String id, String name, String address, double rating, String open, String distance, String formatted_address, String formatted_phone_number,Double latitude,Double longitude, OpeningHours openingHours, String photoUrl,String website){
             this.id = id;
             this.name = name;
             this.address = address;
@@ -33,11 +33,14 @@ public class Restaurant implements Parcelable {
             this.distance = distance;
             this.formatted_address = formatted_address;
             this.formatted_phone_number = formatted_address;
-            this.latLng = latLng;
+            this.latitude = latitude;
+            this.longitude = longitude;
             this.openingHours = openingHours;
             this.photoUrl = photoUrl;
             this.website = website;
         }
+
+        public Restaurant(){}
 
 
     protected Restaurant(Parcel in) {
@@ -49,7 +52,8 @@ public class Restaurant implements Parcelable {
         distance = in.readString();
         formatted_address = in.readString();
         formatted_phone_number = in.readString();
-        latLng = in.readParcelable(LatLng.class.getClassLoader());
+        latitude = in.readDouble();
+        longitude = in.readDouble();
         photoUrl = in.readString();
         website = in.readString();
     }
@@ -64,7 +68,8 @@ public class Restaurant implements Parcelable {
         dest.writeString(distance);
         dest.writeString(formatted_address);
         dest.writeString(formatted_phone_number);
-        dest.writeParcelable(latLng, flags);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
         dest.writeString(photoUrl);
         dest.writeString(website);
     }
@@ -126,12 +131,25 @@ public class Restaurant implements Parcelable {
 
         public void setFormatted_phone_number(String formatted_phone_number){this.formatted_phone_number = formatted_phone_number;}
 
-        public LatLng getLatLng(){return latLng;}
-
         public OpeningHours getOpeningHours(){return openingHours;}
 
         public String getPhotoUrl(){return photoUrl;}
 
         public String getWebsite(){return website;}
 
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 }

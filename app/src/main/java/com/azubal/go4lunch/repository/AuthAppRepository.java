@@ -2,26 +2,18 @@ package com.azubal.go4lunch.repository;
 
 import android.app.Application;
 import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
-
-import com.azubal.go4lunch.models.ApiDetails.Period;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class AuthAppRepository {
@@ -29,7 +21,7 @@ public class AuthAppRepository {
     FirebaseAuth firebaseAuth;
     AuthUI authUI;
     private static final String COLLECTION_NAME = "users";
-    private static final String COLLECTION_RESTAURANT = "restaurant";
+    private static final String COLLECTION_RESTAURANT = "listRestaurant";
     private static final String COLLECTION_RESTAURANT_LIKE = "restaurantLike";
     public AuthAppRepository(Application application) {
         this.application = application;
@@ -48,7 +40,13 @@ public class AuthAppRepository {
     }
 
     public void deleteUser(){
+        String uid = this.firebaseAuth.getUid();
+        if(uid != null){
+            getUsersCollection().document(uid).delete();
+        }
+
         authUI.delete(application.getApplicationContext());
+
     }
 
     // Get the Collection Reference
@@ -56,12 +54,14 @@ public class AuthAppRepository {
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    private CollectionReference getRestaurantCollection(){
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document().collection(COLLECTION_RESTAURANT);
+    private CollectionReference getRestaurantsCollection(){
+        return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT);
     }
 
-    private CollectionReference getRestaurantLikeCollection(){
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document().collection(COLLECTION_RESTAURANT_LIKE);
+    private CollectionReference getRestaurantsLikeCollection(){
+        String uid = this.firebaseAuth.getUid();
+        assert uid != null;
+        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(uid).collection(COLLECTION_RESTAURANT_LIKE);
     }
 
     // Create User in Firestore
@@ -74,9 +74,8 @@ public class AuthAppRepository {
             String username = user.getDisplayName();
             String uid = user.getUid();
             String email = user.getEmail();
-            Map<String, Restaurant> listRestaurant = new HashMap<>();
 
-            User userToCreate = new User(uid, username, urlPicture, email,listRestaurant);
+            User userToCreate = new User(uid, username, urlPicture, email, null);
 
             getUsersCollection().document(uid).set(userToCreate);
 
@@ -95,20 +94,58 @@ public class AuthAppRepository {
         return result;
     }
 
-    public Task<Void> updateMap(Map<String, Restaurant> listRestaurant) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        String uid = Objects.requireNonNull(user).getUid();
-        return this.getUsersCollection().document(uid).update("listRestaurant", listRestaurant);
+
+
+
+    public void updateListRestaurant(List<Restaurant> listRestaurant){
+
+        for (Restaurant restaurant : listRestaurant) {
+            getRestaurantsCollection().document(restaurant.getId()).set(restaurant);
+        }
+
     }
 
+    public MutableLiveData<List<Restaurant>> getListRestaurant(){
+        MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
+        getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<Restaurant> restaurantList = queryDocumentSnapshots.toObjects(Restaurant.class);
+            result.postValue(restaurantList);
+        });
+        return  result;
+    }
 
+    public MutableLiveData<List<User>> getAllUsers(){
+        MutableLiveData<List<User>> result = new MutableLiveData<>();
+        getUsersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<User> userList = queryDocumentSnapshots.toObjects(User.class);
+            result.postValue(userList);
+        });
+        return  result;
+    }
 
-    // Delete the User from Firestore
-    public void deleteUserFromFirestore() {
-        String uid = this.firebaseAuth.getUid();
-        if(uid != null){
-            getUsersCollection().document(uid).delete();
-        }
+    public MutableLiveData<List<Restaurant>> getListRestaurantLike(){
+        MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
+        getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<Restaurant> restaurantList = queryDocumentSnapshots.toObjects(Restaurant.class);
+            result.postValue(restaurantList);
+        });
+        return  result;
+    }
+
+    public void addRestaurantLike(Restaurant restaurant){
+            getRestaurantsLikeCollection().document(restaurant.getId()).set(restaurant);
+    }
+
+    public void deleteRestaurantLike(Restaurant restaurant){
+
+        getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(Restaurant restaurant1 : queryDocumentSnapshots.toObjects(Restaurant.class)){
+                if(restaurant1.getId().equals(restaurant.getId())){
+                    getRestaurantsLikeCollection().document(restaurant1.getId()).delete();
+                }
+            }
+        });
+
     }
 
 }

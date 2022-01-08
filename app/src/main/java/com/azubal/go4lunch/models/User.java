@@ -11,14 +11,14 @@ public class User {
     @Nullable
     private String urlPicture;
     private String email;
-    Map<String, Restaurant> listRestaurant;
+    Restaurant restaurantChosenAt12PM;
 
-    public User(String uid, String username, @Nullable String urlPicture,String email,Map<String, Restaurant> listRestaurant) {
+    public User(String uid, String username, @Nullable String urlPicture,String email,Restaurant restaurantChosenAt12PM) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
         this.email = email;
-        this.listRestaurant = listRestaurant;
+        this.restaurantChosenAt12PM = restaurantChosenAt12PM;
     }
 
     public User() {
@@ -32,12 +32,18 @@ public class User {
     @Nullable
     public String getUrlPicture() { return urlPicture; }
     public String getEmail() { return email; }
-    public Map<String, Restaurant> getListRestaurant(){ return listRestaurant;}
+
+    public Restaurant getRestaurantChosenAt12PM() {
+        return restaurantChosenAt12PM;
+    }
 
     // --- SETTERS ---
     public void setUsername(String username) { this.username = username; }
     public void setUid(String uid) { this.uid = uid; }
     public void setUrlPicture(@Nullable String urlPicture) { this.urlPicture = urlPicture; }
     public void setEmail(String email) { this.email = email; }
-    public void setListRestaurant(Map<String, Restaurant> listRestaurant) { this.listRestaurant = listRestaurant; }
+
+    public void setRestaurantChosenAt12PM(Restaurant restaurantChosenAt12PM) {
+        this.restaurantChosenAt12PM = restaurantChosenAt12PM;
+    }
 }

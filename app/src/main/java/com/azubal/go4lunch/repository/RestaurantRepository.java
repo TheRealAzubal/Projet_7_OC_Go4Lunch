@@ -72,12 +72,12 @@ public class RestaurantRepository {
 
                         String photoUrl = null;
 
-                        if (response.body().getResults().get(i).getPhotos() !=null) {
+                        if (response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() !=null) {
 
-                            photoUrl = "https://maps.googleapis.com/maps/api/place/photo" +
-                                    "?maxwidth=400" +
-                                    "&photo_reference=" +  resultDetail.getResult().getPhotos().get(0).getPhotoReference() + "&key=" + MAPS_API_KEY;
-                            Log.i("photourl",photoUrl);
+                                photoUrl = "https://maps.googleapis.com/maps/api/place/photo" +
+                                        "?maxwidth=400" +
+                                        "&photo_reference=" + resultDetail.getResult().getPhotos().get(0).getPhotoReference() + "&key=" + MAPS_API_KEY;
+                                Log.i("photourl", photoUrl);
 
                         }
 
@@ -98,7 +98,8 @@ public class RestaurantRepository {
                                 ""+Math.round(distanceInMeters)+"m",
                                 resultDetail.getResult().getFormattedAddress(),
                                 resultDetail.getResult().getFormattedPhoneNumber(),
-                                new LatLng(response.body().getResults().get(i).getGeometry().getLocation().getLat(), response.body().getResults().get(i).getGeometry().getLocation().getLng()),
+                                response.body().getResults().get(i).getGeometry().getLocation().getLat(),
+                                response.body().getResults().get(i).getGeometry().getLocation().getLng(),
                                 resultDetail.getResult().getOpeningHours(),
                                 photoUrl,
                                 resultDetail.getResult().getWebsite()
