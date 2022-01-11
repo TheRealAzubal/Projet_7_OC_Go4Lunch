@@ -123,11 +123,17 @@ public class AuthAppRepository {
         return  result;
     }
 
-    public MutableLiveData<List<Restaurant>> getListRestaurantLike(){
-        MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isLikeRestaurant(Restaurant restaurant){
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
         getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
-            List<Restaurant> restaurantList = queryDocumentSnapshots.toObjects(Restaurant.class);
-            result.postValue(restaurantList);
+            for(Restaurant restaurant1 : queryDocumentSnapshots.toObjects(Restaurant.class)){
+                if(restaurant1.getId().equals(restaurant.getId())){
+                    getRestaurantsLikeCollection().document(restaurant1.getId()).delete();
+                    result.postValue(true);
+                }else {
+                    result.postValue(false);
+                }
+            }
         });
         return  result;
     }

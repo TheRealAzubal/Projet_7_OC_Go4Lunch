@@ -4,6 +4,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
@@ -17,27 +19,26 @@ import android.view.View;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityDetailBinding;
 import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 public class DetailActivity extends AppCompatActivity {
     Restaurant restaurant;
     ActivityDetailBinding activityDetailBinding;
+    AuthAppViewModel authAppViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityDetailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(activityDetailBinding.getRoot());
         getRestaurant();
+        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
         restaurantNotNull();
-
-
-
-
-
-
 
     }
 
@@ -61,16 +62,29 @@ public class DetailActivity extends AppCompatActivity {
             requestPermissionPhone();
             });
 
+            activityDetailBinding.likeButton.setOnClickListener(view -> {
 
-        activityDetailBinding.likeButton.setOnClickListener(view -> {
-            view.setSelected(!view.isSelected());
+                activityDetailBinding.likeButton.setSelected(!activityDetailBinding.likeButton.isSelected());
 
-            if (view.isSelected()) {
-                //Handle selected state change
-            } else {
-                //Handle de-select state change
-            }
+                if (view.isSelected()) {
+                    authAppViewModel.addRestaurantLike(restaurant);
+                    //Handle selected state change
+                } else {
+                    authAppViewModel.deleteRestaurantLike(restaurant);
+                    //Handle de-select state change
+                }
 
+            });
+
+            activityDetailBinding.pickRestaurantButton.setOnClickListener(view -> {
+
+                activityDetailBinding.pickRestaurantButton.setSelected(!activityDetailBinding.pickRestaurantButton.isSelected());
+
+                if (view.isSelected()) {
+                    //Handle selected state change
+                } else {
+                    //Handle de-select state change
+                }
 
             });
 

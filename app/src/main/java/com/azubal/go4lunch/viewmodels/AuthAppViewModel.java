@@ -52,4 +52,12 @@ public class AuthAppViewModel extends AndroidViewModel {
 
     public void updateListRestaurant(List<Restaurant> listRestaurant){ authAppRepository.updateListRestaurant(listRestaurant);}
 
+    public  MutableLiveData<Boolean> isLikeRestaurant(Restaurant restaurant){
+        return authAppRepository.isLikeRestaurant(restaurant);
+    }
+
+    public void addRestaurantLike(Restaurant restaurant){authAppRepository.addRestaurantLike(restaurant);}
+
+    public void deleteRestaurantLike(Restaurant restaurant){authAppRepository.deleteRestaurantLike(restaurant);}
+
 }
