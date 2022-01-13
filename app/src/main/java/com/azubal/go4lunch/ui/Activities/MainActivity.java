@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             if (photoUrl != null){
                 Glide.with(this)
                         .load(photoUrl)
-                        .placeholder(R.drawable.logo_go4lunch)
+                        .placeholder(R.drawable.outline_block_24)
                         .into(imageViewUserProfile);
             }
             textViewUserEmail.setText(email);

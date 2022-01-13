@@ -12,7 +12,8 @@
         android:id="@+id/imageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/shape_user_image"
+        android:foreground="@drawable/outline_block_24"
+        android:background="@drawable/shape_user_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="ContentDescription" />

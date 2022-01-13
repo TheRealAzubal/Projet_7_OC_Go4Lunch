@@ -40,7 +40,7 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.View
 
         Glide.with(context)
                 .load(user.getUrlPicture())
-                .placeholder(R.drawable.shape_user_image)
+                .placeholder(R.drawable.outline_block_24)
                 .circleCrop()
                 .into(holder.workmateAvatar);
 
