@@ -154,4 +154,13 @@ public class AuthAppRepository {
 
     }
 
+    public void setRestaurantChosen(Restaurant restaurant){
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", restaurant);
+    }
+
+    public void setRestaurantChosenNull(){
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", null);
+    }
+
+
 }

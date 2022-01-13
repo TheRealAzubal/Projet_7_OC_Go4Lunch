@@ -1,30 +1,22 @@
 package com.azubal.go4lunch.ui.Activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
-import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
-
 
 import java.util.Objects;
 

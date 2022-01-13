@@ -81,8 +81,10 @@ public class DetailActivity extends AppCompatActivity {
                 activityDetailBinding.pickRestaurantButton.setSelected(!activityDetailBinding.pickRestaurantButton.isSelected());
 
                 if (view.isSelected()) {
+                    authAppViewModel.setRestaurantChosen(restaurant);
                     //Handle selected state change
                 } else {
+                    authAppViewModel.setRestaurantChosenNull();
                     //Handle de-select state change
                 }
 

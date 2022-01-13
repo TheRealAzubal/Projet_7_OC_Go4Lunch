@@ -60,4 +60,8 @@ public class AuthAppViewModel extends AndroidViewModel {
 
     public void deleteRestaurantLike(Restaurant restaurant){authAppRepository.deleteRestaurantLike(restaurant);}
 
+    public void setRestaurantChosen(Restaurant restaurant){authAppRepository.setRestaurantChosen(restaurant);}
+
+    public void setRestaurantChosenNull(){authAppRepository.setRestaurantChosenNull();}
+
 }
