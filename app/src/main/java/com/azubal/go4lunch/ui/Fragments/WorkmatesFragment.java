@@ -1,11 +1,13 @@
 package com.azubal.go4lunch.ui.Fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +21,7 @@ import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.ui.ListViewAdapter;
 import com.azubal.go4lunch.ui.WorkmatesAdapter;
 import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -54,11 +57,24 @@ public class WorkmatesFragment extends Fragment {
         authAppViewModel.getAllUsers().observe(this, this::setUpRecyclerView);
 
 
+
+
         return view;
     }
 
-
     public void setUpRecyclerView(List<User> userList){
+
+        authAppViewModel.getUserData().observe(this, user -> {
+            for(int i=0;i<userList.size(); i++){
+                if(userList.get(i).getUid().equals(user.getUid())){
+                    userList.remove(i);
+                }
+            }
+
+
+        });
+
+
         RecyclerView rvUsers = view.findViewById(R.id.list_workmates);
         rvUsers.setAdapter(new WorkmatesAdapter(userList , getContext()));
         rvUsers.setLayoutManager(new LinearLayoutManager(view.getContext()));
