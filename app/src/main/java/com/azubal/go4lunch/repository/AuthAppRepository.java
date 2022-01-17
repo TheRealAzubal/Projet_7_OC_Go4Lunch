@@ -11,8 +11,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -163,6 +161,26 @@ public class AuthAppRepository {
 
     public void setRestaurantChosenNull(){
         getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", null);
+    }
+
+    public MutableLiveData<Boolean> isPickRestaurant(Restaurant restaurant){
+        MutableLiveData<Boolean> result = new MutableLiveData<>();
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get().addOnSuccessListener(documentSnapshot -> {
+
+            if(Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestaurantChosenAt12PM() != null) {
+
+                if (Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestaurantChosenAt12PM().getId().equals(restaurant.getId())) {
+                    result.postValue(true);
+                } else {
+                    result.postValue(false);
+                }
+
+            }else {
+                result.postValue(false);
+            }
+
+        });
+        return  result;
     }
 
 

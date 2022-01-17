@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.content.Intent;
@@ -58,6 +59,11 @@ public class DetailActivity extends AppCompatActivity {
             authAppViewModel.isLikeRestaurant(restaurant).observe(this, aBoolean -> {
                 activityDetailBinding.likeButton.setSelected(aBoolean);
                 Log.e("isLike",aBoolean.toString());
+            });
+
+            authAppViewModel.isPickRestaurant(restaurant).observe(this, aBoolean -> {
+                activityDetailBinding.pickRestaurantButton.setSelected(aBoolean);
+                Log.e("isPickRestaurant",aBoolean.toString());
             });
 
             activityDetailBinding.likeButton.setOnClickListener(view -> {

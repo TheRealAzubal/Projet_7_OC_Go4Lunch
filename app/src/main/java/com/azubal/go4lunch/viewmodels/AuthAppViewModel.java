@@ -64,4 +64,10 @@ public class AuthAppViewModel extends AndroidViewModel {
 
     public void setRestaurantChosenNull(){authAppRepository.setRestaurantChosenNull();}
 
+    public  MutableLiveData<Boolean> isPickRestaurant(Restaurant restaurant){
+        return authAppRepository.isPickRestaurant(restaurant);
+    }
+
+
+
 }
