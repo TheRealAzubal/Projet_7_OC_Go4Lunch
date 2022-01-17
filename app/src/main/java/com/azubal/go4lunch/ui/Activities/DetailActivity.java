@@ -4,11 +4,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -21,11 +18,6 @@ import com.azubal.go4lunch.databinding.ActivityDetailBinding;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
     Restaurant restaurant;
@@ -39,7 +31,6 @@ public class DetailActivity extends AppCompatActivity {
         getRestaurant();
         authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
         restaurantNotNull();
-
     }
 
     public void getRestaurant(){
@@ -62,19 +53,27 @@ public class DetailActivity extends AppCompatActivity {
             requestPermissionPhone();
             });
 
-            activityDetailBinding.likeButton.setOnClickListener(view -> {
 
+
+            authAppViewModel.isLikeRestaurant(restaurant).observe(this, aBoolean -> {
+                activityDetailBinding.likeButton.setSelected(aBoolean);
+                Log.e("isLike",aBoolean.toString());
+            });
+
+            activityDetailBinding.likeButton.setOnClickListener(view -> {
                 activityDetailBinding.likeButton.setSelected(!activityDetailBinding.likeButton.isSelected());
+
+                Log.e("likeButtonOnClick","aa");
 
                 if (view.isSelected()) {
                     authAppViewModel.addRestaurantLike(restaurant);
                     //Handle selected state change
                 } else {
                     authAppViewModel.deleteRestaurantLike(restaurant);
-                    //Handle de-select state change
                 }
 
             });
+
 
             activityDetailBinding.pickRestaurantButton.setOnClickListener(view -> {
 
@@ -147,14 +146,12 @@ public class DetailActivity extends AppCompatActivity {
 
                     onRequestPermissionGranted();
 
-                } else {
+                }  // Explain to the user that the feature is unavailable because the
+                // features requires a permission that the user has denied. At the
+                // same time, respect the user's decision. Don't link to system
+                // settings in an effort to convince the user to change their
+                // decision.
 
-                    // Explain to the user that the feature is unavailable because the
-                    // features requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
-                }
             });
 
     public void  onRequestPermissionGranted(){

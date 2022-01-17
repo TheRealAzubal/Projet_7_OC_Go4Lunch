@@ -128,7 +128,7 @@ public class AuthAppRepository {
         getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(Restaurant restaurant1 : queryDocumentSnapshots.toObjects(Restaurant.class)){
                 if(restaurant1.getId().equals(restaurant.getId())){
-                    getRestaurantsLikeCollection().document(restaurant1.getId()).delete();
+                    //getRestaurantsLikeCollection().document(restaurant1.getId()).delete();
                     result.postValue(true);
                 }else {
                     result.postValue(false);
@@ -140,9 +140,12 @@ public class AuthAppRepository {
 
     public void addRestaurantLike(Restaurant restaurant){
             getRestaurantsLikeCollection().document(restaurant.getId()).set(restaurant);
+            Log.i("addRestaurantLike","addRestaurantLike");
     }
 
     public void deleteRestaurantLike(Restaurant restaurant){
+
+        Log.e("deleteRestaurantLike","deleteRestaurantLike");
 
         getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(Restaurant restaurant1 : queryDocumentSnapshots.toObjects(Restaurant.class)){
