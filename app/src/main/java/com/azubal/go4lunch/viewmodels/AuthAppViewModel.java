@@ -68,6 +68,9 @@ public class AuthAppViewModel extends AndroidViewModel {
         return authAppRepository.isPickRestaurant(restaurant);
     }
 
+    public  MutableLiveData<Restaurant> getRestaurantById(String restaurantId){
+        return authAppRepository.getRestaurantById(restaurantId);
+    }
 
 
 }

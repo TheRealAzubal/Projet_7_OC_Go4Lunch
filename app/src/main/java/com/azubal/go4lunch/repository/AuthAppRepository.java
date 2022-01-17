@@ -183,5 +183,17 @@ public class AuthAppRepository {
         return  result;
     }
 
+    public MutableLiveData<Restaurant> getRestaurantById(String restaurantId){
+        MutableLiveData<Restaurant> result = new MutableLiveData<>();
+        getRestaurantsCollection().document(restaurantId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if(queryDocumentSnapshots.toObject(Restaurant.class) !=null) {
+                        Log.e("restaurantFirebaseId",queryDocumentSnapshots.toObject(Restaurant.class).getId());
+                result.postValue(queryDocumentSnapshots.toObject(Restaurant.class));
+
+            }
+        });
+        return  result;
+    }
+
 
 }

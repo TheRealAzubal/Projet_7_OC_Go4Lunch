@@ -21,7 +21,8 @@ import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
 import com.bumptech.glide.Glide;
 
 public class DetailActivity extends AppCompatActivity {
-    Restaurant restaurant;
+    Restaurant restaurantLocal;
+    String restaurantId;
     ActivityDetailBinding activityDetailBinding;
     AuthAppViewModel authAppViewModel;
     @Override
@@ -29,26 +30,29 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityDetailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(activityDetailBinding.getRoot());
-        getRestaurant();
+        restaurantId = getIntent().getExtras().getString("restaurant_id");
+
         authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
-        restaurantNotNull();
+
+        getRestaurant();
+
+
     }
 
     public void getRestaurant(){
-        restaurant = getIntent().getParcelableExtra("detail_restaurant");
-    }
-
-    public void restaurantNotNull(){
-        if (restaurant != null) {
-            Log.i("name",restaurant.getName());
-            setUpRestaurantUI();
-        }
+            authAppViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
+                if(restaurant != null){
+                    restaurantLocal =restaurant;
+                    Log.e("restaurantLocalName",restaurantLocal.getName());
+                    setUpRestaurantUI();
+                }
+            });
     }
 
     public void setUpRestaurantUI(){
 
-            activityDetailBinding.name.setText(restaurant.getName());
-            activityDetailBinding.detailFormattedAddress.setText(restaurant.getFormatted_address());
+            activityDetailBinding.name.setText(restaurantLocal.getName());
+            activityDetailBinding.detailFormattedAddress.setText(restaurantLocal.getFormatted_address());
 
             activityDetailBinding.phoneButton.setOnClickListener(view -> {
             requestPermissionPhone();
@@ -56,12 +60,12 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-            authAppViewModel.isLikeRestaurant(restaurant).observe(this, aBoolean -> {
+            authAppViewModel.isLikeRestaurant(restaurantLocal).observe(this, aBoolean -> {
                 activityDetailBinding.likeButton.setSelected(aBoolean);
                 Log.e("isLike",aBoolean.toString());
             });
 
-            authAppViewModel.isPickRestaurant(restaurant).observe(this, aBoolean -> {
+            authAppViewModel.isPickRestaurant(restaurantLocal).observe(this, aBoolean -> {
                 activityDetailBinding.pickRestaurantButton.setSelected(aBoolean);
                 Log.e("isPickRestaurant",aBoolean.toString());
             });
@@ -72,10 +76,10 @@ public class DetailActivity extends AppCompatActivity {
                 Log.e("likeButtonOnClick","aa");
 
                 if (view.isSelected()) {
-                    authAppViewModel.addRestaurantLike(restaurant);
+                    authAppViewModel.addRestaurantLike(restaurantLocal);
                     //Handle selected state change
                 } else {
-                    authAppViewModel.deleteRestaurantLike(restaurant);
+                    authAppViewModel.deleteRestaurantLike(restaurantLocal);
                 }
 
             });
@@ -86,7 +90,7 @@ public class DetailActivity extends AppCompatActivity {
                 activityDetailBinding.pickRestaurantButton.setSelected(!activityDetailBinding.pickRestaurantButton.isSelected());
 
                 if (view.isSelected()) {
-                    authAppViewModel.setRestaurantChosen(restaurant);
+                    authAppViewModel.setRestaurantChosen(restaurantLocal);
                     //Handle selected state change
                 } else {
                     authAppViewModel.setRestaurantChosenNull();
@@ -96,33 +100,33 @@ public class DetailActivity extends AppCompatActivity {
             });
 
             activityDetailBinding.websiteButton.setOnClickListener(view -> {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(restaurant.getWebsite())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(restaurantLocal.getWebsite())));
             });
 
 
             Glide.with(this)
-                    .load(restaurant.getPhotoUrl())
+                    .load(restaurantLocal.getPhotoUrl())
                     .placeholder(R.drawable.logo_go4lunch)
                     .centerCrop()
                     .into(activityDetailBinding.imageRestaurant);
 
-            if (Math.round(restaurant.getRating()) ==0){
+            if (Math.round(restaurantLocal.getRating()) ==0){
 
-            }else if (Math.round(restaurant.getRating()) == 1){
+            }else if (Math.round(restaurantLocal.getRating()) == 1){
                 activityDetailBinding.firstStar.setVisibility(View.VISIBLE);
-            }else if (Math.round(restaurant.getRating()) == 2){
+            }else if (Math.round(restaurantLocal.getRating()) == 2){
                 activityDetailBinding.firstStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.secondStar.setVisibility(View.VISIBLE);
-            }else if (Math.round(restaurant.getRating()) == 3){
+            }else if (Math.round(restaurantLocal.getRating()) == 3){
                 activityDetailBinding.firstStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.secondStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.thirdStar.setVisibility(View.VISIBLE);
-            }else if (Math.round(restaurant.getRating()) == 4){
+            }else if (Math.round(restaurantLocal.getRating()) == 4){
                 activityDetailBinding.firstStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.secondStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.thirdStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.fourStar.setVisibility(View.VISIBLE);
-            }else if (Math.round(restaurant.getRating()) == 5){
+            }else if (Math.round(restaurantLocal.getRating()) == 5){
                 activityDetailBinding.firstStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.secondStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.thirdStar.setVisibility(View.VISIBLE);
@@ -162,7 +166,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void  onRequestPermissionGranted(){
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+restaurant.getFormatted_phone_number()));
+        callIntent.setData(Uri.parse("tel:"+ restaurantLocal.getFormatted_phone_number()));
         startActivity(callIntent);
     }
 
