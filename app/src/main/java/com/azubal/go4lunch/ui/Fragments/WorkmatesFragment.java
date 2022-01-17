@@ -63,18 +63,6 @@ public class WorkmatesFragment extends Fragment {
     }
 
     public void setUpRecyclerView(List<User> userList){
-
-        authAppViewModel.getUserData().observe(this, user -> {
-            for(int i=0;i<userList.size(); i++){
-                if(userList.get(i).getUid().equals(user.getUid())){
-                    userList.remove(i);
-                }
-            }
-
-
-        });
-
-
         RecyclerView rvUsers = view.findViewById(R.id.list_workmates);
         rvUsers.setAdapter(new WorkmatesAdapter(userList , getContext()));
         rvUsers.setLayoutManager(new LinearLayoutManager(view.getContext()));

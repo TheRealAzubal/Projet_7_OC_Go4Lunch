@@ -35,8 +35,15 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         User user = userList.get(position);
 
+        if(user.getRestaurantChosenAt12PM() == null){
+            holder.workmateName.setText(user.getUsername()+" hasn't decided yet ");
+        }else {
+            holder.workmateName.setText(user.getUsername()+" ("+user.getRestaurantChosenAt12PM().getName()+")");
+        }
 
-        holder.workmateName.setText(user.getUsername());
+
+
+
 
         Glide.with(context)
                 .load(user.getUrlPicture())
