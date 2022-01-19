@@ -19,6 +19,8 @@ public class UserRepository {
     FirebaseAuth firebaseAuth;
     AuthUI authUI;
     private static final String COLLECTION_NAME = "users";
+    private static final String COLLECTION_RESTAURANT = "listRestaurant";
+    private static final String COLLECTION_LIST_USERS_PICK = "listUsersPick";
 
     public UserRepository(Application application) {
         this.application = application;
@@ -48,6 +50,11 @@ public class UserRepository {
     private CollectionReference getUsersCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
+
+    private CollectionReference getListUsersPickCollection(String restaurantId){
+        return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT).document(restaurantId).collection(COLLECTION_LIST_USERS_PICK);
+    }
+
     // Create User in Firestore
     public void createUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -78,6 +85,15 @@ public class UserRepository {
     public MutableLiveData<List<User>> getAllUsers(){
         MutableLiveData<List<User>> result = new MutableLiveData<>();
         getUsersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            List<User> userList = queryDocumentSnapshots.toObjects(User.class);
+            result.postValue(userList);
+        });
+        return  result;
+    }
+
+    public MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant){
+        MutableLiveData<List<User>> result = new MutableLiveData<>();
+        getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<User> userList = queryDocumentSnapshots.toObjects(User.class);
             result.postValue(userList);
         });

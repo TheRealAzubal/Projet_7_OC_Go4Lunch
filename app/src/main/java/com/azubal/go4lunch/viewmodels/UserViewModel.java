@@ -45,4 +45,8 @@ public class UserViewModel extends AndroidViewModel {
         return authAppRepository.getAllUsers();
     }
 
+    public  MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant){
+        return authAppRepository.getAllUsersPickForThisRestaurant(restaurant);
+    }
+
 }
