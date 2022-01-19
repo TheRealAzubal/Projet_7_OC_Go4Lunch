@@ -11,12 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.models.ApiDetails.Period;
 import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
 
 import org.joda.time.DateTime;
@@ -32,6 +38,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     Context context;
     int minute, monthOfYear, dayMonth, dayOfWeek, hour, year;
     DateTime actualDateTime;
+    UserViewModel userViewModel;
 
     public ListViewAdapter(List<Restaurant> items, Context context) {
         restaurants = items;
@@ -42,6 +49,9 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_list_view_item, parent, false);
+        userViewModel = new ViewModelProvider((ViewModelStoreOwner) view.getContext()).get(UserViewModel.class);
+
+
         return new ViewHolder(view);
     }
 
@@ -54,7 +64,13 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         holder.txViewOpening.setText(restaurant.getOpen());
         holder.txViewDistance.setText(restaurant.getDistance());
         holder.imgWorkmatesIcon.setVisibility(View.VISIBLE);
-        holder.txViewNumberWorkmates.setText("(0)");
+
+
+        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observe((LifecycleOwner) holder.itemView.getContext(), users -> {
+            holder.txViewNumberWorkmates.setText("("+users.size()+")");
+        });
+
+
         holder.txViewNumberWorkmates.setVisibility(View.VISIBLE);
         holder.txViewAddress.setText(restaurant.getAddress());
         holder.txViewAddress.setText(restaurant.getFormatted_address());
