@@ -1,6 +1,7 @@
 package com.azubal.go4lunch.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
+import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.bumptech.glide.Glide;
 import java.util.List;
 
@@ -41,6 +44,11 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.View
             holder.workmateName.setText(user.getUsername()+" ("+user.getRestaurantChosenAt12PM().getName()+")");
         }
 
+        holder.itemView.setOnClickListener(view -> {
+            if(user.getRestaurantChosenAt12PM() != null){
+                launchDetailRestaurant(user.getRestaurantChosenAt12PM(), holder.itemView.getContext());
+            }
+        });
 
 
 
@@ -51,6 +59,12 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.View
                 .circleCrop()
                 .into(holder.workmateAvatar);
 
+    }
+
+    public void launchDetailRestaurant(Restaurant restaurant, Context context) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra("restaurant_id", restaurant.getId());
+        context.startActivity(intent);
     }
 
     @Override

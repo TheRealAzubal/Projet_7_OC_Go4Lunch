@@ -1,6 +1,7 @@
 package com.azubal.go4lunch.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
+import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -52,6 +55,8 @@ public class WorkmatesPickRestaurantAdapter extends RecyclerView.Adapter<Workmat
     public int getItemCount() {
         return userList.size();
     }
+
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView workmateAvatar;
