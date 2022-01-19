@@ -93,9 +93,11 @@ public class DetailActivity extends AppCompatActivity {
 
                 if (view.isSelected()) {
                     restaurantViewModel.setRestaurantChosen(restaurantLocal);
+                    restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
                     //Handle selected state change
                 } else {
                     restaurantViewModel.setRestaurantChosenNull();
+                    restaurantViewModel.deleteUserPickForRestaurant(restaurantLocal);
                     //Handle de-select state change
                 }
 

@@ -44,6 +44,7 @@ public class RestaurantRepository {
     private static final String COLLECTION_NAME = "users";
     private static final String COLLECTION_RESTAURANT = "listRestaurant";
     private static final String COLLECTION_RESTAURANT_LIKE = "restaurantLike";
+    private static final String COLLECTION_LIST_USERS_PICK = "listUsersPick";
 
     public RestaurantRepository(Application application) {
         this.application = application;
@@ -63,6 +64,10 @@ public class RestaurantRepository {
         String uid = this.firebaseAuth.getUid();
         assert uid != null;
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME).document(uid).collection(COLLECTION_RESTAURANT_LIKE);
+    }
+
+    private CollectionReference getListUsersPickCollection(String restaurantId){
+        return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT).document(restaurantId).collection(COLLECTION_LIST_USERS_PICK);
     }
 
     public MutableLiveData<List<Restaurant>> getListRestaurantApiFirst(LatLng latLng) {
@@ -241,12 +246,28 @@ public class RestaurantRepository {
         MutableLiveData<Restaurant> result = new MutableLiveData<>();
         getRestaurantsCollection().document(restaurantId).get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots.toObject(Restaurant.class) !=null) {
-                Log.e("restaurantFirebaseId",queryDocumentSnapshots.toObject(Restaurant.class).getId());
                 result.postValue(queryDocumentSnapshots.toObject(Restaurant.class));
-
             }
         });
         return  result;
+    }
+
+    public void addUserPickForRestaurant(Restaurant restaurant){
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            getListUsersPickCollection(restaurant.getId()).document(firebaseAuth.getCurrentUser().getUid()).set(Objects.requireNonNull(queryDocumentSnapshots.toObject(User.class)));
+        });
+    }
+
+    public void deleteUserPickForRestaurant(Restaurant restaurant){
+
+        getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(User user1 : queryDocumentSnapshots.toObjects(User.class)){
+                if(user1.getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())){
+                    getListUsersPickCollection(restaurant.getId()).document(firebaseAuth.getCurrentUser().getUid()).delete();
+                }
+            }
+        });
+
     }
 
 }

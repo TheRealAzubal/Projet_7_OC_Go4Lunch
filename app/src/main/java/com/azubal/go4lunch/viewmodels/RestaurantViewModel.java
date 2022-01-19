@@ -59,6 +59,9 @@ public class RestaurantViewModel extends AndroidViewModel {
         return restaurantRepository.getRestaurantById(restaurantId);
     }
 
+    public void addUserPickForRestaurant(Restaurant restaurant){restaurantRepository.addUserPickForRestaurant(restaurant);}
+
+    public void deleteUserPickForRestaurant(Restaurant restaurant){restaurantRepository.deleteUserPickForRestaurant(restaurant);}
 
 
 
