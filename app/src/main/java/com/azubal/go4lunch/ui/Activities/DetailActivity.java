@@ -4,7 +4,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,9 +20,14 @@ import android.view.View;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityDetailBinding;
 import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.models.User;
+import com.azubal.go4lunch.ui.WorkmatesAdapter;
+import com.azubal.go4lunch.ui.WorkmatesPickRestaurantAdapter;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
     Restaurant restaurantLocal;
@@ -37,6 +46,8 @@ public class DetailActivity extends AppCompatActivity {
         restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
 
         getRestaurant();
+
+
 
 
     }
@@ -137,6 +148,8 @@ public class DetailActivity extends AppCompatActivity {
                 activityDetailBinding.fourStar.setVisibility(View.VISIBLE);
                 activityDetailBinding.fiveStar.setVisibility(View.VISIBLE);
             }
+
+            authAppViewModel.getAllUsersPickForThisRestaurant(restaurantLocal).observe(this, this::setUpRecyclerView);
     }
 
     private void requestPermissionPhone(){
@@ -172,6 +185,12 @@ public class DetailActivity extends AppCompatActivity {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:"+ restaurantLocal.getFormatted_phone_number()));
         startActivity(callIntent);
+    }
+
+    public void setUpRecyclerView(List<User> userList){
+        RecyclerView rvUsers = activityDetailBinding.recyclerViewDetailResto;
+        rvUsers.setAdapter(new WorkmatesPickRestaurantAdapter(userList,getApplicationContext()));
+        rvUsers.setLayoutManager(new LinearLayoutManager(activityDetailBinding.recyclerViewDetailResto.getContext()));
     }
 
 
