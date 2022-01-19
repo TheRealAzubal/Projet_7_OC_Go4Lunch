@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -14,7 +14,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AuthAppViewModel authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
+        UserViewModel authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         authAppViewModel.isCurrentUserLoggedIn().observe(this, isConnected -> {
             if (isConnected) {

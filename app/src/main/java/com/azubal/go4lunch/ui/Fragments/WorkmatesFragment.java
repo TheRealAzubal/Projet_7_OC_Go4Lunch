@@ -1,27 +1,21 @@
 package com.azubal.go4lunch.ui.Fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentWorkmatesBinding;
-import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
-import com.azubal.go4lunch.ui.ListViewAdapter;
 import com.azubal.go4lunch.ui.WorkmatesAdapter;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
-import com.google.firebase.auth.FirebaseAuth;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 
 import java.util.List;
 
@@ -29,7 +23,7 @@ public class WorkmatesFragment extends Fragment {
 
     private FragmentWorkmatesBinding binding;
     View view;
-    AuthAppViewModel authAppViewModel;
+    UserViewModel authAppViewModel;
 
     public WorkmatesFragment() {
         // Required empty public constructor
@@ -52,7 +46,7 @@ public class WorkmatesFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         view = binding.getRoot();
-        authAppViewModel = new ViewModelProvider(requireActivity()).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         authAppViewModel.getAllUsers().observe(this, this::setUpRecyclerView);
 

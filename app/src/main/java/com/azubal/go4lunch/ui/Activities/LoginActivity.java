@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.utils.ToastUtil;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
@@ -18,14 +18,14 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    AuthAppViewModel authAppViewModel;
+    UserViewModel authAppViewModel;
     List<Restaurant> restaurantListLocal;
     List<Restaurant> restaurantListLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         startSignIn();
     }

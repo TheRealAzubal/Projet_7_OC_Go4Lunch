@@ -15,7 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
 
 import java.util.Objects;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     NavHostFragment navHostFragment;
     AppBarConfiguration appBarConfiguration;
-    AuthAppViewModel authAppViewModel;
+    UserViewModel authAppViewModel;
     TextView textViewUserEmail;
     TextView textViewUserName;
     ImageView imageViewUserProfile;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpViewModel(){
-        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     private void setUpNavHostFragmentAndController(){

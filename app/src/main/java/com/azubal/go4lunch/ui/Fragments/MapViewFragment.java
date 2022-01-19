@@ -24,7 +24,7 @@ import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -35,9 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class MapViewFragment extends Fragment implements OnMapReadyCallback {
@@ -47,7 +45,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     private FragmentMapViewBinding binding;
     MainActivity mainActivity;
     RestaurantViewModel restaurantViewModel;
-    AuthAppViewModel authAppViewModel;
+    UserViewModel authAppViewModel;
     SupportMapFragment mapFragment;
 
 
@@ -77,7 +75,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
 
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
-        authAppViewModel = new ViewModelProvider(requireActivity()).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         requestPermissionLocation();
 
         return view;
@@ -99,22 +97,18 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
         map.setMyLocationEnabled(true);
 
-        authAppViewModel.getListRestaurant().observe(this, list -> {
 
-            if (list != null){
+
+        restaurantViewModel.getPosition().observe(this, latLng -> {
+
+            restaurantViewModel.getListRestaurant(latLng).observe(this, list -> {
                 setMarkers(list);
                 prepareDetailActivity(list);
-            }else{
-                restaurantViewModel.getListRestaurant().observe(this, restaurantList -> {
-                    setMarkers(restaurantList);
-                    prepareDetailActivity(restaurantList);
-                    authAppViewModel.updateListRestaurant(restaurantList);
-                });
-            }
+            });
+
+            moveCamera(latLng);
 
         });
-
-        restaurantViewModel.getPosition().observe(this, this::moveCamera);
     }
 
     public void prepareDetailActivity(List<Restaurant> restaurantList){

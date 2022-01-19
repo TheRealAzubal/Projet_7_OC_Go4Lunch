@@ -4,7 +4,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.content.Intent;
@@ -17,14 +16,16 @@ import android.view.View;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityDetailBinding;
 import com.azubal.go4lunch.models.Restaurant;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
 
 public class DetailActivity extends AppCompatActivity {
     Restaurant restaurantLocal;
     String restaurantId;
     ActivityDetailBinding activityDetailBinding;
-    AuthAppViewModel authAppViewModel;
+    RestaurantViewModel restaurantViewModel;
+    UserViewModel authAppViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,8 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(activityDetailBinding.getRoot());
         restaurantId = getIntent().getExtras().getString("restaurant_id");
 
-        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
 
         getRestaurant();
 
@@ -40,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void getRestaurant(){
-            authAppViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
+            restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
                 if(restaurant != null){
                     restaurantLocal =restaurant;
                     Log.e("restaurantLocalName",restaurantLocal.getName());
@@ -60,12 +62,12 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-            authAppViewModel.isLikeRestaurant(restaurantLocal).observe(this, aBoolean -> {
+            restaurantViewModel.isLikeRestaurant(restaurantLocal).observe(this, aBoolean -> {
                 activityDetailBinding.likeButton.setSelected(aBoolean);
                 Log.e("isLike",aBoolean.toString());
             });
 
-            authAppViewModel.isPickRestaurant(restaurantLocal).observe(this, aBoolean -> {
+            restaurantViewModel.isPickRestaurant(restaurantLocal).observe(this, aBoolean -> {
                 activityDetailBinding.pickRestaurantButton.setSelected(aBoolean);
                 Log.e("isPickRestaurant",aBoolean.toString());
             });
@@ -76,10 +78,10 @@ public class DetailActivity extends AppCompatActivity {
                 Log.e("likeButtonOnClick","aa");
 
                 if (view.isSelected()) {
-                    authAppViewModel.addRestaurantLike(restaurantLocal);
+                    restaurantViewModel.addRestaurantLike(restaurantLocal);
                     //Handle selected state change
                 } else {
-                    authAppViewModel.deleteRestaurantLike(restaurantLocal);
+                    restaurantViewModel.deleteRestaurantLike(restaurantLocal);
                 }
 
             });
@@ -90,10 +92,10 @@ public class DetailActivity extends AppCompatActivity {
                 activityDetailBinding.pickRestaurantButton.setSelected(!activityDetailBinding.pickRestaurantButton.isSelected());
 
                 if (view.isSelected()) {
-                    authAppViewModel.setRestaurantChosen(restaurantLocal);
+                    restaurantViewModel.setRestaurantChosen(restaurantLocal);
                     //Handle selected state change
                 } else {
-                    authAppViewModel.setRestaurantChosenNull();
+                    restaurantViewModel.setRestaurantChosenNull();
                     //Handle de-select state change
                 }
 

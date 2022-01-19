@@ -1,7 +1,6 @@
 package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.ui.ListViewAdapter;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 public class ListViewFragment extends Fragment {
 
     View view;
     RestaurantViewModel restaurantViewModel;
-    AuthAppViewModel authAppViewModel;
+    UserViewModel authAppViewModel;
 
     public ListViewFragment() {}
 
@@ -35,16 +36,10 @@ public class ListViewFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
-        authAppViewModel = new ViewModelProvider(requireActivity()).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        authAppViewModel.getListRestaurant().observe(this, list -> {
-
-            if (list != null) {
-                setUpRecyclerView(list);
-            }else{
-                restaurantViewModel.getListRestaurant().observe(this, this::setUpRecyclerView);
-            }
-
+        restaurantViewModel.getPosition().observe(this, latLng -> {
+            restaurantViewModel.getListRestaurant(latLng).observe(this, this::setUpRecyclerView);
         });
 
         return view;

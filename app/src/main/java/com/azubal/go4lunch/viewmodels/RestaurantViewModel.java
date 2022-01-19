@@ -31,13 +31,32 @@ public class RestaurantViewModel extends AndroidViewModel {
         restaurantRepository = new RestaurantRepository(application);
     }
 
-
-    public LiveData<List<Restaurant>> getListRestaurant() {
-        return listRestaurantLiveData;
+    public  MutableLiveData<List<Restaurant>> getListRestaurant(LatLng latLng){
+        return restaurantRepository.getListRestaurantApiFirst(latLng);
     }
 
     public MutableLiveData<LatLng> getPosition() {
         return positionLiveData;
+    }
+
+    public  MutableLiveData<Boolean> isLikeRestaurant(Restaurant restaurant){
+        return restaurantRepository.isLikeRestaurant(restaurant);
+    }
+
+    public void addRestaurantLike(Restaurant restaurant){restaurantRepository.addRestaurantLike(restaurant);}
+
+    public void deleteRestaurantLike(Restaurant restaurant){restaurantRepository.deleteRestaurantLike(restaurant);}
+
+    public void setRestaurantChosen(Restaurant restaurant){restaurantRepository.setRestaurantChosen(restaurant);}
+
+    public void setRestaurantChosenNull(){restaurantRepository.setRestaurantChosenNull();}
+
+    public  MutableLiveData<Boolean> isPickRestaurant(Restaurant restaurant){
+        return restaurantRepository.isPickRestaurant(restaurant);
+    }
+
+    public  MutableLiveData<Restaurant> getRestaurantById(String restaurantId){
+        return restaurantRepository.getRestaurantById(restaurantId);
     }
 
 

@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.azubal.go4lunch.databinding.FragmentLogOutBinding;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
-import com.azubal.go4lunch.viewmodels.AuthAppViewModel;
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 
 public class LogOutFragment extends Fragment {
 
     private FragmentLogOutBinding binding;
     MainActivity mainActivity;
-    AuthAppViewModel authAppViewModel;
+    UserViewModel authAppViewModel;
 
 
     public LogOutFragment(){}
@@ -51,7 +51,7 @@ public class LogOutFragment extends Fragment {
     }
 
     private void setUpViewModel(){
-        authAppViewModel = new ViewModelProvider(this).get(AuthAppViewModel.class);
+        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     private void logOutButtonListener(){
