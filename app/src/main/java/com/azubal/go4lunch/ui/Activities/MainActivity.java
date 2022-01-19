@@ -1,12 +1,18 @@
 package com.azubal.go4lunch.ui.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -15,12 +21,15 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ActivityMainBinding binding;
     NavHostFragment navHostFragment;
@@ -42,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         configureNavDrawerAndNavBottom();
         setUpViewHeader();
         updateUserData();
+        setNavigationViewListener();
     }
 
     private void setUpViewModel(){
@@ -113,4 +123,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.yourLunch: {
+                authAppViewModel.getUserData().observe(this, user -> {
+                    launchDetailRestaurant(user.getRestaurantChosenAt12PM(), binding.navViewDrawer.getContext());
+                });
+                break;
+            }
+        }
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        return false;
+    }
+
+    public void launchDetailRestaurant(Restaurant restaurant, Context context) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra("restaurant_id", restaurant.getId());
+        context.startActivity(intent);
+    }
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = binding.navViewDrawer;
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 }
