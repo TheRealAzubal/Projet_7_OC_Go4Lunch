@@ -29,7 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     NavHostFragment navHostFragment;
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         configureNavDrawerAndNavBottom();
         setUpViewHeader();
         updateUserData();
-        setNavigationViewListener();
     }
 
     private void setUpViewModel(){
@@ -122,29 +121,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(LoginActivity);
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.yourLunch: {
-                authAppViewModel.getUserData().observe(this, user -> {
-                    launchDetailRestaurant(user.getRestaurantChosenAt12PM(), binding.navViewDrawer.getContext());
-                });
-                break;
-            }
-        }
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
-        return false;
-    }
-
     public void launchDetailRestaurant(Restaurant restaurant, Context context) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("restaurant_id", restaurant.getId());
         context.startActivity(intent);
     }
 
-    private void setNavigationViewListener() {
-        NavigationView navigationView = binding.navViewDrawer;
-        navigationView.setNavigationItemSelectedListener(this);
-    }
 }
