@@ -7,18 +7,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:701388618743:android:436e2b35875295744c0cf2",
+        "mobilesdk_app_id": "1:701388618743:android:23c111d10d233e464c0cf2",
         "android_client_info": {
           "package_name": "com.azubal.go4lunch"
         }
       },
       "oauth_client": [
         {
-          "client_id": "701388618743-7ipf3a4s2oh122974u0bb7anq7d5s4nb.apps.googleusercontent.com",
+          "client_id": "701388618743-r1oin3vqkebv80q9teo1h94orf2loisg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.azubal.go4lunch",
-            "certificate_hash": "d6d6763be253b4ae91f585b9806303482362d5ea"
+            "certificate_hash": "40a7c32b6b67575e02042d9b4e7def6212c06c16"
           }
         },
         {
@@ -28,7 +28,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD6XPScy-UkisTUvX-m14266CO-b4gqyEw"
+          "current_key": "AIzaSyDu_4_QRMPdzaIo6ugOqoMpugAHYgRn2yA"
         }
       ],
       "services": {
