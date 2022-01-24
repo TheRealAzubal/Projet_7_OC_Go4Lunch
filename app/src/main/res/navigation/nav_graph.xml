@@ -27,13 +27,13 @@
         tools:layout="@layout/fragment_workmates" >
     </fragment>
 
-    <fragment
+    <activity
         android:id="@+id/yourLunch"
-        android:name="com.azubal.go4lunch.ui.Fragments.YourLunchFragment"
+        android:name="com.azubal.go4lunch.ui.Activities.DetailActivity"
         android:label="@string/yourLunch"
-        tools:layout="@layout/fragment_your_lunch" >
+        tools:layout="@layout/activity_detail" >
 
-    </fragment>
+    </activity>
     <fragment
         android:id="@+id/settings"
         android:name="com.azubal.go4lunch.ui.Fragments.SettingsFragment"

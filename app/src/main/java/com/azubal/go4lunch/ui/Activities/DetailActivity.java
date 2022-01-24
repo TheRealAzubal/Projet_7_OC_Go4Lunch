@@ -53,13 +53,33 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void getRestaurant(){
-            restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
-                if(restaurant != null){
-                    restaurantLocal =restaurant;
-                    Log.e("restaurantLocalName",restaurantLocal.getName());
-                    setUpRestaurantUI();
+            authAppViewModel.getUserData().observe(this, user -> {
+                if(restaurantId == null){
+                    restaurantViewModel.getRestaurantById(user.getRestaurantChosenAt12PM().getId()).observe(this, restaurant -> {
+                        if(restaurant != null){
+                            restaurantLocal =restaurant;
+                            Log.e("restaurantLocalName",restaurantLocal.getName());
+                            setUpRestaurantUI();
+                        }
+                    });
+
+
+
+                }else {
+
+                    restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
+                        if(restaurant != null){
+                            restaurantLocal =restaurant;
+                            Log.e("restaurantLocalName",restaurantLocal.getName());
+                            setUpRestaurantUI();
+                        }
+                    });
+
                 }
             });
+
+
+
     }
 
     public void setUpRestaurantUI(){
