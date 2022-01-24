@@ -96,6 +96,15 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void setUpRestaurantUI(){
+            if(restaurantLocal.getFormatted_phone_number() == null){
+                activityDetailBinding.phoneButton.setVisibility(View.INVISIBLE);
+            }
+
+            if(restaurantLocal.getWebsite() == null){
+                activityDetailBinding.websiteButton.setVisibility(View.INVISIBLE);
+            }
+
+
 
             activityDetailBinding.name.setText(restaurantLocal.getName());
             activityDetailBinding.detailFormattedAddress.setText(restaurantLocal.getFormatted_address());
