@@ -10,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityDetailBinding;
@@ -54,28 +56,48 @@ public class DetailActivity extends AppCompatActivity {
 
     public void getRestaurant(){
             authAppViewModel.getUserData().observe(this, user -> {
-                if(restaurantId == null){
-                    restaurantViewModel.getRestaurantById(user.getRestaurantChosenAt12PM().getId()).observe(this, restaurant -> {
-                        if(restaurant != null){
-                            restaurantLocal =restaurant;
-                            Log.e("restaurantLocalName",restaurantLocal.getName());
-                            setUpRestaurantUI();
-                        }
-                    });
+                if(user.getRestaurantChosenAt12PM() == null){
+
+                    Context context = getApplicationContext();
+                    CharSequence text = "Vous n'avez pas choisi de restaurant ";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
 
 
 
                 }else {
 
-                    restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
-                        if(restaurant != null){
-                            restaurantLocal =restaurant;
-                            Log.e("restaurantLocalName",restaurantLocal.getName());
-                            setUpRestaurantUI();
-                        }
-                    });
+
+                    if (restaurantId == null) {
+                        restaurantViewModel.getRestaurantById(user.getRestaurantChosenAt12PM().getId()).observe(this, restaurant -> {
+                            if (restaurant != null) {
+                                restaurantLocal = restaurant;
+                                Log.e("restaurantLocalName", restaurantLocal.getName());
+                                setUpRestaurantUI();
+                            }
+                        });
+
+
+                    } else {
+
+                        restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
+                            if (restaurant != null) {
+                                restaurantLocal = restaurant;
+                                Log.e("restaurantLocalName", restaurantLocal.getName());
+                                setUpRestaurantUI();
+                            }
+                        });
+
+                    }
 
                 }
+
+
+
+
+
             });
 
 
