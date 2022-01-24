@@ -20,8 +20,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
 import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
@@ -32,6 +34,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -121,8 +124,32 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         if(restaurantList != null) {
 
             for (int i = 0; i < restaurantList.size(); i++) {
-                LatLng latLng = new LatLng(restaurantList.get(i).getLatitude(),restaurantList.get(i).getLongitude());
-                map.addMarker(new MarkerOptions().position(latLng).title(restaurantList.get(i).getName()).zIndex(i));
+                Restaurant restaurantCurrent = restaurantList.get(i);
+                int numberRestaurantInList = i;
+
+
+                LatLng latLng = new LatLng(restaurantCurrent.getLatitude(),restaurantCurrent.getLongitude());
+
+
+
+                        authAppViewModel.getAllUsersPickForThisRestaurant(restaurantCurrent).observe(this, users -> {
+                            if (users.size() > 0 ){
+                                map.addMarker(new MarkerOptions().position(latLng).title(restaurantCurrent.getName()).zIndex(numberRestaurantInList).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_restaurant_green)));
+                            }else{
+                                map.addMarker(new MarkerOptions().position(latLng).title(restaurantCurrent.getName()).zIndex(numberRestaurantInList).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_restaurant_orange)));
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+
             }
         }
     }
