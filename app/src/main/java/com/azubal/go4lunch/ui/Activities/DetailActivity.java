@@ -56,33 +56,30 @@ public class DetailActivity extends AppCompatActivity {
 
     public void getRestaurant(){
             authAppViewModel.getUserData().observe(this, user -> {
-                if(user.getRestaurantChosenAt12PM() == null){
-
-                    Context context = getApplicationContext();
-                    CharSequence text = "Vous n'avez pas choisi de restaurant ";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
 
 
-
+                if(restaurantId != null){
+                    restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
+                        if (restaurant != null) {
+                            restaurantLocal = restaurant;
+                            Log.e("restaurantLocalName", restaurantLocal.getName());
+                            setUpRestaurantUI();
+                        }
+                    });
                 }else {
 
+                    if(user.getRestaurantChosenAt12PM() == null){
 
-                    if (restaurantId == null) {
+                        Context context = getApplicationContext();
+                        CharSequence text = "Vous n'avez pas choisi de restaurant ";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
+                    }else {
+
                         restaurantViewModel.getRestaurantById(user.getRestaurantChosenAt12PM().getId()).observe(this, restaurant -> {
-                            if (restaurant != null) {
-                                restaurantLocal = restaurant;
-                                Log.e("restaurantLocalName", restaurantLocal.getName());
-                                setUpRestaurantUI();
-                            }
-                        });
-
-
-                    } else {
-
-                        restaurantViewModel.getRestaurantById(restaurantId).observe(this, restaurant -> {
                             if (restaurant != null) {
                                 restaurantLocal = restaurant;
                                 Log.e("restaurantLocalName", restaurantLocal.getName());
@@ -94,13 +91,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 }
 
-
-
-
-
             });
-
-
 
     }
 
