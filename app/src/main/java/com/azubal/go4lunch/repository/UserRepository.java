@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,6 +88,12 @@ public class UserRepository {
         MutableLiveData<List<User>> result = new MutableLiveData<>();
         getUsersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<User> userList = queryDocumentSnapshots.toObjects(User.class);
+            for (Iterator<User> iterator = userList.iterator(); iterator.hasNext();) {
+                if (iterator.next().getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
+                    // Remove the current element from the iterator and the list.
+                    iterator.remove();
+                }
+            }
             result.postValue(userList);
         });
         return  result;
@@ -95,6 +103,12 @@ public class UserRepository {
         MutableLiveData<List<User>> result = new MutableLiveData<>();
         getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<User> userList = queryDocumentSnapshots.toObjects(User.class);
+            for (Iterator<User> iterator = userList.iterator(); iterator.hasNext();) {
+                if (iterator.next().getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
+                    // Remove the current element from the iterator and the list.
+                    iterator.remove();
+                }
+            }
             result.postValue(userList);
         });
         return  result;

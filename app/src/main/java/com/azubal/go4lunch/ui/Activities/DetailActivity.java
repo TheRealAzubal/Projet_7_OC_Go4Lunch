@@ -118,6 +118,7 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(restaurantLocal.getWebsite())));
             });
 
+            Log.e("photoUrl",restaurantLocal.getPhotoUrl());
 
             Glide.with(this)
                     .load(restaurantLocal.getPhotoUrl())
