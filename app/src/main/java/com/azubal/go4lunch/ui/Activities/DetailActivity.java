@@ -136,8 +136,37 @@ public class DetailActivity extends AppCompatActivity {
                 activityDetailBinding.pickRestaurantButton.setSelected(!activityDetailBinding.pickRestaurantButton.isSelected());
 
                 if (view.isSelected()) {
-                    restaurantViewModel.setRestaurantChosen(restaurantLocal);
-                    restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
+
+                    authAppViewModel.getUserData().observe(this, user -> {
+
+                        Restaurant restaurantChosen = user.getRestaurantChosenAt12PM();
+
+                        if(restaurantChosen == null){
+                            restaurantViewModel.setRestaurantChosen(restaurantLocal);
+                            restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
+                        }else{
+                            if(!restaurantChosen.getId().equals(restaurantLocal.getId())){
+                                restaurantViewModel.deleteUserPickForRestaurant(restaurantChosen);
+                                restaurantViewModel.setRestaurantChosen(restaurantLocal);
+                                restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
+                            }else{
+                                restaurantViewModel.setRestaurantChosen(restaurantLocal);
+                                restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
+                            }
+                        }
+
+                    });
+
+
+
+
+
+
+
+
+
+
+
                     //Handle selected state change
                 } else {
                     restaurantViewModel.setRestaurantChosenNull();
