@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/listFavorite"
         android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
-        android:label="@string/listView"
+        android:label="FAVORITES"
         tools:layout="@layout/fragment_list_view" >
 
         <argument
