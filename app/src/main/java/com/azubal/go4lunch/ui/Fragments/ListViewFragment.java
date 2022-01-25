@@ -45,7 +45,7 @@ public class ListViewFragment extends Fragment {
         Log.e("listIsFavorite", String.valueOf(listIsFavorite));
 
         restaurantViewModel.getPosition().observe(this, latLng -> {
-            restaurantViewModel.getListRestaurant(latLng).observe(this, this::setUpRecyclerView);
+            restaurantViewModel.getListRestaurant(latLng,listIsFavorite).observe(this, this::setUpRecyclerView);
         });
 
         return view;

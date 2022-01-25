@@ -70,100 +70,111 @@ public class RestaurantRepository {
         return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT).document(restaurantId).collection(COLLECTION_LIST_USERS_PICK);
     }
 
-    public MutableLiveData<List<Restaurant>> getListRestaurantApiFirst(LatLng latLng) {
+    public MutableLiveData<List<Restaurant>> getListRestaurantApiFirst(LatLng latLng, Boolean listIsFavorite) {
         MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
 
-        getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
-            List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
+        if(listIsFavorite){
+            getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+                result.postValue(queryDocumentSnapshots.toObjects(Restaurant.class));
+            });
 
-        if(restaurantListFirebase !=null ){
-            result.postValue(restaurantListFirebase);
         }else {
 
-            String location = latLng.latitude + "," + latLng.longitude;
-            Call<NearbyResult> listRestaurantApiNearBySearchResponseOut = myInterface.getApiNearBySearchResponse(location, "3000");
-            Log.e("getListRestaurants", "0");
-            listRestaurantApiNearBySearchResponseOut.enqueue(new Callback<NearbyResult>() {
 
-                @Override
-                public void onResponse(@NonNull Call<NearbyResult> call, @NonNull Response<NearbyResult> response) {
-                    Log.e("getListRestaurants", "4");
-                    if (response.body() != null) {
-                        List<Restaurant> restaurants = new ArrayList<>();
+            getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+                List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
 
-                        for (int i = 0; i < response.body().getResults().size(); i++) {
 
-                            String place_id = response.body().getResults().get(i).getPlaceId();
+                if (restaurantListFirebase != null) {
+                    result.postValue(restaurantListFirebase);
+                } else {
 
-                            Location originLocation = new Location("");
-                            originLocation.setLatitude(latLng.latitude);
-                            originLocation.setLongitude(latLng.longitude);
+                    String location = latLng.latitude + "," + latLng.longitude;
+                    Call<NearbyResult> listRestaurantApiNearBySearchResponseOut = myInterface.getApiNearBySearchResponse(location, "3000");
+                    Log.e("getListRestaurants", "0");
+                    listRestaurantApiNearBySearchResponseOut.enqueue(new Callback<NearbyResult>() {
 
-                            Location targetLocation = new Location("");
-                            targetLocation.setLatitude(response.body().getResults().get(i).getGeometry().getLocation().getLat());
-                            targetLocation.setLongitude(response.body().getResults().get(i).getGeometry().getLocation().getLng());
+                        @Override
+                        public void onResponse(@NonNull Call<NearbyResult> call, @NonNull Response<NearbyResult> response) {
+                            Log.e("getListRestaurants", "4");
+                            if (response.body() != null) {
+                                List<Restaurant> restaurants = new ArrayList<>();
 
-                            float distanceInMeters = originLocation.distanceTo(targetLocation);
+                                for (int i = 0; i < response.body().getResults().size(); i++) {
 
-                            PlaceDetails resultDetail = getRestaurantDetails(place_id);
+                                    String place_id = response.body().getResults().get(i).getPlaceId();
 
-                            String photoUrl = null;
+                                    Location originLocation = new Location("");
+                                    originLocation.setLatitude(latLng.latitude);
+                                    originLocation.setLongitude(latLng.longitude);
 
-                            if (response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() != null) {
+                                    Location targetLocation = new Location("");
+                                    targetLocation.setLatitude(response.body().getResults().get(i).getGeometry().getLocation().getLat());
+                                    targetLocation.setLongitude(response.body().getResults().get(i).getGeometry().getLocation().getLng());
 
-                                photoUrl = "https://maps.googleapis.com/maps/api/place/photo" +
-                                        "?maxwidth=400" +
-                                        "&photo_reference=" + resultDetail.getResult().getPhotos().get(0).getPhotoReference() + "&key=" + MAPS_API_KEY;
-                                Log.i("photourl", photoUrl);
+                                    float distanceInMeters = originLocation.distanceTo(targetLocation);
+
+                                    PlaceDetails resultDetail = getRestaurantDetails(place_id);
+
+                                    String photoUrl = null;
+
+                                    if (response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() != null) {
+
+                                        photoUrl = "https://maps.googleapis.com/maps/api/place/photo" +
+                                                "?maxwidth=400" +
+                                                "&photo_reference=" + resultDetail.getResult().getPhotos().get(0).getPhotoReference() + "&key=" + MAPS_API_KEY;
+                                        Log.i("photourl", photoUrl);
+
+                                    }
+
+                                    double rating = 0;
+
+
+                                    if (response.body().getResults().get(i).getRating() != null) {
+                                        rating = response.body().getResults().get(i).getRating();
+                                    }
+
+
+                                    Restaurant restaurant = new Restaurant(
+                                            place_id,
+                                            response.body().getResults().get(i).getName(),
+                                            "",
+                                            rating,
+                                            "",
+                                            "" + Math.round(distanceInMeters) + "m",
+                                            resultDetail.getResult().getFormattedAddress(),
+                                            resultDetail.getResult().getFormattedPhoneNumber(),
+                                            response.body().getResults().get(i).getGeometry().getLocation().getLat(),
+                                            response.body().getResults().get(i).getGeometry().getLocation().getLng(),
+                                            resultDetail.getResult().getOpeningHours(),
+                                            photoUrl,
+                                            resultDetail.getResult().getWebsite()
+                                    );
+                                    restaurants.add(restaurant);
+                                }
+                                result.postValue(restaurants);
+
+                                for (Restaurant restaurant : restaurants) {
+                                    getRestaurantsCollection().document(restaurant.getId()).set(restaurant);
+                                }
+
 
                             }
-
-                            double rating = 0;
-
-
-                            if (response.body().getResults().get(i).getRating() != null) {
-                                rating = response.body().getResults().get(i).getRating();
-                            }
-
-
-                            Restaurant restaurant = new Restaurant(
-                                    place_id,
-                                    response.body().getResults().get(i).getName(),
-                                    "",
-                                    rating,
-                                    "",
-                                    "" + Math.round(distanceInMeters) + "m",
-                                    resultDetail.getResult().getFormattedAddress(),
-                                    resultDetail.getResult().getFormattedPhoneNumber(),
-                                    response.body().getResults().get(i).getGeometry().getLocation().getLat(),
-                                    response.body().getResults().get(i).getGeometry().getLocation().getLng(),
-                                    resultDetail.getResult().getOpeningHours(),
-                                    photoUrl,
-                                    resultDetail.getResult().getWebsite()
-                            );
-                            restaurants.add(restaurant);
-                        }
-                        result.postValue(restaurants);
-
-                        for (Restaurant restaurant : restaurants) {
-                            getRestaurantsCollection().document(restaurant.getId()).set(restaurant);
                         }
 
+                        @Override
+                        public void onFailure(@NonNull Call<NearbyResult> call, @NonNull Throwable t) {
+                            result.postValue(null);
+                            Log.e("onFailure", "5" + t.getLocalizedMessage());
+                        }
+                    });
 
-                    }
                 }
 
-                @Override
-                public void onFailure(@NonNull Call<NearbyResult> call, @NonNull Throwable t) {
-                    result.postValue(null);
-                    Log.e("onFailure", "5" + t.getLocalizedMessage());
-                }
+
             });
 
         }
-
-
-        });
 
 
         return result;

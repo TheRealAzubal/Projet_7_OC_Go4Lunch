@@ -20,7 +20,7 @@ public class RestaurantViewModel extends AndroidViewModel {
     MutableLiveData<LatLng> positionLiveData = new MutableLiveData();
 
     LiveData<List<Restaurant>> listRestaurantLiveData = Transformations.switchMap(positionLiveData, position ->
-            restaurantRepository.getListRestaurantApiFirst(position));
+            restaurantRepository.getListRestaurantApiFirst(position,false));
 
     public void setLatLng(LatLng latLng) {
         this.positionLiveData.setValue(latLng);
@@ -31,8 +31,8 @@ public class RestaurantViewModel extends AndroidViewModel {
         restaurantRepository = new RestaurantRepository(application);
     }
 
-    public  MutableLiveData<List<Restaurant>> getListRestaurant(LatLng latLng){
-        return restaurantRepository.getListRestaurantApiFirst(latLng);
+    public  MutableLiveData<List<Restaurant>> getListRestaurant(LatLng latLng,Boolean listIsRestaurant){
+        return restaurantRepository.getListRestaurantApiFirst(latLng,listIsRestaurant);
     }
 
     public MutableLiveData<LatLng> getPosition() {

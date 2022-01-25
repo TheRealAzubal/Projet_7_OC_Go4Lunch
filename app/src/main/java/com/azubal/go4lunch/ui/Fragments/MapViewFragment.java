@@ -104,7 +104,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
         restaurantViewModel.getPosition().observe(this, latLng -> {
 
-            restaurantViewModel.getListRestaurant(latLng).observe(this, list -> {
+            restaurantViewModel.getListRestaurant(latLng,false).observe(this, list -> {
                 setMarkers(list);
                 prepareDetailActivity(list);
             });
