@@ -52,10 +52,18 @@
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable-hdpi/ic_logogo4lunch.xml" value="0.29444444444444445" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable-hdpi/ic_logogo4lunch_white.xml" value="0.29444444444444445" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable-hdpi/outline_star_border_24.xml" value="0.29444444444444445" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/baseline_phone_24.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/baseline_public_24.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/bg_gradient.xml" value="0.28055555555555556" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_chosen_restaurant_selector.xml" value="0.29444444444444445" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_like_selector.xml" value="0.29444444444444445" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_radius_orange.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/button_radius_red.xml" value="0.28055555555555556" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_add_circle_outline_24.xml" value="0.29444444444444445" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_block_24.xml" value="0.29444444444444445" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_format_list_bulleted_24.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_group_24.xml" value="0.28055555555555556" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_phone_24.xml" value="0.28055555555555556" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_restaurant_24.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_star_24.xml" value="0.29444444444444445" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/drawable/outline_star_24_detail.xml" value="0.29444444444444445" />
@@ -69,6 +77,7 @@
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/layout/fragment_workmates.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/layout/recycler_view_item_workmates.xml" value="0.1762917933130699" />
         <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/layout/recycler_view_list_view_item.xml" value="0.1762917933130699" />
+        <entry key="..\:/Users/valen/StudioProjects/Projet-7-OC-Go4Lunch/app/src/main/res/menu/bottom_menu_nav.xml" value="0.1962962962962963" />
       </map>
     </option>
   </component>

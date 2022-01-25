@@ -1,6 +1,7 @@
 package com.azubal.go4lunch.ui.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,14 @@ import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListViewFragment extends Fragment {
 
     View view;
     RestaurantViewModel restaurantViewModel;
     UserViewModel authAppViewModel;
+    Boolean listIsFavorite;
 
     public ListViewFragment() {}
 
@@ -37,6 +40,9 @@ public class ListViewFragment extends Fragment {
 
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
         authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+
+        listIsFavorite = Objects.requireNonNull(getArguments()).getBoolean("isListFavorite");
+        Log.e("listIsFavorite", String.valueOf(listIsFavorite));
 
         restaurantViewModel.getPosition().observe(this, latLng -> {
             restaurantViewModel.getListRestaurant(latLng).observe(this, this::setUpRecyclerView);

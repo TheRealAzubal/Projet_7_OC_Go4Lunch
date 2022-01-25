@@ -10,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -51,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         configureNavDrawerAndNavBottom();
         setUpViewHeader();
         updateUserData();
+
+
+
     }
 
     private void setUpViewModel(){
@@ -66,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.mapView, R.id.listView, R.id.workmates, R.id.yourLunch , R.id.settings , R.id.logout).setDrawerLayout(binding.drawerLayout).build();
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
     }
 
     private void setUpViewHeader(){
@@ -104,6 +111,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isListFavorite", Boolean.TRUE);
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if(destination.getId() == R.id.listFavorite){
+                navController.navigate(R.id.listView, bundle);
+            }
+        });
+
+
+
+
+
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
