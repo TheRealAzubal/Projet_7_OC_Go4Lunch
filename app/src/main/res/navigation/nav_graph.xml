@@ -16,7 +16,12 @@
         android:id="@+id/listView"
         android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
         android:label="@string/listView"
-        tools:layout="@layout/fragment_list_view" >
+        tools:layout="@layout/fragment_list_view">
+
+        <argument
+            android:name="isListFavorite"
+            app:argType="boolean"
+            android:defaultValue="false" />
 
     </fragment>
 
@@ -25,6 +30,11 @@
         android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
         android:label="@string/listView"
         tools:layout="@layout/fragment_list_view" >
+
+        <argument
+            android:name="isListFavorite"
+            app:argType="boolean"
+            android:defaultValue="true" />
 
     </fragment>
 

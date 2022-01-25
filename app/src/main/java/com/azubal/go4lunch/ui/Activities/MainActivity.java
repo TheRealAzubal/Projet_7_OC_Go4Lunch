@@ -112,13 +112,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isListFavorite", Boolean.TRUE);
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if(destination.getId() == R.id.listFavorite){
-                navController.navigate(R.id.listView, bundle);
-            }
-        });
+
+
 
 
 
