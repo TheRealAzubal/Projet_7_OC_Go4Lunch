@@ -21,6 +21,14 @@
     </fragment>
 
     <fragment
+        android:id="@+id/listFavorite"
+        android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
+        android:label="@string/listView"
+        tools:layout="@layout/fragment_list_view" >
+
+    </fragment>
+
+    <fragment
         android:id="@+id/workmates"
         android:name="com.azubal.go4lunch.ui.Fragments.WorkmatesFragment"
         android:label="@string/workmates"
