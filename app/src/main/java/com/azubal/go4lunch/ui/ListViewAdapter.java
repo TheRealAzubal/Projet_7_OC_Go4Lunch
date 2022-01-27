@@ -26,6 +26,7 @@ import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
 
 import java.util.Calendar;
 import java.util.List;
@@ -148,7 +149,12 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                     Log.i("actualDateTime", actualDateTime.toString());
                     if (actualDateTime.isAfter(dateTimeOpen) && actualDateTime.isBefore(dateTimeClose)) {
                         //Afficher que le restaurant est ouvert
-                        holder.txViewOpening.setText("Open until " + dateTimeClose.getHourOfDay() + "h" + dateTimeClose.getMinuteOfHour());
+
+
+
+
+
+                        holder.txViewOpening.setText("Open until " + new LocalTime(dateTimeClose.getHourOfDay(),dateTimeClose.getMinuteOfHour()).toString("hh:mm"));
                         if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
                             holder.txViewOpening.setText("Closing Soon");
                         }
