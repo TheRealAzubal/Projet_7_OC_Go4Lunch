@@ -111,8 +111,8 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         });
 
         final Calendar c = Calendar.getInstance();
-        TimeZone tz = TimeZone.getTimeZone("GMT+1");
-        c.setTimeZone(tz);
+
+
         minute = c.get(Calendar.MINUTE);
         hour = c.get(Calendar.HOUR_OF_DAY);
         year = c.get(Calendar.YEAR);
