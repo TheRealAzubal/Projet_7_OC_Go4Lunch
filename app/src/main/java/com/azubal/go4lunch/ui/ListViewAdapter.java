@@ -154,7 +154,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
 
 
-                        holder.txViewOpening.setText("Open until " + new LocalTime(dateTimeClose.getHourOfDay(),dateTimeClose.getMinuteOfHour()).toString("hh:mm"));
+                        holder.txViewOpening.setText("Open until " + new LocalTime(dateTimeClose.getHourOfDay(),dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
                         if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
                             holder.txViewOpening.setText("Closing Soon");
                         }

@@ -1,8 +1,16 @@
 package com.azubal.go4lunch.ui.Activities;
 
+
+
+import static androidx.work.ExistingWorkPolicy.REPLACE;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +24,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,15 +35,27 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
+
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
+import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
+
+import java.util.Calendar;
 import java.util.Objects;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewUserName;
     ImageView imageViewUserProfile;
     NavController navController;
+
+    final String NOTIFICATION_ID = "appName_notification_id";
+    final String NOTIFICATION_CHANNEL = "appName_channel_01";
+    final String NOTIFICATION_WORK = "appName_notification_work";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +84,25 @@ public class MainActivity extends AppCompatActivity {
         setUpViewHeader();
         updateUserData();
 
+
+        final Calendar c = Calendar.getInstance();
+        TimeZone tz = TimeZone.getTimeZone("GMT+1");
+        c.setTimeZone(tz);
+        int currentTime = new LocalTime(c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE)).getMillisOfSecond();
+
+        int customTimeNotification = new LocalTime(12, 0).getMillisOfSecond();
+        int customTimeRemoveChosen = new LocalTime(23, 0).getMillisOfSecond();
+
+        if(customTimeNotification > currentTime){
+            int delay = customTimeNotification - currentTime;
+            scheduleNotification(delay);
+        }
+
+    }
+
+    public void scheduleNotification(int delay ){
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay, TimeUnit.MILLISECONDS).build();
+        WorkManager.getInstance(this).enqueue(notificationWork);
     }
 
     @Override
@@ -159,5 +204,11 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("restaurant_id", restaurant.getId());
         context.startActivity(intent);
     }
+
+
+
+
+
+
 
 }

@@ -41,7 +41,7 @@ public class ListViewFragment extends Fragment {
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
         authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        listIsFavorite = Objects.requireNonNull(getArguments()).getBoolean("isListFavorite");
+        listIsFavorite = requireArguments().getBoolean("isListFavorite");
         Log.e("listIsFavorite", String.valueOf(listIsFavorite));
 
         restaurantViewModel.getPosition().observe(this, latLng -> {
