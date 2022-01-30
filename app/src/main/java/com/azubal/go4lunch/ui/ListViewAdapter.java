@@ -133,42 +133,45 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
 
             for (Period period : restaurant.getOpeningHours().getPeriods()) {
-                if (period.getOpen().getDay() == dayOfWeek) {
-                    //Prevoir si le jour de fermeture est different du jour d'ouverture
-                    Log.i("period", String.valueOf(restaurant.getName()));
-                    //jour actuel == jour ouvré
-                    //verifier si l'heure actuel est dans l'intervalle de l'heure d'ouverture du restaurant
-
-                    int openTime = Integer.parseInt(period.getOpen().getTime());
-                    int closeTime = Integer.parseInt(period.getClose().getTime());
-                    DateTime dateTimeOpen = new DateTime(year, monthOfYear, dayMonth, openTime / 100, openTime % 100);
-                    DateTime dateTimeClose = new DateTime(year, monthOfYear, dayMonth + (period.getClose().getDay() - dayOfWeek), closeTime / 100, closeTime % 100);
-
-                    Log.i("dateTimeOpen", dateTimeOpen.toString());
-                    Log.i("dateTimeClose", dateTimeClose.toString());
-                    Log.i("actualDateTime", actualDateTime.toString());
-                    if (actualDateTime.isAfter(dateTimeOpen) && actualDateTime.isBefore(dateTimeClose)) {
-                        //Afficher que le restaurant est ouvert
+                if(period.getOpen() != null && period.getClose() != null) {
 
 
+                    if (period.getOpen().getDay() == dayOfWeek) {
+                        //Prevoir si le jour de fermeture est different du jour d'ouverture
+                        Log.i("period", String.valueOf(restaurant.getName()));
+                        //jour actuel == jour ouvré
+                        //verifier si l'heure actuel est dans l'intervalle de l'heure d'ouverture du restaurant
+
+                        int openTime = Integer.parseInt(period.getOpen().getTime());
+                        int closeTime = Integer.parseInt(period.getClose().getTime());
+                        DateTime dateTimeOpen = new DateTime(year, monthOfYear, dayMonth, openTime / 100, openTime % 100);
+                        DateTime dateTimeClose = new DateTime(year, monthOfYear, dayMonth + (period.getClose().getDay() - dayOfWeek), closeTime / 100, closeTime % 100);
+
+                        Log.i("dateTimeOpen", dateTimeOpen.toString());
+                        Log.i("dateTimeClose", dateTimeClose.toString());
+                        Log.i("actualDateTime", actualDateTime.toString());
+                        if (actualDateTime.isAfter(dateTimeOpen) && actualDateTime.isBefore(dateTimeClose)) {
+                            //Afficher que le restaurant est ouvert
 
 
+                            holder.txViewOpening.setText("Open until " + new LocalTime(dateTimeClose.getHourOfDay(), dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
+                            if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
+                                holder.txViewOpening.setText("Closing Soon");
+                            }
+                            isClosed = false;
+                            break;
 
-                        holder.txViewOpening.setText("Open until " + new LocalTime(dateTimeClose.getHourOfDay(),dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
-                        if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
-                            holder.txViewOpening.setText("Closing Soon");
                         }
-                        isClosed = false;
-                        break;
 
+
+                        if (actualDateTime.isBefore(dateTimeOpen) && actualDateTime.isAfter(dateTimeOpen.plusMinutes(-30))) {
+                            holder.txViewOpening.setText("Opening Soon");
+                            isClosed = false;
+                        }
                     }
 
-
-                    if (actualDateTime.isBefore(dateTimeOpen) && actualDateTime.isAfter(dateTimeOpen.plusMinutes(-30))) {
-                        holder.txViewOpening.setText("Opening Soon");
-                        isClosed = false;
-                    }
                 }
+
             }
         }
 
