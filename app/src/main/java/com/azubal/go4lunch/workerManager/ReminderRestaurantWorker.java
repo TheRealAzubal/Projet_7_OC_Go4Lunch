@@ -20,26 +20,16 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.azubal.go4lunch.R;
-import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
-import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
-import com.azubal.go4lunch.viewmodels.UserViewModel;
+
 
 public class ReminderRestaurantWorker extends Worker {
 
 
     String NOTIFICATION_CHANNEL = "appName_channel_01";
 
-    RestaurantViewModel restaurantViewModel;
-    UserViewModel userViewModel;
-    Restaurant restaurantChosen;
-
-
-    public ReminderRestaurantWorker(@NonNull Context context, @NonNull WorkerParameters params, Restaurant restaurant) {
+    public ReminderRestaurantWorker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
-        restaurantChosen = restaurant;
-        userViewModel = new ViewModelProvider((ViewModelStoreOwner) getApplicationContext()).get(UserViewModel.class);
-        restaurantViewModel = new ViewModelProvider((ViewModelStoreOwner) getApplicationContext()).get(RestaurantViewModel.class);
     }
 
     @NonNull
@@ -51,18 +41,15 @@ public class ReminderRestaurantWorker extends Worker {
     }
 
     public void sendNotification(){
-        userViewModel.getUserData().observe((LifecycleOwner) getApplicationContext(), user -> {
-            if(user.getRestaurantChosenAt12PM() != null){
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("restaurantId",user.getRestaurantChosenAt12PM().getId());
+                intent.putExtra("restaurantId","");
                 PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL)
                         .setSmallIcon(R.drawable.logo_go4lunch)
                         .setContentTitle("Rappel du choix pour déjeuner ")
-                        .setContentText("Vouz avez choisi : "+
-                                " "+user.getRestaurantChosenAt12PM().getName()+" ")
+                        .setContentText("Vouz avez choisi : ")
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         // Set the intent that will fire when the user taps the notification
                         .setContentIntent(pendingIntent)
@@ -70,7 +57,7 @@ public class ReminderRestaurantWorker extends Worker {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     CharSequence name = getApplicationContext().getString(R.string.app_name);
-                    String description = getApplicationContext().getString(R.string.app_name)+" "+user.getRestaurantChosenAt12PM().getName()+" ";
+                    String description = getApplicationContext().getString(R.string.app_name);
                     int importance = NotificationManager.IMPORTANCE_DEFAULT;
                     NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, name, importance);
                     channel.setDescription(description);
@@ -84,15 +71,5 @@ public class ReminderRestaurantWorker extends Worker {
 
                 notificationManager.notify(0, builder.build());
             }
-
-        });
-
-    }
-
-    public void deleteRestaurantChosenAt12PM(){
-        restaurantViewModel.setRestaurantChosen(null);
-    }
-
-
 
 }
