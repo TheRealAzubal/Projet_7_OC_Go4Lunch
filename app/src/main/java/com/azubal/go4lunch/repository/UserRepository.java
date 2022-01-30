@@ -46,11 +46,44 @@ public class UserRepository {
             getUsersCollection().document(uid).delete();
         }
         authUI.delete(application.getApplicationContext());
+
+        getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+
+
+            for(Restaurant restaurant : queryDocumentSnapshots.toObjects(Restaurant.class)){
+
+                getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+
+                    for(User user : queryDocumentSnapshots1.toObjects(User.class)){
+
+                        if(user.getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())){
+
+                            getListUsersPickCollection(restaurant.getId()).document(Objects.requireNonNull(uid)).delete();
+                        }
+
+                    }
+
+
+                });
+
+
+
+
+            }
+
+        });
+
+
+
     }
 
     // Get the Collection Reference
     private CollectionReference getUsersCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    }
+
+    private CollectionReference getRestaurantsCollection(){
+        return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT);
     }
 
     private CollectionReference getListUsersPickCollection(String restaurantId){
