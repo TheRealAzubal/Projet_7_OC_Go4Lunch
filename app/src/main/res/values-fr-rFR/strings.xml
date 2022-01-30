@@ -17,4 +17,6 @@
     <string name="toolbarTitleFragmentWorkmates">Collaborateurs Disponibles</string>
     <string name="textLogout">Voulez vous vraiment vous déconnecter ? Appuyer pour continuer</string>
     <string name="textDeleteAccount">Si vous souhaitez supprimer definitivement votre compte appuyer sur le bouton suivant , cette action est irréversible</string>
+    <string name="reminderRestaurantTitleNotification">Rappel du choix pour déjeuner</string>
+    <string name="reminderRestaurantDescriptionNotification">\"Vouz avez choisi : \"</string>
 </resources>

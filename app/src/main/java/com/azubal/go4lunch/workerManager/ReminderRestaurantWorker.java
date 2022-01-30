@@ -53,8 +53,8 @@ public class ReminderRestaurantWorker extends Worker {
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL)
                         .setSmallIcon(R.drawable.logo_go4lunch)
-                        .setContentTitle("Rappel du choix pour déjeuner ")
-                        .setContentText("Vouz avez choisi : "+restaurantName)
+                        .setContentTitle(getApplicationContext().getString(R.string.reminderRestaurantTitleNotification))
+                        .setContentText(getApplicationContext().getString(R.string.reminderRestaurantDescriptionNotification)+restaurantName)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         // Set the intent that will fire when the user taps the notification
                         .setContentIntent(pendingIntent)
