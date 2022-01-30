@@ -27,6 +27,8 @@ public class ReminderRestaurantWorker extends Worker {
 
 
     String NOTIFICATION_CHANNEL = "appName_channel_01";
+    String restaurantId;
+    String restaurantName;
 
     public ReminderRestaurantWorker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
@@ -35,6 +37,9 @@ public class ReminderRestaurantWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        restaurantId = getInputData().getString("restaurantId");
+        restaurantName= getInputData().getString("restaurantName");
+
         sendNotification();
         // Indicate whether the work finished successfully with the Result
         return Result.success();
@@ -43,13 +48,13 @@ public class ReminderRestaurantWorker extends Worker {
     public void sendNotification(){
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("restaurantId","");
+                intent.putExtra("restaurantId",restaurantId);
                 PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL)
                         .setSmallIcon(R.drawable.logo_go4lunch)
                         .setContentTitle("Rappel du choix pour déjeuner ")
-                        .setContentText("Vouz avez choisi : ")
+                        .setContentText("Vouz avez choisi : "+restaurantName)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                         // Set the intent that will fire when the user taps the notification
                         .setContentIntent(pendingIntent)

@@ -13,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,10 +21,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.work.Configuration;
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
 import com.bumptech.glide.Glide;
@@ -54,17 +57,19 @@ public class MainActivity extends AppCompatActivity {
         updateUserData();
 
 
+        authAppViewModel.getUserData().observe(this, user -> {
+            if(user.getRestaurantChosenAt12PM() != null){
+                Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
+                scheduleNotification(10000,restaurantChosen);
+            }
 
-
-
-            scheduleNotification(10000);
-
+        });
 
     }
 
-    public void scheduleNotification(int delay ){
+    public void scheduleNotification(int delay , Data data){
         WorkManager workManager = WorkManager.getInstance(this);
-        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).build();
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).setInputData(data).build();
         workManager.enqueue(notificationWork);
     }
 
