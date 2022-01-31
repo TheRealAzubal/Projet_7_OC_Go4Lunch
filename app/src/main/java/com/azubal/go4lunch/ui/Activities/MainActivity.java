@@ -30,6 +30,12 @@ import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
 import com.bumptech.glide.Glide;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalTime;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewUserName;
     ImageView imageViewUserProfile;
     NavController navController;
+    long delay;
+    int delay1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,20 +64,49 @@ public class MainActivity extends AppCompatActivity {
         setUpViewHeader();
         updateUserData();
 
+        Calendar calendar = Calendar.getInstance();
+
+
+        Calendar calendar1 = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),12,0);
+        long currentTime = calendar.getTime().getTime();
+        long customTime = calendar1.getTime().getTime();
+
+        Log.e("calendar", String.valueOf(currentTime));
+        Log.e("calendar1", String.valueOf(customTime));
+
+        if (currentTime < customTime) {
+
+            delay = customTime - currentTime;
+            Log.e("delay", String.valueOf(delay));
+
+            delay1 = (int) delay;
+            Log.e("delay1", String.valueOf(delay1));
+
+        }
 
         authAppViewModel.getUserData().observe(this, user -> {
             if(user.getRestaurantChosenAt12PM() != null){
-                Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
-                scheduleNotification(10000,restaurantChosen);
+
+
+                    Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
+                    scheduleNotification(delay1,restaurantChosen);
+
+
+
+
+
+
+
             }
 
         });
 
     }
 
-    public void scheduleNotification(int delay , Data data){
+    public void scheduleNotification(long delay , Data data){
+
         WorkManager workManager = WorkManager.getInstance(this);
-        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).setInputData(data).build();
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay1,TimeUnit.MILLISECONDS).setInputData(data).build();
         workManager.enqueue(notificationWork);
     }
 
