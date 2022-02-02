@@ -37,7 +37,7 @@ import retrofit2.Response;
 
 public class RestaurantRepository {
 
-    Application application;
+
     private final ApiInterface myInterface;
     FirebaseAuth firebaseAuth;
 
@@ -46,8 +46,7 @@ public class RestaurantRepository {
     private static final String COLLECTION_RESTAURANT_LIKE = "restaurantLike";
     private static final String COLLECTION_LIST_USERS_PICK = "listUsersPick";
 
-    public RestaurantRepository(Application application) {
-        this.application = application;
+    public RestaurantRepository() {
         this.firebaseAuth = FirebaseAuth.getInstance();
         myInterface = ApiService.getInterface();
     }

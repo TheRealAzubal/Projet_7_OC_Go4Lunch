@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 import java.util.concurrent.Executors;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+//import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -27,9 +27,9 @@ public class ApiService {
     }
 
     public static Retrofit createRetrofit(){
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        //HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        //logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 // add your other interceptors …

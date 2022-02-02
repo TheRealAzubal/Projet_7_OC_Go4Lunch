@@ -44,9 +44,16 @@ public class ListViewFragment extends Fragment {
         listIsFavorite = requireArguments().getBoolean("isListFavorite");
         Log.e("listIsFavorite", String.valueOf(listIsFavorite));
 
-        restaurantViewModel.getPosition().observe(this, latLng -> {
-            restaurantViewModel.getListRestaurant(latLng,listIsFavorite).observe(this, this::setUpRecyclerView);
-        });
+        //restaurantViewModel.getPosition().observe(this, latLng -> {
+            //restaurantViewModel.getListRestaurant(latLng,listIsFavorite).observe(this, this::setUpRecyclerView);
+        //});
+
+        if(listIsFavorite){
+            restaurantViewModel.getFavoritesListRestaurant().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
+        }else {
+            restaurantViewModel.getListRestaurant().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
+        }
+
 
         return view;
     }
