@@ -8,13 +8,18 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -84,6 +89,28 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
+        inflater.inflate(R.menu.top_app_bar, menu);
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView sv = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("search query submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("tap");
+                return false;
+            }
+        });
+    }
+
     public void getMainActivity() {
         mainActivity = (MainActivity) getActivity();
     }
@@ -114,6 +141,8 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     public void prepareDetailActivity(List<Restaurant> restaurantList){
         map.setOnInfoWindowClickListener(marker -> launchDetailRestaurant(restaurantList.get((int) marker.getZIndex()),requireContext()));
     }
+
+
 
 
 

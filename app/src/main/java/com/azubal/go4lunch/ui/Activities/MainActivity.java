@@ -82,31 +82,23 @@ public class MainActivity extends AppCompatActivity {
             delay1 = (int) delay;
             Log.e("delay1", String.valueOf(delay1));
 
-        }
-
-        authAppViewModel.getUserData().observe(this, user -> {
-            if(user.getRestaurantChosenAt12PM() != null){
-
-
+            authAppViewModel.getUserData().observe(this, user -> {
+                if(user.getRestaurantChosenAt12PM() != null){
                     Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
                     scheduleNotification(delay1,restaurantChosen);
+                }
+            });
+
+        }
 
 
-
-
-
-
-
-            }
-
-        });
 
     }
 
     public void scheduleNotification(long delay , Data data){
 
         WorkManager workManager = WorkManager.getInstance(this);
-        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay1,TimeUnit.MILLISECONDS).setInputData(data).build();
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).setInputData(data).build();
         workManager.enqueue(notificationWork);
     }
 
