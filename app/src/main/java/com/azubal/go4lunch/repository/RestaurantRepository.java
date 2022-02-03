@@ -84,7 +84,7 @@ public class RestaurantRepository {
                 List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
 
 
-                if (restaurantListFirebase != null) {
+                if (restaurantListFirebase.size() > 0) {
                     result.postValue(restaurantListFirebase);
                 } else {
 
