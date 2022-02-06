@@ -52,16 +52,10 @@ public class WorkmatesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-
-        authAppViewModel.getAllUsers().observe(this, this::setUpRecyclerView);
-
-
-
-
+        authAppViewModel.getAllUsers().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
         return view;
     }
 

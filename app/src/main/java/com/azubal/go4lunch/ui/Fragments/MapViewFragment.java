@@ -13,22 +13,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
 import com.azubal.go4lunch.models.Restaurant;
-import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
@@ -42,7 +35,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -60,10 +52,13 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
     public MapViewFragment() {}
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+
 
     @Override
     public void onDestroyView() {
@@ -87,28 +82,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         requestPermissionLocation();
 
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.top_app_bar, menu);
-        MenuItem item = menu.findItem(R.id.search);
-        SearchView sv = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
-        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-        MenuItemCompat.setActionView(item, sv);
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                System.out.println("search query submit");
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                System.out.println("tap");
-                return false;
-            }
-        });
     }
 
     public void getMainActivity() {

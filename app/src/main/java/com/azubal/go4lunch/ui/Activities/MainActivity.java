@@ -1,39 +1,28 @@
 package com.azubal.go4lunch.ui.Activities;
 
-import android.app.SearchManager;
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.work.Configuration;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
-import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
+import com.azubal.go4lunch.workerManager.RestaurantChosenSetNullWorker;
 import com.bumptech.glide.Glide;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
@@ -49,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
     TextView textViewUserName;
     ImageView imageViewUserProfile;
     NavController navController;
-    long delay;
+    int delay;
     int delay1;
 
+
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,34 +59,53 @@ public class MainActivity extends AppCompatActivity {
 
 
         Calendar calendar1 = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),12,0);
+        Calendar calendar2 = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),17,0);
         long currentTime = calendar.getTime().getTime();
-        long customTime = calendar1.getTime().getTime();
+        long customTimeReminderNotification = calendar1.getTime().getTime();
+        long customTimeRestoChosenSetNull = calendar2.getTime().getTime();
+        Log.e("currentTime", String.valueOf(currentTime));
+        Log.e("customTimeReminder", String.valueOf(customTimeReminderNotification));
+        Log.e("customTimeResto", String.valueOf(customTimeRestoChosenSetNull));
 
-        Log.e("calendar", String.valueOf(currentTime));
-        Log.e("calendar1", String.valueOf(customTime));
+        int currentTimeInt = (int) currentTime;
+        int customTimeReminderNotificationInt = (int)  customTimeReminderNotification;
+        int customTimeRestoChosenSetNullInt = (int) customTimeRestoChosenSetNull;
+        Log.e("currentTimeInt", String.valueOf(currentTimeInt));
+        Log.e("customTimeReminderNotificationInt", String.valueOf(customTimeReminderNotificationInt));
+        Log.e("customTimeRestoChosenSetNullInt", String.valueOf(customTimeRestoChosenSetNullInt));
 
-        if (currentTime < customTime) {
 
-            delay = customTime - currentTime;
+
+
+        if (currentTimeInt < customTimeReminderNotificationInt) {
+
+            delay = customTimeReminderNotificationInt - currentTimeInt;
             Log.e("delay", String.valueOf(delay));
-
-            delay1 = (int) delay;
-            Log.e("delay1", String.valueOf(delay1));
 
             authAppViewModel.getUserData().observe(this, user -> {
                 if(user.getRestaurantChosenAt12PM() != null){
                     Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
-                    scheduleNotification(delay1,restaurantChosen);
+                    scheduleNotification(delay,restaurantChosen);
                 }
             });
 
         }
 
-
+        if(currentTimeInt < customTimeRestoChosenSetNullInt && currentTimeInt > customTimeReminderNotificationInt){
+            delay1 = customTimeRestoChosenSetNullInt - currentTimeInt;
+            Log.e("delay1", String.valueOf(delay1));
+            setRestaurantChosenNull(delay1);
+        }
 
     }
 
-    public void scheduleNotification(long delay , Data data){
+    public void setRestaurantChosenNull(int delay ){
+        WorkManager workManager = WorkManager.getInstance(this);
+        OneTimeWorkRequest restaurantChosenSetNullWork = new OneTimeWorkRequest.Builder(RestaurantChosenSetNullWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).build();
+        workManager.enqueue(restaurantChosenSetNullWork);
+    }
+
+    public void scheduleNotification(int delay , Data data){
 
         WorkManager workManager = WorkManager.getInstance(this);
         OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).setInputData(data).build();
