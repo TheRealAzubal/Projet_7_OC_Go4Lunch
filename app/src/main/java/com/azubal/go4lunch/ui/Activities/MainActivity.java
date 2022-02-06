@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        if(currentTimeInt < customTimeRestoChosenSetNullInt && currentTimeInt > customTimeReminderNotificationInt){
+        if(currentTimeInt < customTimeRestoChosenSetNullInt ){
             delay1 = customTimeRestoChosenSetNullInt - currentTimeInt;
             Log.e("delay1", String.valueOf(delay1));
             setRestaurantChosenNull(delay1);
