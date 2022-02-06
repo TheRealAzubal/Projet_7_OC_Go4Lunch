@@ -68,8 +68,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 
     //Navigation
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
-    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+    implementation "androidx.navigation:navigation-fragment:2.4.0"
+    implementation "androidx.navigation:navigation-ui:2.4.0"
 
     //MultiDex
     implementation "androidx.multidex:multidex:2.0.1"
