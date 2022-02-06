@@ -64,28 +64,6 @@ public class ListViewFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu (@NonNull Menu menu, MenuInflater inflater){
-        inflater.inflate(R.menu.top_app_bar, menu);
-        MenuItem item = menu.findItem(R.id.search);
-        SearchView sv = new SearchView(Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).getThemedContext());
-        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
-        MenuItemCompat.setActionView(item, sv);
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                System.out.println("search query submit");
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                System.out.println("tap");
-                return false;
-            }
-        });
-    }
-
     public void setUpRecyclerView(List<Restaurant> restaurantList){
         RecyclerView rvRestaurants = view.findViewById(R.id.recycler_view_list_view);
         rvRestaurants.setAdapter(new ListViewAdapter(restaurantList,this.getContext()));
