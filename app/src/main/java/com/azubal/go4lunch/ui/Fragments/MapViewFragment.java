@@ -2,6 +2,7 @@ package com.azubal.go4lunch.ui.Fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,10 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
@@ -24,6 +28,7 @@ import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
+import com.azubal.go4lunch.utils.ToastUtil;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -56,9 +61,37 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        requireActivity().getMenuInflater().inflate(R.menu.top_app_bar, menu);
 
+        SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Reset SearchView
+                Log.d("textSearchMapView",query);
+                ToastUtil.displayToastLong(query,requireActivity());
+                // Set activity title to search query
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+    }
 
     @Override
     public void onDestroyView() {

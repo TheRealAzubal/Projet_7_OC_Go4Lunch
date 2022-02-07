@@ -1,5 +1,7 @@
 package com.azubal.go4lunch.ui.Fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,8 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -20,6 +23,7 @@ import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.ui.Activities.MainActivity;
 import com.azubal.go4lunch.ui.ListViewAdapter;
+import com.azubal.go4lunch.utils.ToastUtil;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,6 +42,41 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        requireActivity().getMenuInflater().inflate(R.menu.top_app_bar, menu);
+
+        SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Reset SearchView
+
+                // Set activity title to search query
+                Log.d("textSearchListView",query);
+
+                ToastUtil.displayToastLong(query,requireActivity());
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Log.e("textSearchListView",s);
+                return false;
+            }
+
+        });
+
     }
 
     @Override
@@ -63,6 +102,7 @@ public class ListViewFragment extends Fragment {
 
         return view;
     }
+
 
     public void setUpRecyclerView(List<Restaurant> restaurantList){
         RecyclerView rvRestaurants = view.findViewById(R.id.recycler_view_list_view);
