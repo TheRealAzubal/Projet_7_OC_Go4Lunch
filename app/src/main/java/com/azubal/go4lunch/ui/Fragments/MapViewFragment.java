@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
@@ -76,12 +78,19 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Reset SearchView
-                Log.d("textSearchMapView",query);
-                ToastUtil.displayToastLong(query,requireActivity());
-                // Set activity title to search query
+
+                Log.e("mapviewonQueryTextSubmit",query);
+
+                restaurantViewModel.getRestaurantsBySearchQuery(query).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+                    Log.e("queryMapView",query);
+                    for(Restaurant restaurant : restaurants){
+                        Log.e("MapViewSearchResult",restaurant.getName()+" : "+restaurant.getFormatted_address());
+                    }
+
+                });
                 return true;
             }
 
@@ -91,7 +100,17 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+
+        // Catch event on [x] button inside search view
+
+
+
+
     }
+
+
+
+
 
     @Override
     public void onDestroyView() {
@@ -113,6 +132,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
         authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         requestPermissionLocation();
+
 
         return view;
     }

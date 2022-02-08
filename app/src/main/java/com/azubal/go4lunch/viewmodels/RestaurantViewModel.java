@@ -1,6 +1,7 @@
 package com.azubal.go4lunch.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -70,6 +71,10 @@ public class RestaurantViewModel extends ViewModel {
 
     public void deleteUserPickForRestaurant(Restaurant restaurant){restaurantRepository.deleteUserPickForRestaurant(restaurant);}
 
+    public  MutableLiveData<List<Restaurant>> getRestaurantsBySearchQuery(String query){
+        Log.e("queryVM",query);
+        return restaurantRepository.getRestaurantsBySearchQuery(query);
+    }
 
 
 }

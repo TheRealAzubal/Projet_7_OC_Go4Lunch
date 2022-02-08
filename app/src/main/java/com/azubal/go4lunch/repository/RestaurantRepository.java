@@ -280,6 +280,37 @@ public class RestaurantRepository {
 
     }
 
+    public MutableLiveData<List<Restaurant>> getRestaurantsBySearchQuery(String query){
+        MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
+
+        if(query.length() >= 3){
+
+            getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+                List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
+                String querySplit = query.substring(0,3);
+                List<Restaurant> restaurantListSearch = new ArrayList<>();
+
+                for (int i=0; i < restaurantListFirebase.size(); i++){
+                    String nameRestaurantSplit = restaurantListFirebase.get(i).getName().substring(0,3);
+
+                    if(querySplit.equals(nameRestaurantSplit)){
+                        restaurantListSearch.add(restaurantListFirebase.get(i));
+
+                    }
+
+
+
+                }
+
+                result.postValue(restaurantListSearch);
+
+            });
+            return result;
+        }else{
+            return null;
+        }
+
+    }
 
 
 }

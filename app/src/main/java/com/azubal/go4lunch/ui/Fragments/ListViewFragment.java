@@ -1,5 +1,6 @@
 package com.azubal.go4lunch.ui.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -57,24 +58,34 @@ public class ListViewFragment extends Fragment {
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Reset SearchView
-
-                // Set activity title to search query
-                Log.d("textSearchListView",query);
-
-                ToastUtil.displayToastLong(query,requireActivity());
+                Log.e("listviewonQueryTextSubmit",query);
+                getRestaurantByQuery(query);
 
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.e("textSearchListView",s);
                 return false;
             }
 
+        });
+
+
+
+
+    }
+
+    public void getRestaurantByQuery(String query){
+        restaurantViewModel.getRestaurantsBySearchQuery(query).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+            Log.e("queryListView",query);
+            for(Restaurant restaurant : restaurants){
+                Log.e("ListViewSearchResult",restaurant.getName()+" : "+restaurant.getFormatted_address());
+            }
+            setUpRecyclerView(restaurants);
         });
 
     }
@@ -89,18 +100,19 @@ public class ListViewFragment extends Fragment {
         listIsFavorite = requireArguments().getBoolean("isListFavorite");
         Log.e("listIsFavorite", String.valueOf(listIsFavorite));
 
-        //restaurantViewModel.getPosition().observe(this, latLng -> {
-            //restaurantViewModel.getListRestaurant(latLng,listIsFavorite).observe(this, this::setUpRecyclerView);
-        //});
 
+        getRestaurantListOrRestaurantListFavorites(listIsFavorite);
+
+
+        return view;
+    }
+
+    public void getRestaurantListOrRestaurantListFavorites(Boolean listIsFavorite){
         if(listIsFavorite){
             restaurantViewModel.getFavoritesListRestaurant().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
         }else {
             restaurantViewModel.getListRestaurant().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
         }
-
-
-        return view;
     }
 
 
