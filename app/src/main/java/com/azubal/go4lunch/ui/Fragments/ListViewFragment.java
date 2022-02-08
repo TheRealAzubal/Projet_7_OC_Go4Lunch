@@ -52,10 +52,15 @@ public class ListViewFragment extends Fragment {
         requireActivity().getMenuInflater().inflate(R.menu.top_app_bar, menu);
 
         SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
+
+        MenuItem menuItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) menuItem.getActionView();
+
+
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setIconifiedByDefault(false);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @SuppressLint("LongLogTag")
@@ -74,8 +79,19 @@ public class ListViewFragment extends Fragment {
 
         });
 
+        MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                getRestaurantListOrRestaurantListFavorites(listIsFavorite);
+                return true;  // Return true to collapse action view
+            }
 
-
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // Do something when expanded
+                return true;  // Return true to expand action view
+            }
+        });
 
     }
 
