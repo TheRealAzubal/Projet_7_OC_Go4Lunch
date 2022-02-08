@@ -54,7 +54,25 @@ public class ListViewFragment extends Fragment {
         SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
 
 
+        MenuItem.OnActionExpandListener expandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                getRestaurantListOrRestaurantListFavorites(listIsFavorite);
+                // Do something when action item collapses
+                return true;  // Return true to collapse action view
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // Do something when expanded
+                return true;  // Return true to expand action view
+            }
+        };
+
+
+
         MenuItem menuItem = menu.findItem(R.id.search);
+        menuItem.setOnActionExpandListener(expandListener);
         final SearchView searchView = (SearchView) menuItem.getActionView();
 
 
@@ -79,19 +97,10 @@ public class ListViewFragment extends Fragment {
 
         });
 
-        MenuItemCompat.setOnActionExpandListener(menuItem, new MenuItemCompat.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                getRestaurantListOrRestaurantListFavorites(listIsFavorite);
-                return true;  // Return true to collapse action view
-            }
 
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                // Do something when expanded
-                return true;  // Return true to expand action view
-            }
-        });
+
+
+
 
     }
 
