@@ -121,6 +121,8 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
         actualDateTime = new DateTime(year, monthOfYear, dayMonth, hour, minute);
 
+
+
         Log.i("dayOfWeek", String.valueOf(dayOfWeek));
 
 
