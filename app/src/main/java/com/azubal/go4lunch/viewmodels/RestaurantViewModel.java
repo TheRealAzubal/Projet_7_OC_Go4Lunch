@@ -71,9 +71,9 @@ public class RestaurantViewModel extends ViewModel {
 
     public void deleteUserPickForRestaurant(Restaurant restaurant){restaurantRepository.deleteUserPickForRestaurant(restaurant);}
 
-    public  MutableLiveData<List<Restaurant>> getRestaurantsBySearchQuery(String query){
+    public  MutableLiveData<List<Restaurant>> getRestaurantsBySearchQuery(String query,Boolean requestIsFavorites){
         Log.e("queryVM",query);
-        return restaurantRepository.getRestaurantsBySearchQuery(query);
+        return restaurantRepository.getRestaurantsBySearchQuery(query,requestIsFavorites);
     }
 
 

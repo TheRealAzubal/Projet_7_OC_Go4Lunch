@@ -84,7 +84,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
                 Log.e("mapviewonQueryTextSubmit",query);
 
-                restaurantViewModel.getRestaurantsBySearchQuery(query).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+                restaurantViewModel.getRestaurantsBySearchQuery(query,false).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
                     Log.e("queryMapView",query);
                     for(Restaurant restaurant : restaurants){
                         Log.e("MapViewSearchResult",restaurant.getName()+" : "+restaurant.getFormatted_address());

@@ -280,37 +280,67 @@ public class RestaurantRepository {
 
     }
 
-    public MutableLiveData<List<Restaurant>> getRestaurantsBySearchQuery(String query){
+    public MutableLiveData<List<Restaurant>> getRestaurantsBySearchQuery(String query , Boolean requestIsFavorites) {
         MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
 
-        if(query.length() >= 3){
+        if (!requestIsFavorites) {
 
-            getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
-                List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
-                String querySplit = query.substring(0,3);
-                List<Restaurant> restaurantListSearch = new ArrayList<>();
 
-                for (int i=0; i < restaurantListFirebase.size(); i++){
-                    String nameRestaurantSplit = restaurantListFirebase.get(i).getName().substring(0,3);
+            if (query.length() >= 3) {
 
-                    if(querySplit.equals(nameRestaurantSplit)){
-                        restaurantListSearch.add(restaurantListFirebase.get(i));
+                getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
+                    String querySplit = query.substring(0, 3);
+                    List<Restaurant> restaurantListSearch = new ArrayList<>();
+
+                    for (int i = 0; i < restaurantListFirebase.size(); i++) {
+                        String nameRestaurantSplit = restaurantListFirebase.get(i).getName().substring(0, 3);
+
+                        if (querySplit.equals(nameRestaurantSplit)) {
+                            restaurantListSearch.add(restaurantListFirebase.get(i));
+
+                        }
+
 
                     }
 
+                    result.postValue(restaurantListSearch);
+
+                });
+                return result;
+            } else {
+                return null;
+            }
 
 
-                }
+        } else {
+            if (query.length() >= 3) {
 
-                result.postValue(restaurantListSearch);
+                getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
+                    String querySplit = query.substring(0, 3);
+                    List<Restaurant> restaurantListSearch = new ArrayList<>();
 
-            });
-            return result;
-        }else{
-            return null;
+                    for (int i = 0; i < restaurantListFirebase.size(); i++) {
+                        String nameRestaurantSplit = restaurantListFirebase.get(i).getName().substring(0, 3);
+
+                        if (querySplit.equals(nameRestaurantSplit)) {
+                            restaurantListSearch.add(restaurantListFirebase.get(i));
+
+                        }
+
+
+                    }
+
+                    result.postValue(restaurantListSearch);
+
+                });
+                return result;
+            } else {
+                return null;
+            }
         }
 
     }
-
 
 }

@@ -105,7 +105,7 @@ public class ListViewFragment extends Fragment {
     }
 
     public void getRestaurantByQuery(String query){
-        restaurantViewModel.getRestaurantsBySearchQuery(query).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+        restaurantViewModel.getRestaurantsBySearchQuery(query,listIsFavorite).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
             Log.e("queryListView",query);
             for(Restaurant restaurant : restaurants){
                 Log.e("ListViewSearchResult",restaurant.getName()+" : "+restaurant.getFormatted_address());
