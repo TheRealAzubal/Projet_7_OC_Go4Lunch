@@ -73,9 +73,33 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
         SearchManager searchManager = (SearchManager) requireActivity().getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
+        MenuItem.OnActionExpandListener expandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                restaurantViewModel.getListRestaurant().observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+                    setMarkers(restaurants);
+                });
+                // Do something when action item collapses
+                return true;  // Return true to collapse action view
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // Do something when expanded
+                return true;  // Return true to expand action view
+            }
+        };
+
+        MenuItem menuItem = menu.findItem(R.id.search);
+        menuItem.setOnActionExpandListener(expandListener);
+
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @SuppressLint("LongLogTag")
@@ -89,6 +113,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
                     for(Restaurant restaurant : restaurants){
                         Log.e("MapViewSearchResult",restaurant.getName()+" : "+restaurant.getFormatted_address());
                     }
+                    map.clear();
+
+                    setMarkers(restaurants);
 
                 });
                 return true;
