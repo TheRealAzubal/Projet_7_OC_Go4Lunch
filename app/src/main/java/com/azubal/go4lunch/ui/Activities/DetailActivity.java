@@ -9,6 +9,7 @@ import com.azubal.go4lunch.ui.Fragments.DetailFragment;
 
 public class DetailActivity extends AppCompatActivity {
     ActivityDetailBinding activityDetailBinding;
+    String restaurantId;
 
 
     @Override
@@ -17,12 +18,13 @@ public class DetailActivity extends AppCompatActivity {
         activityDetailBinding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(activityDetailBinding.getRoot());
 
+        restaurantId = getIntent().getExtras().getString("restaurant_id");
         Bundle bundle = new Bundle();
-        bundle.putString("restaurant_id",getIntent().getExtras().getString("restaurant_id"));
+        bundle.putString("restaurant_id",restaurantId);
 
         getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
-                .add(R.id.fragment_container_view, DetailFragment.class, null)
+                .add(R.id.fragment_container_view, DetailFragment.class, bundle)
                 .commit();
 
     }
