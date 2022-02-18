@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -27,6 +28,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
 import com.azubal.go4lunch.workerManager.RestaurantChosenSetNullWorker;
@@ -179,17 +181,29 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
 
-        Log.e("2", String.valueOf(R.id.yourLunch));
-        Log.e("2", String.valueOf(R.id.listFavorite));
-        Log.e("2", String.valueOf(R.id.settings));
-        Log.e("2", String.valueOf(R.id.logout));
-
 
         navController.addOnDestinationChangedListener((navController1, navDestination, bundle) -> {
 
-            int a = 2131231043;
+            if(navDestination.getId() == R.id.yourLunch){
+
+                Log.e("","");
+
+
+                authAppViewModel.getUserData().observe(this, user -> {
+
+                    if(user.getRestaurantChosenAt12PM() == null){
+
+                        navController.popBackStack();
+                        navController.navigate(R.id.mapView);
+                    }
+                });
+
+
+
+            }
 
         });
+
 
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();

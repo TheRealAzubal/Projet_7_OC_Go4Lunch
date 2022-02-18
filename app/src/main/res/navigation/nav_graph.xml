@@ -45,13 +45,18 @@
         tools:layout="@layout/fragment_workmates" >
     </fragment>
 
-    <activity
+    <fragment
         android:id="@+id/yourLunch"
-        android:name="com.azubal.go4lunch.ui.Activities.DetailActivity"
+        android:name="com.azubal.go4lunch.ui.Fragments.DetailFragment"
         android:label="@string/yourLunch"
         tools:layout="@layout/activity_detail" >
 
-    </activity>
+        <argument
+            android:name="restaurant_id"
+            app:argType="string"
+            android:defaultValue="" />
+
+    </fragment>
     <fragment
         android:id="@+id/settings"
         android:name="com.azubal.go4lunch.ui.Fragments.SettingsFragment"
