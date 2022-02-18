@@ -3,15 +3,16 @@
     <string name="app_name">Go4Lunch</string>
     <string name="facebook_application_id">205701438038321</string>
     <string name="fb_login_protocol_scheme">fb205701438038321</string>
-    <string name="mapView">Carte</string>//
+
+    <string name="mapView">Carte</string>
     <string name="listView">Restaurants</string>
     <string name="workmates">Collaborateurs</string>
     <string name="yourLunch">TON REPAS</string>
     <string name="settings">PARAMETRES</string>
     <string name="logout">DECONNEXION</string>
+    <string name="favorites">FAVORIS</string>
     <string name="ToastLoginSuccessfully">Inscription ou Connexion Réussi</string>
-    <string name="ToastLoginFailed">Inscription ou Connexion Echoué , Please try again</string>
-    <string name="go4lunch">Go4Lunch</string>
+    <string name="ToastLoginFailed">Inscription ou Connexion Echoué , Veuillez réesayer</string>
     <string name="textButtonDeleteAccount">SUPPRIMER COMPTE</string>
     <string name="toolbarTitleFragmentMapViewListView">J\'ai Faim!</string>
     <string name="toolbarTitleFragmentWorkmates">Collaborateurs Disponibles</string>
@@ -19,4 +20,19 @@
     <string name="textDeleteAccount">Si vous souhaitez supprimer definitivement votre compte appuyer sur le bouton suivant , cette action est irréversible</string>
     <string name="reminderRestaurantTitleNotification">Rappel du choix pour déjeuner</string>
     <string name="reminderRestaurantDescriptionNotification">\"Vouz avez choisi : \"</string>
+    <string name="notChosenRestaurantToast">\"Vous n\'avez pas choisi de restaurant \"</string>
+    <string name="beforeNumberPhone">tel:</string>
+
+
+    <string name="Closed">Fermé</string>
+    <string name="Open24_7">Ouvert 24/7</string>
+    <string name="hoursIsUnknow">Inconnu</string>
+    <string name="hoursOpenUntil">"Ouvert jusqu'a"</string>
+    <string name="ClosingSoon">Ferme Bientôt</string>
+    <string name="OpeningSoon">Ouvre Bientôt</string>
+    <string name="workmatesHasntDecidedYet">"n'a pas encore décidé"</string>
+    <string name="wormatesJoining">"s'est joint!"</string>
+    <string name="nameButtonCall">TELEPHONER</string>
+    <string name="nameButtonWebsite">SITE WEB</string>
+    <string name="toastIfLocationHasBeenSavedInGooglePlayServices">"Aucun n'emplacement n'a été enregistré dans les services Google Play, veuillez vérifier dans Google Maps qu'une position a été définie et patientez avant de revenir dans l'application"</string>
 </resources>

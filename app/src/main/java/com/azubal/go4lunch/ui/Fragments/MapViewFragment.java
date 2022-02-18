@@ -283,10 +283,17 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
-            LatLng myPosition = new LatLng(location.getLatitude(), location.getLongitude());
-            Log.e("myPosition", String.valueOf(myPosition));
-            restaurantViewModel.setLatLng(myPosition);
-            syncMap();
+
+            if(location == null){
+                ToastUtil.displayToastLong(getString(R.string.toastIfLocationHasBeenSavedInGooglePlayServices), requireActivity());
+            }else {
+
+                LatLng myPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                Log.e("myPosition", String.valueOf(myPosition));
+                restaurantViewModel.setLatLng(myPosition);
+                syncMap();
+
+            }
         });
     }
 

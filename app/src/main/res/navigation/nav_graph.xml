@@ -8,14 +8,14 @@
     <fragment
         android:id="@+id/mapView"
         android:name="com.azubal.go4lunch.ui.Fragments.MapViewFragment"
-        android:label="@string/mapView"
+        android:label="@string/toolbarTitleFragmentMapViewListView"
         tools:layout="@layout/fragment_map_view" >
     </fragment>
 
     <fragment
         android:id="@+id/listView"
         android:name="com.azubal.go4lunch.ui.Fragments.ListViewFragment"
-        android:label="@string/listView"
+        android:label="@string/toolbarTitleFragmentMapViewListView"
         tools:layout="@layout/fragment_list_view">
 
         <argument
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/workmates"
         android:name="com.azubal.go4lunch.ui.Fragments.WorkmatesFragment"
-        android:label="@string/workmates"
+        android:label="@string/toolbarTitleFragmentWorkmates"
         tools:layout="@layout/fragment_workmates" >
     </fragment>
 

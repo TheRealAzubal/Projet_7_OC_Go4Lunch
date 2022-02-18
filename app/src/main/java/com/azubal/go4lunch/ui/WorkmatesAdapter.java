@@ -39,7 +39,7 @@ public class WorkmatesAdapter extends RecyclerView.Adapter<WorkmatesAdapter.View
         User user = userList.get(position);
 
         if(user.getRestaurantChosenAt12PM() == null){
-            holder.workmateName.setText(user.getUsername()+" hasn't decided yet ");
+            holder.workmateName.setText(user.getUsername()+" "+context.getString(R.string.workmatesHasntDecidedYet));
         }else {
             holder.workmateName.setText(user.getUsername()+" ("+user.getRestaurantChosenAt12PM().getName()+")");
         }

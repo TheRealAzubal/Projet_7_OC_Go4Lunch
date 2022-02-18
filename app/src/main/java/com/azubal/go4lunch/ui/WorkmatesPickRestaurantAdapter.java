@@ -41,7 +41,7 @@ public class WorkmatesPickRestaurantAdapter extends RecyclerView.Adapter<Workmat
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         User user = userList.get(position);
 
-        holder.workmateName.setText(user.getUsername()+" is joining!");
+        holder.workmateName.setText(user.getUsername()+" "+context.getString(R.string.wormatesJoining));
 
         Glide.with(context)
                 .load(user.getUrlPicture())

@@ -51,6 +51,6 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:textColor="@color/white"
-        android:text="@string/go4lunch" />
+        android:text="@string/app_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

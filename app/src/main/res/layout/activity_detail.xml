@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_columnWeight="1"
-                        android:text="CALL"
+                        android:text="@string/nameButtonCall"
                         android:textColor="@color/orange"
                         android:gravity="center" />
 
@@ -152,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_columnWeight="1"
-                        android:text="WEBSITE"
+                        android:text="@string/nameButtonWebsite"
                         android:textColor="@color/orange"
                         android:gravity="center" />
 

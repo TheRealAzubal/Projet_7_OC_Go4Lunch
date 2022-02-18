@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
                     if(user.getRestaurantChosenAt12PM() == null){
 
                         Context context = getApplicationContext();
-                        CharSequence text = "Vous n'avez pas choisi de restaurant ";
+                        CharSequence text = getString(R.string.notChosenRestaurantToast);
                         int duration = Toast.LENGTH_SHORT;
 
                         Toast toast = Toast.makeText(context, text, duration);
@@ -255,7 +255,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void  onRequestPermissionGranted(){
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+ restaurantLocal.getFormatted_phone_number()));
+        callIntent.setData(Uri.parse(getString(R.string.beforeNumberPhone)+ restaurantLocal.getFormatted_phone_number()));
         startActivity(callIntent);
     }
 

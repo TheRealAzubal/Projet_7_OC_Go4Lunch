@@ -9,14 +9,30 @@
     <string name="yourLunch">YOUR LUNCH</string>
     <string name="settings">SETTINGS</string>
     <string name="logout">LOGOUT</string>
+    <string name="favorites">FAVORITES</string>
     <string name="ToastLoginSuccessfully">Sign In or Login Successfully</string>
     <string name="ToastLoginFailed">Sign In or Login Failed , Please try again</string>
-    <string name="go4lunch">Go4Lunch</string>
     <string name="textButtonDeleteAccount">DELETE ACCOUNT</string>
     <string name="toolbarTitleFragmentMapViewListView">I\'m Hungry!</string>
     <string name="toolbarTitleFragmentWorkmates">Available workmates</string>
     <string name="textLogout">Are you sure you want to log out? Press to continue</string>
     <string name="textDeleteAccount">If you want to permanently delete your account press the next button, this action is irreversible</string>
-    <string name="reminderRestaurantTitleNotification">Rappel du choix pour déjeuner</string>
-    <string name="reminderRestaurantDescriptionNotification">\"Vouz avez choisi : \"</string>
+    <string name="reminderRestaurantTitleNotification">Reminder of choice for lunch</string>
+    <string name="reminderRestaurantDescriptionNotification">\"You have chosen : \"</string>
+    <string name="notChosenRestaurantToast">\"Vous n\'avez pas choisi de restaurant \"</string>
+    <string name="beforeNumberPhone">tel:</string>
+
+    <string name="Closed">Closed</string>
+    <string name="Open24_7">Open 24/7</string>
+    <string name="hoursIsUnknow">Unknown</string>
+    <string name="hoursOpenUntil">\"Open until \"</string>
+    <string name="ClosingSoon">Closing Soon</string>
+    <string name="OpeningSoon">Opening Soon</string>
+    <string name="workmatesHasntDecidedYet">\" hasn\'t decided yet \"</string>
+    <string name="wormatesJoining">\" is joining!\"</string>
+    <string name="nameButtonCall">CALL</string>
+    <string name="nameButtonWebsite">WEBSITE</string>
+    <string name="toastIfLocationHasBeenSavedInGooglePlayServices">No location has been saved in Google Play Services, please check in Google Maps that a location has been set and wait before returning to the app</string>
+
+
 </resources>

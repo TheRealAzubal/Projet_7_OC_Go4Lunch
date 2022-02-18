@@ -102,7 +102,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
         Glide.with(context)
                 .load(restaurant.getPhotoUrl())
-                .placeholder(R.drawable.logo_go4lunch)
+                .placeholder(R.drawable.image_not_found)
                 .into(holder.imgRestaurant);
 
         holder.itemView.setOnClickListener(v -> {
@@ -130,7 +130,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
 
         if (restaurant.getOpeningHours() == null) {
-            holder.txViewOpening.setText("Unknown");
+            holder.txViewOpening.setText(R.string.hoursIsUnknow);
         }else {
 
 
@@ -156,9 +156,9 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                             //Afficher que le restaurant est ouvert
 
 
-                            holder.txViewOpening.setText("Open until " + new LocalTime(dateTimeClose.getHourOfDay(), dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
+                            holder.txViewOpening.setText(context.getString(R.string.hoursOpenUntil) +" "+ new LocalTime(dateTimeClose.getHourOfDay(), dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
                             if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
-                                holder.txViewOpening.setText("Closing Soon");
+                                holder.txViewOpening.setText(context.getString(R.string.ClosingSoon));
                             }
                             isClosed = false;
                             break;
@@ -167,7 +167,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
 
                         if (actualDateTime.isBefore(dateTimeOpen) && actualDateTime.isAfter(dateTimeOpen.plusMinutes(-30))) {
-                            holder.txViewOpening.setText("Opening Soon");
+                            holder.txViewOpening.setText(context.getString(R.string.OpeningSoon));
                             isClosed = false;
                         }
                     }
@@ -178,7 +178,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
 
         if (isClosed ){
-            holder.txViewOpening.setText("Closed");
+            holder.txViewOpening.setText(context.getString(R.string.Closed));
         }
 
             if (restaurant.getOpeningHours() != null) {
@@ -191,7 +191,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                         restaurant.getOpeningHours().getWeekdayText().get(5).equals("Saturday: Open 24 hours") &&
                         restaurant.getOpeningHours().getWeekdayText().get(6).equals("Sunday: Open 24 hours")
                 ) {
-                    holder.txViewOpening.setText("Open 24/7");
+                    holder.txViewOpening.setText(context.getString(R.string.Open24_7));
                 }
             }
 
