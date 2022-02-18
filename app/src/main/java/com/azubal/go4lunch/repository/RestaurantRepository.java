@@ -285,60 +285,75 @@ public class RestaurantRepository {
 
         if (!requestIsFavorites) {
 
-
-            if (query.length() >= 3) {
-
                 getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
-                    String querySplit = query.substring(0, 3);
                     List<Restaurant> restaurantListSearch = new ArrayList<>();
-
                     for (int i = 0; i < restaurantListFirebase.size(); i++) {
-                        String nameRestaurantSplit = restaurantListFirebase.get(i).getName().substring(0, 3);
+                        String nameRestaurant = restaurantListFirebase.get(i).getName();
 
-                        if (querySplit.equals(nameRestaurantSplit)) {
-                            restaurantListSearch.add(restaurantListFirebase.get(i));
+                        if(query.length() == nameRestaurant.length()) {
 
+                            if (query.equals(nameRestaurant)) {
+                                restaurantListSearch.add(restaurantListFirebase.get(i));
+                            }
+
+                        }else if(query.length() > nameRestaurant.length()){
+
+                            String querySplit = query.substring(0,nameRestaurant.length());
+
+                            if (querySplit.equals(nameRestaurant)) {
+                                restaurantListSearch.add(restaurantListFirebase.get(i));
+                            }
+
+                        }else if (query.length() < nameRestaurant.length()){
+
+                            String nameRestaurantSplit = nameRestaurant.substring(0,query.length());
+
+                            if (query.equals(nameRestaurantSplit)) {
+                                restaurantListSearch.add(restaurantListFirebase.get(i));
+                            }
                         }
 
-
                     }
-
                     result.postValue(restaurantListSearch);
-
                 });
                 return result;
-            } else {
-                return null;
-            }
-
 
         } else {
-            if (query.length() >= 3) {
 
                 getRestaurantsLikeCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
                     List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
-                    String querySplit = query.substring(0, 3);
                     List<Restaurant> restaurantListSearch = new ArrayList<>();
 
                     for (int i = 0; i < restaurantListFirebase.size(); i++) {
-                        String nameRestaurantSplit = restaurantListFirebase.get(i).getName().substring(0, 3);
+                        String nameRestaurant = restaurantListFirebase.get(i).getName();
 
-                        if (querySplit.equals(nameRestaurantSplit)) {
-                            restaurantListSearch.add(restaurantListFirebase.get(i));
+                        if(query.length() == nameRestaurant.length()) {
 
+                            if (query.equals(nameRestaurant)) {
+                                restaurantListSearch.add(restaurantListFirebase.get(i));
+                            }
+
+                        }else if(query.length() > nameRestaurant.length()){
+
+                            String querySplit = query.substring(0,nameRestaurant.length());
+
+                            if (querySplit.equals(nameRestaurant)) {
+                                restaurantListSearch.add(restaurantListFirebase.get(i));
+                            }
+
+                        }else if (query.length() < nameRestaurant.length()){
+
+                            String nameRestaurantSplit = nameRestaurant.substring(0,query.length());
+
+                            if (query.equals(nameRestaurantSplit)) {
+                                restaurantListSearch.add(restaurantListFirebase.get(i));
+                            }
                         }
-
-
                     }
-
                     result.postValue(restaurantListSearch);
-
                 });
                 return result;
-            } else {
-                return null;
-            }
         }
 
     }
