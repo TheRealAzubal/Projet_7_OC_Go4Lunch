@@ -3,6 +3,7 @@ package com.azubal.go4lunch.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -156,8 +157,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                             //Afficher que le restaurant est ouvert
 
 
+                            holder.txViewOpening.setTextColor(Color.BLACK);
                             holder.txViewOpening.setText(context.getString(R.string.hoursOpenUntil) +" "+ new LocalTime(dateTimeClose.getHourOfDay(), dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
                             if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
+                                holder.txViewOpening.setTextColor(Color.RED);
                                 holder.txViewOpening.setText(context.getString(R.string.ClosingSoon));
                             }
                             isClosed = false;
@@ -167,6 +170,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
 
                         if (actualDateTime.isBefore(dateTimeOpen) && actualDateTime.isAfter(dateTimeOpen.plusMinutes(-30))) {
+                            holder.txViewOpening.setTextColor(Color.GREEN);
                             holder.txViewOpening.setText(context.getString(R.string.OpeningSoon));
                             isClosed = false;
                         }
@@ -178,6 +182,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
 
         if (isClosed ){
+            holder.txViewOpening.setTextColor(Color.BLACK);
             holder.txViewOpening.setText(context.getString(R.string.Closed));
         }
 
