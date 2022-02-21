@@ -14,14 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,13 +50,10 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     private FragmentMapViewBinding binding;
     MainActivity mainActivity;
     RestaurantViewModel restaurantViewModel;
-    UserViewModel authAppViewModel;
+    UserViewModel userViewModel;
     SupportMapFragment mapFragment;
 
-
-
     public MapViewFragment() {}
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,22 +141,23 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setBindingViewAndMapFragment(inflater, container);
+        getMainActivity();
+        setViewModel();
+        requestPermissionLocation();
+        return view;
+    }
+
+    public void setBindingViewAndMapFragment(LayoutInflater inflater, ViewGroup container){
         binding = FragmentMapViewBinding.inflate(inflater, container, false);
         view = binding.getRoot();
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(binding.map.getId());
+    }
 
-        getMainActivity();
-
-
-
+    public void setViewModel(){
         restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
-        authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        requestPermissionLocation();
-
-
-        return view;
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
     }
 
     public void getMainActivity() {
@@ -172,32 +168,21 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         Objects.requireNonNull(mapFragment).getMapAsync(this);
     }
 
-
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
-
         map.setMyLocationEnabled(true);
-
-
-
         restaurantViewModel.getPosition().observe(this, this::moveCamera);
-
         restaurantViewModel.getListRestaurant().observe(this, list -> {
             setMarkers(list);
             prepareDetailActivity(list);
         });
-
     }
 
     public void prepareDetailActivity(List<Restaurant> restaurantList){
         map.setOnInfoWindowClickListener(marker -> launchDetailRestaurant(restaurantList.get((int) marker.getZIndex()),requireContext()));
     }
-
-
-
-
 
     public void setMarkers(List<Restaurant> restaurantList){
         if(restaurantList != null) {
@@ -211,7 +196,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
 
 
-                        authAppViewModel.getAllUsersPickForThisRestaurant(restaurantCurrent).observe(this, users -> {
+                        userViewModel.getAllUsersPickForThisRestaurant(restaurantCurrent).observe(this, users -> {
                             if (users.size() > 0 ){
                                 map.addMarker(new MarkerOptions().position(latLng).title(restaurantCurrent.getName()).zIndex(numberRestaurantInList).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_restaurant_green)));
                             }else{
@@ -257,8 +242,6 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
             );
         }
     }
-
-
 
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {

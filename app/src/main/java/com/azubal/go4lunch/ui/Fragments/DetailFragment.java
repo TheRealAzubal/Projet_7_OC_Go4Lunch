@@ -5,29 +5,24 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentDetailBinding;
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.ui.WorkmatesPickRestaurantAdapter;
+import com.azubal.go4lunch.utils.ToastUtil;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
@@ -39,67 +34,60 @@ public class DetailFragment extends Fragment {
     Restaurant restaurantLocal;
     String restaurantId;
     RestaurantViewModel restaurantViewModel;
-    UserViewModel authAppViewModel;
+    UserViewModel userViewModel;
     FragmentDetailBinding fragmentDetailBinding;
 
-    public DetailFragment() {
-        // Required empty public constructor
-    }
-
-
+    public DetailFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        fragmentDetailBinding = FragmentDetailBinding.inflate(getLayoutInflater());
-
-
-        restaurantId = requireArguments().getString("restaurant_id");
-
-        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setBinding(inflater, container);
+        setRestaurantId();
+        setViewModel();
         getRestaurant();
 
-        // Inflate the layout for this fragment
         return fragmentDetailBinding.getRoot();
     }
 
+    public void setBinding(LayoutInflater inflater, ViewGroup container){
+        fragmentDetailBinding = FragmentDetailBinding.inflate(inflater,container,false);
+    }
+
+    public void setRestaurantId(){
+        restaurantId = requireArguments().getString("restaurant_id");
+    }
+
+    public void setViewModel(){
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        restaurantViewModel = new ViewModelProvider(this).get(RestaurantViewModel.class);
+    }
+
     public void getRestaurant(){
-        authAppViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
+        userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
 
 
             if(!restaurantId.equals("")){
                 restaurantViewModel.getRestaurantById(restaurantId).observe(getViewLifecycleOwner(), restaurant -> {
                     if (restaurant != null) {
                         restaurantLocal = restaurant;
-                        Log.e("restaurantLocalName", restaurantLocal.getName());
                         setUpRestaurantUI();
                     }
                 });
             }else {
 
                 if(user.getRestaurantChosenAt12PM() == null){
-
-                    CharSequence text = getString(R.string.notChosenRestaurantToast);
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(requireActivity(), text, duration);
-                    toast.show();
+                    ToastUtil.displayToastLong(getString(R.string.notChosenRestaurantToast),requireActivity());
 
                 }else {
 
                     restaurantViewModel.getRestaurantById(user.getRestaurantChosenAt12PM().getId()).observe(getViewLifecycleOwner(), restaurant -> {
                         if (restaurant != null) {
                             restaurantLocal = restaurant;
-                            Log.e("restaurantLocalName", restaurantLocal.getName());
                             setUpRestaurantUI();
                         }
                     });
@@ -126,9 +114,7 @@ public class DetailFragment extends Fragment {
         fragmentDetailBinding.name.setText(restaurantLocal.getName());
         fragmentDetailBinding.detailFormattedAddress.setText(restaurantLocal.getFormatted_address());
 
-        fragmentDetailBinding.phoneButton.setOnClickListener(view -> {
-            requestPermissionPhone();
-        });
+        fragmentDetailBinding.phoneButton.setOnClickListener(view -> requestPermissionPhone());
 
 
 
@@ -163,7 +149,7 @@ public class DetailFragment extends Fragment {
 
             if (view.isSelected()) {
 
-                authAppViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
+                userViewModel.getUserData().observe(getViewLifecycleOwner(), user -> {
 
                     Restaurant restaurantChosen = user.getRestaurantChosenAt12PM();
 
@@ -183,28 +169,14 @@ public class DetailFragment extends Fragment {
 
                 });
 
-
-
-
-
-
-
-
-
-
-
-                //Handle selected state change
             } else {
                 restaurantViewModel.setRestaurantChosenNull();
                 restaurantViewModel.deleteUserPickForRestaurant(restaurantLocal);
-                //Handle de-select state change
             }
 
         });
 
-        fragmentDetailBinding.websiteButton.setOnClickListener(view -> {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(restaurantLocal.getWebsite())));
-        });
+        fragmentDetailBinding.websiteButton.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(restaurantLocal.getWebsite()))));
 
         Log.e("photoUrl",restaurantLocal.getPhotoUrl());
 
@@ -238,12 +210,11 @@ public class DetailFragment extends Fragment {
             fragmentDetailBinding.fiveStar.setVisibility(View.VISIBLE);
         }
 
-        authAppViewModel.getAllUsersPickForThisRestaurant(restaurantLocal).observe(getViewLifecycleOwner(), this::setUpRecyclerView);
+        userViewModel.getAllUsersPickForThisRestaurant(restaurantLocal).observe(getViewLifecycleOwner(), this::setUpRecyclerView);
     }
 
     private void requestPermissionPhone(){
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.CALL_PHONE) ==
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CALL_PHONE) ==
                 PackageManager.PERMISSION_GRANTED ) {
 
             onRequestPermissionGranted();
@@ -259,14 +230,8 @@ public class DetailFragment extends Fragment {
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
 
                 if (isGranted) {
-
                     onRequestPermissionGranted();
-
-                }  // Explain to the user that the feature is unavailable because the
-                // features requires a permission that the user has denied. At the
-                // same time, respect the user's decision. Don't link to system
-                // settings in an effort to convince the user to change their
-                // decision.
+                }
 
             });
 

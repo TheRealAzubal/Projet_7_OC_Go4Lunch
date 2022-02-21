@@ -4,21 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.MenuItemCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -28,7 +19,6 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
-import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
 import com.azubal.go4lunch.workerManager.RestaurantChosenSetNullWorker;
@@ -43,14 +33,13 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     NavHostFragment navHostFragment;
     AppBarConfiguration appBarConfiguration;
-    UserViewModel authAppViewModel;
+    UserViewModel userViewModel;
     TextView textViewUserEmail;
     TextView textViewUserName;
     ImageView imageViewUserProfile;
     NavController navController;
     int delay;
     int delay1;
-
 
     @SuppressLint("LongLogTag")
     @Override
@@ -64,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
         configureNavDrawerAndNavBottom();
         setUpViewHeader();
         updateUserData();
+        setDelayForTwoWorkManager();
+    }
 
+    public void setDelayForTwoWorkManager(){
         Calendar calendar = Calendar.getInstance();
-
-
         Calendar calendar1 = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),12,0);
         Calendar calendar2 = new GregorianCalendar(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),17,0);
         long currentTime = calendar.getTime().getTime();
@@ -81,18 +71,15 @@ public class MainActivity extends AppCompatActivity {
         int customTimeReminderNotificationInt = (int)  customTimeReminderNotification;
         int customTimeRestoChosenSetNullInt = (int) customTimeRestoChosenSetNull;
         Log.e("currentTimeInt", String.valueOf(currentTimeInt));
-        Log.e("customTimeReminderNotificationInt", String.valueOf(customTimeReminderNotificationInt));
-        Log.e("customTimeRestoChosenSetNullInt", String.valueOf(customTimeRestoChosenSetNullInt));
-
-
-
+        Log.e("reminderNotificationInt", String.valueOf(customTimeReminderNotificationInt));
+        Log.e("restoChosenSetNullInt", String.valueOf(customTimeRestoChosenSetNullInt));
 
         if (currentTimeInt < customTimeReminderNotificationInt) {
 
             delay = customTimeReminderNotificationInt - currentTimeInt;
             Log.e("delay", String.valueOf(delay));
 
-            authAppViewModel.getUserData().observe(this, user -> {
+            userViewModel.getUserData().observe(this, user -> {
                 if(user.getRestaurantChosenAt12PM() != null){
                     Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
                     scheduleNotification(delay,restaurantChosen);
@@ -106,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("delay1", String.valueOf(delay1));
             setRestaurantChosenNull(delay1);
         }
-
     }
 
 
@@ -118,16 +104,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void scheduleNotification(int delay , Data data){
-
         WorkManager workManager = WorkManager.getInstance(this);
         OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(ReminderRestaurantWorker.class).setInitialDelay(delay,TimeUnit.MILLISECONDS).setInputData(data).build();
         workManager.enqueue(notificationWork);
     }
 
-
-
     private void setUpViewModel(){
-        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     private void setUpNavHostFragmentAndController(){
@@ -139,9 +122,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.mapView, R.id.listView, R.id.workmates, R.id.yourLunch , R.id.settings , R.id.logout).setOpenableLayout(binding.drawerLayout).build();
-
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
     }
 
     private void setUpViewHeader(){
@@ -157,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUserData(){
-        authAppViewModel.getUserData().observe(this, user -> {
-
+        userViewModel.getUserData().observe(this, user -> {
             String email = user.getEmail();
             Log.i("userEmail",email);
             String name = user.getUsername();
@@ -171,39 +151,24 @@ public class MainActivity extends AppCompatActivity {
             }
             textViewUserEmail.setText(email);
             textViewUserName.setText(name);
-
         });
 
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-
-
         navController.addOnDestinationChangedListener((navController1, navDestination, bundle) -> {
-
             if(navDestination.getId() == R.id.yourLunch){
-
                 Log.e("","");
-
-
-                authAppViewModel.getUserData().observe(this, user -> {
-
+                userViewModel.getUserData().observe(this, user -> {
                     if(user.getRestaurantChosenAt12PM() == null){
-
                         navController.popBackStack();
                         navController.navigate(R.id.mapView);
                     }
                 });
-
-
-
             }
-
         });
-
 
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();

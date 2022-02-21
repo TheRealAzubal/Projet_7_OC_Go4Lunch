@@ -6,7 +6,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
-import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.utils.ToastUtil;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.firebase.ui.auth.AuthUI;
@@ -18,16 +17,17 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    UserViewModel authAppViewModel;
-    List<Restaurant> restaurantListLocal;
-    List<Restaurant> restaurantListLike;
+    UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-
+        setViewModel();
         startSignIn();
+    }
+
+    public void setViewModel(){
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
             ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),getApplicationContext());
-            authAppViewModel.createUser();
+            userViewModel.createUser();
             startActivityMain();
             finish();
         } else if(response == null) {

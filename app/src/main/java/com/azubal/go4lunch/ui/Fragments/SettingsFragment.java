@@ -17,9 +17,7 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
     View view;
 
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
+    public SettingsFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,12 +37,13 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentSettingsBinding.inflate(inflater, container, false);
-        view = binding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setBinding(inflater, container);
         return view;
     }
 
+    public void setBinding(LayoutInflater inflater, ViewGroup container) {
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
+    }
 }

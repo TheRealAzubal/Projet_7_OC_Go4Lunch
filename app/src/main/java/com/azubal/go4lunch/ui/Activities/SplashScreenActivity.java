@@ -3,22 +3,24 @@ package com.azubal.go4lunch.ui.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends AppCompatActivity {
 
+    UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UserViewModel authAppViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        setBinding();
+        startActivityInTermsOfUserIsConnected();
+    }
 
-        authAppViewModel.isCurrentUserLoggedIn().observe(this, isConnected -> {
+    public void startActivityInTermsOfUserIsConnected(){
+        userViewModel.isCurrentUserLoggedIn().observe(this, isConnected -> {
             if (isConnected) {
                 startActivityMain();
             } else {
@@ -26,7 +28,10 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
             finish();
         });
+    }
 
+    public void setBinding(){
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 
     private void startActivityLogin() {

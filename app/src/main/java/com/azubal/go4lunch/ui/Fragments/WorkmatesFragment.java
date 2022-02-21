@@ -25,7 +25,7 @@ public class WorkmatesFragment extends Fragment {
 
     private FragmentWorkmatesBinding binding;
     View view;
-    UserViewModel authAppViewModel;
+    UserViewModel userViewModel;
 
     public WorkmatesFragment() {
         // Required empty public constructor
@@ -52,11 +52,23 @@ public class WorkmatesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setBinding(inflater, container);
+        setViewModel();
+        getAllUsers();
+        return view;
+    }
+
+    public void setBinding(LayoutInflater inflater, ViewGroup container){
         binding = FragmentWorkmatesBinding.inflate(inflater, container, false);
         view = binding.getRoot();
-        authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        authAppViewModel.getAllUsers().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
-        return view;
+    }
+
+    public void setViewModel(){
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+    }
+
+    public void getAllUsers(){
+        userViewModel.getAllUsers().observe(getViewLifecycleOwner(), this::setUpRecyclerView);
     }
 
     public void setUpRecyclerView(List<User> userList){

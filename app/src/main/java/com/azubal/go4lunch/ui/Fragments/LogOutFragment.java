@@ -38,12 +38,16 @@ public class LogOutFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentLogOutBinding.inflate(inflater, container, false);
+        setBinding(inflater, container);
         getMainActivity();
         setUpViewModel();
         logOutButtonListener();
         deleteAccountButtonListener();
         return binding.getRoot();
+    }
+
+    public void setBinding(LayoutInflater inflater, ViewGroup container){
+        binding = FragmentLogOutBinding.inflate(inflater, container, false);
     }
 
     public void getMainActivity() {

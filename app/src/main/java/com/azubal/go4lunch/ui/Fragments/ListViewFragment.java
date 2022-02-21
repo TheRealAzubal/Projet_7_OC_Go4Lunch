@@ -12,31 +12,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-
 import androidx.annotation.NonNull;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.databinding.FragmentListViewBinding;
 import com.azubal.go4lunch.models.Restaurant;
-import com.azubal.go4lunch.ui.Activities.MainActivity;
 import com.azubal.go4lunch.ui.ListViewAdapter;
-import com.azubal.go4lunch.utils.ToastUtil;
-import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
-import com.google.android.gms.maps.model.LatLng;
-
+import com.azubal.go4lunch.viewmodels.UserViewModel;
 import java.util.List;
-import java.util.Objects;
 
 public class ListViewFragment extends Fragment {
 
     View view;
+    FragmentListViewBinding fragmentListViewBinding;
     RestaurantViewModel restaurantViewModel;
-    UserViewModel authAppViewModel;
+    UserViewModel userViewModel;
     Boolean listIsFavorite;
 
     public ListViewFragment() {}
@@ -117,19 +112,25 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_list_view, container, false);
-
-        restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
-        authAppViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-
-        listIsFavorite = requireArguments().getBoolean("isListFavorite");
-        Log.e("listIsFavorite", String.valueOf(listIsFavorite));
-
-
+        setViewAndBinding(inflater,container);
+        setViewModel();
+        setListIsFavorite();
         getRestaurantListOrRestaurantListFavorites(listIsFavorite);
-
-
         return view;
+    }
+
+    public void setViewAndBinding(LayoutInflater inflater, ViewGroup container){
+        fragmentListViewBinding = FragmentListViewBinding.inflate(inflater,container,false);
+        view = fragmentListViewBinding.getRoot();
+    }
+
+    public void setViewModel(){
+        restaurantViewModel = new ViewModelProvider(requireActivity()).get(RestaurantViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+    }
+
+    public void setListIsFavorite(){
+        listIsFavorite = requireArguments().getBoolean("isListFavorite");
     }
 
     public void getRestaurantListOrRestaurantListFavorites(Boolean listIsFavorite){
