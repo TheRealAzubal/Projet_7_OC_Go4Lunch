@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,12 +20,17 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityMainBinding;
+import com.azubal.go4lunch.models.Restaurant;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.azubal.go4lunch.workerManager.ReminderRestaurantWorker;
 import com.azubal.go4lunch.workerManager.RestaurantChosenSetNullWorker;
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -81,8 +87,31 @@ public class MainActivity extends AppCompatActivity {
 
             userViewModel.getUserData().observe(this, user -> {
                 if(user.getRestaurantChosenAt12PM() != null){
-                    Data restaurantChosen = new Data.Builder().putString("restaurantId",user.getRestaurantChosenAt12PM().getId()).putString("restaurantName",user.getRestaurantChosenAt12PM().getName()).build();
-                    scheduleNotification(delay,restaurantChosen);
+
+                    userViewModel.getAllUsersPickForThisRestaurant(user.getRestaurantChosenAt12PM()).observe(this, users -> {
+                        List<String> usernames = new ArrayList<>();
+
+                        for (User user1 : users){
+                            usernames.add(user1.getUsername());
+                        }
+
+                        String[] array = usernames.toArray(new String[0]);
+
+                        Data restaurantChosen = new Data.Builder()
+                                .putString("restaurantId",user.getRestaurantChosenAt12PM().getId())
+                                .putString("restaurantName",user.getRestaurantChosenAt12PM().getName())
+                                .putString("restaurantAddress",user.getRestaurantChosenAt12PM().getFormatted_address())
+                                .putStringArray("restaurantListWorkmates",array)
+                                .build();
+                        scheduleNotification(delay,restaurantChosen);
+
+                    });
+
+
+
+
+
+
                 }
             });
 

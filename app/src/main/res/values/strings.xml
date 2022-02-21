@@ -17,7 +17,7 @@
     <string name="textLogout">Are you sure you want to log out? Press to continue</string>
     <string name="textDeleteAccount">If you want to permanently delete your account press the next button, this action is irreversible</string>
     <string name="reminderRestaurantTitleNotification">Reminder of choice for lunch</string>
-    <string name="reminderRestaurantDescriptionNotification">\"You have chosen : \"</string>
+    <string name="reminderRestaurantDescriptionNotification">You have chosen : </string>
     <string name="notChosenRestaurantToast">\"Vous n\'avez pas choisi de restaurant \"</string>
     <string name="beforeNumberPhone">tel:</string>
     <string name="hoursIsUnknow">Unknown</string>
