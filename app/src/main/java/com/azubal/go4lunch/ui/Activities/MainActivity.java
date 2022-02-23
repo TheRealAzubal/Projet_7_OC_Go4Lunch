@@ -1,12 +1,19 @@
 package com.azubal.go4lunch.ui.Activities;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -36,6 +43,8 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
+    String NOTIFICATION_CHANNEL = "appName_channel_01";
+
     ActivityMainBinding binding;
     NavHostFragment navHostFragment;
     AppBarConfiguration appBarConfiguration;
@@ -46,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     int delay;
     int delay1;
+    NotificationManager notificationManager;
+    NotificationChannel notificationChannel;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -59,8 +70,33 @@ public class MainActivity extends AppCompatActivity {
         configureNavDrawerAndNavBottom();
         setUpViewHeader();
         updateUserData();
-        setDelayForTwoWorkManager();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getApplicationContext().getString(R.string.app_name);
+            String description = getApplicationContext().getString(R.string.app_name);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, name, importance);
+            channel.setDescription(description);
+
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
+
+            if(notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL) ==null){
+                notificationManager.createNotificationChannel(channel);
+                Log.e("NotificationNull","123");
+            }
+
+            if(notificationManager.getNotificationChannel(NOTIFICATION_CHANNEL).getImportance() == NotificationManager.IMPORTANCE_HIGH ){
+                setDelayForTwoWorkManager();
+            }
+
+        }else{
+            setDelayForTwoWorkManager();
+        }
+
     }
+
 
     public void setDelayForTwoWorkManager(){
         Calendar calendar = Calendar.getInstance();

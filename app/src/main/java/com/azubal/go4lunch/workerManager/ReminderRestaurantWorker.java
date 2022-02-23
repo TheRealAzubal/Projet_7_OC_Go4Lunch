@@ -70,17 +70,7 @@ public class ReminderRestaurantWorker extends Worker {
                                 .bigText(getApplicationContext().getString(R.string.reminderRestaurantDescriptionNotification)+restaurantName+","+"\n"+restaurantAddress+","+"\n"+joinedString))
                         .setAutoCancel(true);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    CharSequence name = getApplicationContext().getString(R.string.app_name);
-                    String description = getApplicationContext().getString(R.string.app_name);
-                    int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                    NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, name, importance);
-                    channel.setDescription(description);
-                    // Register the channel with the system; you can't change the importance
-                    // or other notification behaviors after this
-                    NotificationManager notificationManager = getApplicationContext().getSystemService(NotificationManager.class);
-                    notificationManager.createNotificationChannel(channel);
-                }
+
 
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
 

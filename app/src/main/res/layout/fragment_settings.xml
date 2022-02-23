@@ -5,4 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.Fragments.SettingsFragment">
 
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switchNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Notification"/>
 </FrameLayout>
