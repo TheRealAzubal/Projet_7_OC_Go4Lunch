@@ -154,15 +154,12 @@ public class DetailFragment extends Fragment {
                     Restaurant restaurantChosen = user.getRestaurantChosenAt12PM();
 
                     if(restaurantChosen == null){
-                        restaurantViewModel.setRestaurantChosen(restaurantLocal);
                         restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
                     }else{
                         if(!restaurantChosen.getId().equals(restaurantLocal.getId())){
                             restaurantViewModel.deleteUserPickForRestaurant(restaurantChosen);
-                            restaurantViewModel.setRestaurantChosen(restaurantLocal);
                             restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
                         }else{
-                            restaurantViewModel.setRestaurantChosen(restaurantLocal);
                             restaurantViewModel.addUserPickForRestaurant(restaurantLocal);
                         }
                     }
@@ -170,7 +167,6 @@ public class DetailFragment extends Fragment {
                 });
 
             } else {
-                restaurantViewModel.setRestaurantChosenNull();
                 restaurantViewModel.deleteUserPickForRestaurant(restaurantLocal);
             }
 

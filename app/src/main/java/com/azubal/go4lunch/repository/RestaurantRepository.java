@@ -224,13 +224,9 @@ public class RestaurantRepository {
 
     }
 
-    public void setRestaurantChosen(Restaurant restaurant){
-        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", restaurant);
-    }
 
-    public void setRestaurantChosenNull(){
-        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", null);
-    }
+
+
 
     public MutableLiveData<Boolean> isPickRestaurant(Restaurant restaurant){
         MutableLiveData<Boolean> result = new MutableLiveData<>();
@@ -263,13 +259,14 @@ public class RestaurantRepository {
     }
 
     public void addUserPickForRestaurant(Restaurant restaurant){
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", restaurant);
         getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             getListUsersPickCollection(restaurant.getId()).document(firebaseAuth.getCurrentUser().getUid()).set(Objects.requireNonNull(queryDocumentSnapshots.toObject(User.class)));
         });
     }
 
     public void deleteUserPickForRestaurant(Restaurant restaurant){
-
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("restaurantChosenAt12PM", null);
         getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for(User user1 : queryDocumentSnapshots.toObjects(User.class)){
                 if(user1.getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())){
