@@ -1,6 +1,7 @@
 package com.azubal.go4lunch.repository;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import com.azubal.go4lunch.models.Restaurant;
@@ -17,15 +18,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserRepository {
-    Application application;
     FirebaseAuth firebaseAuth;
     AuthUI authUI;
     private static final String COLLECTION_NAME = "users";
     private static final String COLLECTION_RESTAURANT = "listRestaurant";
     private static final String COLLECTION_LIST_USERS_PICK = "listUsersPick";
 
-    public UserRepository(Application application) {
-        this.application = application;
+    public UserRepository() {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.authUI = AuthUI.getInstance();
     }
@@ -36,16 +35,16 @@ public class UserRepository {
         return result;
     }
 
-    public void signOut(){
-        authUI.signOut(application.getApplicationContext());
+    public void signOut(Context context){
+        authUI.signOut(context);
     }
 
-    public void deleteUser(){
+    public void deleteUser(Context context){
         String uid = this.firebaseAuth.getUid();
         if(uid != null){
             getUsersCollection().document(uid).delete();
         }
-        authUI.delete(application.getApplicationContext());
+        authUI.delete(context);
 
         getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
 

@@ -1,6 +1,5 @@
 package com.azubal.go4lunch.viewmodels;
 
-import android.app.Application;
 import android.util.Log;
 
 
@@ -22,6 +21,10 @@ public class RestaurantViewModel extends ViewModel {
         restaurantRepository = new RestaurantRepository();
     }
 
+    public RestaurantViewModel(RestaurantRepository restaurantRepository){
+        this.restaurantRepository = restaurantRepository;
+    }
+
 
     MutableLiveData<LatLng> positionLiveData = new MutableLiveData();
     public void setLatLng(LatLng latLng) {
@@ -34,10 +37,10 @@ public class RestaurantViewModel extends ViewModel {
 
 
     LiveData<List<Restaurant>> listRestaurantLiveData = Transformations.switchMap(positionLiveData, position ->
-            restaurantRepository.getListRestaurantApiFirst(position,false));
+            restaurantRepository.getRestaurants(position,false));
 
     LiveData<List<Restaurant>> listRestaurantLiveDataFavorites = Transformations.switchMap(positionLiveData, position ->
-            restaurantRepository.getListRestaurantApiFirst(position,true));
+            restaurantRepository.getRestaurants(position,true));
 
 
     public  LiveData<List<Restaurant>> getListRestaurant(){

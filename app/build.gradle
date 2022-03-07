@@ -108,5 +108,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-firestore'
 
+    testImplementation "org.mockito:mockito-core:4.3.1"
+    androidTestImplementation "org.mockito:mockito-android:4.3.1"
 
 }

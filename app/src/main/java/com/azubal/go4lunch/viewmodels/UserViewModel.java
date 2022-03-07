@@ -1,10 +1,8 @@
 package com.azubal.go4lunch.viewmodels;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
@@ -13,40 +11,41 @@ import com.azubal.go4lunch.repository.UserRepository;
 
 import java.util.List;
 
-public class UserViewModel extends AndroidViewModel {
-    com.azubal.go4lunch.repository.UserRepository authAppRepository;
+public class UserViewModel extends ViewModel {
+    UserRepository userRepository;
 
-    public UserViewModel(@NonNull Application application) {
-        super(application);
-        authAppRepository = new com.azubal.go4lunch.repository.UserRepository(application);
+    public UserViewModel() {
+        userRepository = new UserRepository();
     }
+
+    public UserViewModel(UserRepository userRepository){this.userRepository = userRepository;}
 
     public MutableLiveData<Boolean> isCurrentUserLoggedIn(){
-        return authAppRepository.isCurrentUserLoggedIn();
+        return userRepository.isCurrentUserLoggedIn();
     }
 
-    public void signOut(){
-        authAppRepository.signOut();
+    public void signOut(Context context){
+        userRepository.signOut(context);
     }
 
-    public void deleteUser(){
-        authAppRepository.deleteUser();
+    public void deleteUser(Context context){
+        userRepository.deleteUser(context);
     }
 
     public void createUser(){
-        authAppRepository.createUser();
+        userRepository.createUser();
     }
 
     public  MutableLiveData<User> getUserData(){
-        return authAppRepository.getUserData();
+        return userRepository.getUserData();
     }
 
     public  MutableLiveData<List<User>> getAllUsers(){
-        return authAppRepository.getAllUsers();
+        return userRepository.getAllUsers();
     }
 
     public  MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant){
-        return authAppRepository.getAllUsersPickForThisRestaurant(restaurant);
+        return userRepository.getAllUsersPickForThisRestaurant(restaurant);
     }
 
 }

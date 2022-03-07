@@ -60,7 +60,7 @@ public class LogOutFragment extends Fragment {
 
     private void logOutButtonListener(){
         binding.LogOutButton.setOnClickListener(view -> {
-            authAppViewModel.signOut();
+            authAppViewModel.signOut(LogOutFragment.this.getContext());
             mainActivity.startActivityLogin();
             mainActivity.finishMainActivity();
         });
@@ -68,7 +68,7 @@ public class LogOutFragment extends Fragment {
 
     private void deleteAccountButtonListener(){
         binding.deleteAccountButton.setOnClickListener(view -> {
-            authAppViewModel.deleteUser();
+            authAppViewModel.deleteUser(LogOutFragment.this.getContext());
             mainActivity.startActivityLogin();
             mainActivity.finishMainActivity();
         });

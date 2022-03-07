@@ -2,7 +2,6 @@ package com.azubal.go4lunch;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import java.util.concurrent.CountDownLatch;

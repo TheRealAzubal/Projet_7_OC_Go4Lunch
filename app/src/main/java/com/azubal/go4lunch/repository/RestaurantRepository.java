@@ -69,7 +69,7 @@ public class RestaurantRepository {
         return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT).document(restaurantId).collection(COLLECTION_LIST_USERS_PICK);
     }
 
-    public MutableLiveData<List<Restaurant>> getListRestaurantApiFirst(LatLng latLng, Boolean listIsFavorite) {
+    public MutableLiveData<List<Restaurant>> getRestaurants(LatLng latLng, Boolean listIsFavorite) {
         MutableLiveData<List<Restaurant>> result = new MutableLiveData<>();
 
         if(listIsFavorite){
