@@ -25,7 +25,6 @@ public class RestaurantViewModel extends ViewModel {
         this.restaurantRepository = restaurantRepository;
     }
 
-
     MutableLiveData<LatLng> positionLiveData = new MutableLiveData();
     public void setLatLng(LatLng latLng) {
         this.positionLiveData.setValue(latLng);
@@ -33,8 +32,6 @@ public class RestaurantViewModel extends ViewModel {
     public MutableLiveData<LatLng> getPosition() {
         return positionLiveData;
     }
-
-
 
     LiveData<List<Restaurant>> listRestaurantLiveData = Transformations.switchMap(positionLiveData, position ->
             restaurantRepository.getRestaurants(position,false));
@@ -51,12 +48,6 @@ public class RestaurantViewModel extends ViewModel {
         return listRestaurantLiveDataFavorites;
     }
 
-
-
-
-
-
-
     public  MutableLiveData<Boolean> isLikeRestaurant(Restaurant restaurant){
         return restaurantRepository.isLikeRestaurant(restaurant);
     }
@@ -65,24 +56,12 @@ public class RestaurantViewModel extends ViewModel {
 
     public void deleteRestaurantLike(Restaurant restaurant){restaurantRepository.deleteRestaurantLike(restaurant);}
 
-
-
-
-
     public  MutableLiveData<Boolean> isPickRestaurant(Restaurant restaurant){
         return restaurantRepository.isPickRestaurant(restaurant);
     }
     public void addUserPickForRestaurant(Restaurant restaurant){restaurantRepository.addUserPickForRestaurant(restaurant);}
 
     public void deleteUserPickForRestaurant(Restaurant restaurant){restaurantRepository.deleteUserPickForRestaurant(restaurant);}
-
-
-
-
-
-
-
-
 
 
     public  MutableLiveData<Restaurant> getRestaurantById(String restaurantId){

@@ -21,9 +21,7 @@ public class User {
         this.restaurantChosenAt12PM = restaurantChosenAt12PM;
     }
 
-    public User() {
-
-    }
+    public User() {}
 
 
     // --- GETTERS ---

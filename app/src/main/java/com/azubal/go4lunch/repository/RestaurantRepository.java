@@ -137,9 +137,7 @@ public class RestaurantRepository {
                                     Restaurant restaurant = new Restaurant(
                                             place_id,
                                             response.body().getResults().get(i).getName(),
-                                            "",
                                             rating,
-                                            "",
                                             "" + Math.round(distanceInMeters) + "m",
                                             resultDetail.getResult().getFormattedAddress(),
                                             resultDetail.getResult().getFormattedPhoneNumber(),
