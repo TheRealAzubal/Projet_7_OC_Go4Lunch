@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -100,7 +99,7 @@ public class ListViewFragment extends Fragment {
     }
 
     public void getRestaurantByQuery(String query){
-        restaurantViewModel.getRestaurantsBySearchQuery(query,listIsFavorite).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+        restaurantViewModel.getRestaurantsBySearchQuery(query,listIsFavorite).observe(getViewLifecycleOwner(), restaurants -> {
             Log.e("queryListView",query);
             for(Restaurant restaurant : restaurants){
                 Log.e("ListViewSearchResult",restaurant.getName()+" : "+restaurant.getFormatted_address());

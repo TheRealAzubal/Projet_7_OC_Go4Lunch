@@ -1,24 +1,16 @@
 package com.azubal.go4lunch.ui.Fragments;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.azubal.go4lunch.databinding.FragmentSettingsBinding;
-import com.azubal.go4lunch.ui.Activities.MainActivity;
 
 public class SettingsFragment extends Fragment {
 

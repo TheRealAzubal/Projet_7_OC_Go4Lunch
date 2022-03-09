@@ -21,7 +21,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.FragmentMapViewBinding;
@@ -72,9 +71,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         MenuItem.OnActionExpandListener expandListener = new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                restaurantViewModel.getListRestaurant().observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
-                    setMarkers(restaurants);
-                });
+                restaurantViewModel.getListRestaurant().observe(getViewLifecycleOwner(), restaurants -> setMarkers(restaurants));
                 // Do something when action item collapses
                 return true;  // Return true to collapse action view
             }
@@ -101,9 +98,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                Log.e("mapviewonQueryTextSubmit",query);
+                Log.e("mapviewQueryTextSubmit",query);
 
-                restaurantViewModel.getRestaurantsBySearchQuery(query,false).observe(getViewLifecycleOwner(), (Observer<List<Restaurant>>) restaurants -> {
+                restaurantViewModel.getRestaurantsBySearchQuery(query,false).observe(getViewLifecycleOwner(), restaurants -> {
 
                     if(restaurants != null){
                         map.clear();

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.models.ApiDetails.Period;
 import com.azubal.go4lunch.models.Restaurant;
-import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.ui.Activities.DetailActivity;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.bumptech.glide.Glide;
@@ -31,7 +29,6 @@ import org.joda.time.LocalTime;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 
 
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
@@ -67,9 +64,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         holder.imgWorkmatesIcon.setVisibility(View.VISIBLE);
 
 
-        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observe((LifecycleOwner) holder.itemView.getContext(), users -> {
-            holder.txViewNumberWorkmates.setText("("+users.size()+")");
-        });
+        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observe((LifecycleOwner) holder.itemView.getContext(), users -> holder.txViewNumberWorkmates.setText("("+users.size()+")"));
 
 
         holder.txViewNumberWorkmates.setVisibility(View.VISIBLE);
@@ -139,10 +134,9 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
 
                     if (period.getOpen().getDay() == dayOfWeek) {
-                        //Prevoir si le jour de fermeture est different du jour d'ouverture
+
                         Log.i("period", String.valueOf(restaurant.getName()));
-                        //jour actuel == jour ouvré
-                        //verifier si l'heure actuel est dans l'intervalle de l'heure d'ouverture du restaurant
+
 
                         int openTime = Integer.parseInt(period.getOpen().getTime());
                         int closeTime = Integer.parseInt(period.getClose().getTime());
@@ -153,7 +147,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                         Log.i("dateTimeClose", dateTimeClose.toString());
                         Log.i("actualDateTime", actualDateTime.toString());
                         if (actualDateTime.isAfter(dateTimeOpen) && actualDateTime.isBefore(dateTimeClose)) {
-                            //Afficher que le restaurant est ouvert
 
 
                             holder.txViewOpening.setTextColor(Color.BLACK);

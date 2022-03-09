@@ -2,7 +2,6 @@ package com.azubal.go4lunch;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Before;
@@ -29,6 +28,8 @@ public class ExampleInstrumentedTest {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
+
     Application application;
 
     @Mock
@@ -79,9 +80,7 @@ public class ExampleInstrumentedTest {
         when(restaurantRepository.getRestaurants(latLng,false)).thenReturn(data);
         restaurantViewModel.setLatLng(latLng);
 
-        restaurantViewModel.getListRestaurant().observeForever(restaurants -> {
-            assertEquals(restaurants.size(),2);
-        });
+        restaurantViewModel.getListRestaurant().observeForever(restaurants -> assertEquals(restaurants.size(),2));
 
     }
 
@@ -97,9 +96,7 @@ public class ExampleInstrumentedTest {
         data.postValue(restaurantList);
         when(restaurantRepository.getRestaurants(latLng, true)).thenReturn(data);
         restaurantViewModel.setLatLng(latLng);
-        restaurantViewModel.getFavoritesListRestaurant().observeForever(restaurants -> {
-            assertEquals(restaurants.size(), 1);
-        });
+        restaurantViewModel.getFavoritesListRestaurant().observeForever(restaurants -> assertEquals(restaurants.size(), 1));
 
     }
 
@@ -113,9 +110,7 @@ public class ExampleInstrumentedTest {
         data.postValue(restaurant1);
         when(restaurantRepository.getRestaurantById(id)).thenReturn(data);
 
-        restaurantViewModel.getRestaurantById(id).observeForever(restaurant -> {
-            assertEquals(restaurant.getId(),id);
-        });
+        restaurantViewModel.getRestaurantById(id).observeForever(restaurant -> assertEquals(restaurant.getId(),id));
 
     }
 
@@ -124,9 +119,7 @@ public class ExampleInstrumentedTest {
         MutableLiveData<Boolean> data = new MutableLiveData<>();
         data.postValue(false);
         when(userRepository.isCurrentUserLoggedIn()).thenReturn(data);
-        userViewModel.isCurrentUserLoggedIn().observeForever(aBoolean -> {
-            assertEquals(aBoolean,false);
-        });
+        userViewModel.isCurrentUserLoggedIn().observeForever(aBoolean -> assertEquals(aBoolean,false));
     }
 
     @Test
@@ -135,9 +128,7 @@ public class ExampleInstrumentedTest {
         data.postValue(userTest);
 
         when(userRepository.getUserData()).thenReturn(data);
-        userViewModel.getUserData().observeForever(user1 -> {
-            assertEquals(user1,userTest);
-        });
+        userViewModel.getUserData().observeForever(user1 -> assertEquals(user1,userTest));
     }
 
     @Test
@@ -150,9 +141,7 @@ public class ExampleInstrumentedTest {
 
         when(userRepository.getAllUsers()).thenReturn(data);
 
-        userViewModel.getAllUsers().observeForever(users -> {
-            assertEquals(users.size(), 1);
-        });
+        userViewModel.getAllUsers().observeForever(users -> assertEquals(users.size(), 1));
 
     }
 
@@ -160,9 +149,7 @@ public class ExampleInstrumentedTest {
     public void getPosition() {
         LatLng latLng = new LatLng(37.422131,-122.084801);
         restaurantViewModel.setLatLng(latLng);
-        restaurantViewModel.getPosition().observeForever(latLng1 -> {
-            assertEquals(latLng1,latLng);
-        });
+        restaurantViewModel.getPosition().observeForever(latLng1 -> assertEquals(latLng1,latLng));
     }
 
     @Test
@@ -181,9 +168,7 @@ public class ExampleInstrumentedTest {
 
         when(userRepository.getAllUsersPickForThisRestaurant(restaurant)).thenReturn(data);
 
-        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observeForever(users -> {
-            assertEquals(users.get(0).getUid(),userUid);
-        });
+        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observeForever(users -> assertEquals(users.get(0).getUid(),userUid));
 
     }
 
@@ -199,9 +184,7 @@ public class ExampleInstrumentedTest {
 
         when(restaurantRepository.isPickRestaurant(restaurant)).thenReturn(data);
 
-        restaurantViewModel.isPickRestaurant(restaurant).observeForever(aBoolean -> {
-            assertEquals(aBoolean,false);
-        });
+        restaurantViewModel.isPickRestaurant(restaurant).observeForever(aBoolean -> assertEquals(aBoolean,false));
 
     }
 
@@ -217,9 +200,7 @@ public class ExampleInstrumentedTest {
 
         when(restaurantRepository.isLikeRestaurant(restaurant)).thenReturn(data);
 
-        restaurantViewModel.isLikeRestaurant(restaurant).observeForever(aBoolean -> {
-            assertEquals(aBoolean,false);
-        });
+        restaurantViewModel.isLikeRestaurant(restaurant).observeForever(aBoolean -> assertEquals(aBoolean,false));
 
     }
 
@@ -238,9 +219,7 @@ public class ExampleInstrumentedTest {
 
         when(restaurantRepository.getRestaurantsBySearchQuery(name,false)).thenReturn(data);
 
-        restaurantViewModel.getRestaurantsBySearchQuery(name,false).observeForever(restaurants -> {
-            assertEquals(restaurants.get(0).getName(),name);
-        });
+        restaurantViewModel.getRestaurantsBySearchQuery(name,false).observeForever(restaurants -> assertEquals(restaurants.get(0).getName(),name));
 
     }
 
