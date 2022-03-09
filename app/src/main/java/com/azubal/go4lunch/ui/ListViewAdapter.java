@@ -63,7 +63,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         Restaurant restaurant = restaurants.get(position);
         holder.txViewName.setText(restaurant.getName());
         holder.txViewAddress.setText(restaurant.getAddress());
-        holder.txViewOpening.setText(restaurant.getOpen());
         holder.txViewDistance.setText(restaurant.getDistance());
         holder.imgWorkmatesIcon.setVisibility(View.VISIBLE);
 
