@@ -61,7 +61,7 @@ dependencies {
     androidTestUtil "androidx.test:orchestrator:1.4.1"
 
 
-    androidTestImplementation "android.arch.core:core-testing:1.1.1"
+    androidTestImplementation "android.arch.core:core-testing:2.1.0"
 
     implementation "androidx.core:core:1.7.0"
 
