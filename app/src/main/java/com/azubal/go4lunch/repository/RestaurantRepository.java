@@ -85,6 +85,8 @@ public class RestaurantRepository {
 
             if(restaurantListFirebase.size() <= 0){
 
+
+
                     String location = latLng.latitude + "," + latLng.longitude;
                     Call<NearbyResult> listRestaurantApiNearBySearchResponseOut = myInterface.getApiNearBySearchResponse(location, "3000");
                     Log.e("getListRestaurants", "0");
@@ -168,7 +170,7 @@ public class RestaurantRepository {
                     });
 
                 }else{
-                    //result.postValue(restaurantListFirebase);
+                    result.postValue(restaurantListFirebase);
                 }
 
 
