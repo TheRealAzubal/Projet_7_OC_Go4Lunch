@@ -208,12 +208,13 @@ public class MainActivity extends AppCompatActivity {
             Log.i("userEmail",email);
             String name = user.getUsername();
             String photoUrl = user.getUrlPicture();
-            if (photoUrl != null){
+
                 Glide.with(this)
                         .load(photoUrl)
-                        .placeholder(R.drawable.outline_block_24)
+                        .centerCrop()
+                        .placeholder(R.drawable.image_not_found)
                         .into(imageViewUserProfile);
-            }
+
             textViewUserEmail.setText(email);
             textViewUserName.setText(name);
         });

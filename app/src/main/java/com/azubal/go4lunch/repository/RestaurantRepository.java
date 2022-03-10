@@ -79,7 +79,6 @@ public class RestaurantRepository {
 
         }else {
 
-
             getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
                 List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
 
