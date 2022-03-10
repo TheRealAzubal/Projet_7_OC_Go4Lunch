@@ -83,10 +83,7 @@ public class RestaurantRepository {
             getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
                 List<Restaurant> restaurantListFirebase = queryDocumentSnapshots.toObjects(Restaurant.class);
 
-
-                if (restaurantListFirebase.size() > 0) {
-                    result.postValue(restaurantListFirebase);
-                } else {
+            if(restaurantListFirebase.size() <= 0){
 
                     String location = latLng.latitude + "," + latLng.longitude;
                     Call<NearbyResult> listRestaurantApiNearBySearchResponseOut = myInterface.getApiNearBySearchResponse(location, "3000");
@@ -170,7 +167,10 @@ public class RestaurantRepository {
                         }
                     });
 
+                }else{
+                    //result.postValue(restaurantListFirebase);
                 }
+
 
 
             });
