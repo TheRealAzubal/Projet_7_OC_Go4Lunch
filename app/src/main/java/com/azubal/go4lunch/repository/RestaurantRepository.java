@@ -117,12 +117,16 @@ public class RestaurantRepository {
 
                                     String photoUrl = null;
 
-                                    if (response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() != null) {
+                                    if(response.body().getResults().get(i).getPhotos() != null) {
 
-                                        photoUrl = "https://maps.googleapis.com/maps/api/place/photo" +
-                                                "?maxwidth=400" +
-                                                "&photo_reference=" + resultDetail.getResult().getPhotos().get(0).getPhotoReference() + "&key=" + MAPS_API_KEY;
-                                        Log.i("photourl", photoUrl);
+                                        if (response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() != null) {
+
+                                            photoUrl = "https://maps.googleapis.com/maps/api/place/photo" +
+                                                    "?maxwidth=400" +
+                                                    "&photo_reference=" + resultDetail.getResult().getPhotos().get(0).getPhotoReference() + "&key=" + MAPS_API_KEY;
+                                            Log.i("photourl", photoUrl);
+
+                                        }
 
                                     }
 
