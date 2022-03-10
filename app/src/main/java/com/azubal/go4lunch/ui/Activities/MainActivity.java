@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Glide.with(this)
                         .load(photoUrl)
-                        .centerCrop()
+                        .circleCrop()
                         .placeholder(R.drawable.image_not_found)
                         .into(imageViewUserProfile);
 
