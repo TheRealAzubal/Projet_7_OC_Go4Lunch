@@ -48,4 +48,12 @@ public class UserViewModel extends ViewModel {
         return userRepository.getAllUsersPickForThisRestaurant(restaurant);
     }
 
+    public void setUserName(String userName){
+        userRepository.setUsername(userName);
+    }
+
+    public void setUserEmail(String email){
+        userRepository.setUserEmail(email);
+    }
+
 }

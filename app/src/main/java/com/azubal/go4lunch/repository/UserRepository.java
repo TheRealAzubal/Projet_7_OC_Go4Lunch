@@ -146,4 +146,13 @@ public class UserRepository {
         return  result;
     }
 
+    public void setUserEmail(String email){
+        firebaseAuth.getCurrentUser().updateEmail(email);
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("email",email);
+    }
+
+    public void setUsername(String username){
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("username",username);
+    }
+
 }

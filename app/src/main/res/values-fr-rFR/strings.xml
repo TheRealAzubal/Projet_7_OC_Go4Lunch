@@ -22,7 +22,8 @@
     <string name="reminderRestaurantDescriptionNotification">\"Vouz avez choisi : \"</string>
     <string name="notChosenRestaurantToast">\"Vous n\'avez pas choisi de restaurant \"</string>
     <string name="beforeNumberPhone">tel:</string>
-
+    <string name="nameButtonEditUsername">Modifier Nom d\'utilisateur</string>
+    <string name="nameButtonEditEmail">Modifier Email</string>
 
     <string name="Closed">Fermé</string>
     <string name="Open24_7">Ouvert 24/7</string>
