@@ -77,7 +77,7 @@ dependencies {
     // FIREBASE U
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
 
-
+    implementation 'com.firebaseui:firebase-ui-storage:7.1.1'
 
     implementation 'com.facebook.android:facebook-android-sdk:latest.release'
 

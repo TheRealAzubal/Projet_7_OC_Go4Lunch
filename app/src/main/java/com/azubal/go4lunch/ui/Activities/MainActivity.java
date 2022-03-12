@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     int delay;
     int delay1;
-    NotificationManager notificationManager;
-    NotificationChannel notificationChannel;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -251,6 +249,14 @@ public class MainActivity extends AppCompatActivity {
     public void startActivityLogin(){
         Intent LoginActivity = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(LoginActivity);
+    }
+
+    public void displayNewProfilePicture(String url){
+        Glide.with(this)
+                .load(url)
+                .circleCrop()
+                .placeholder(R.drawable.image_not_found)
+                .into(imageViewUserProfile);
     }
 
 }

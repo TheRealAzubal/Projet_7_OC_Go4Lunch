@@ -155,4 +155,8 @@ public class UserRepository {
         getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("username",username);
     }
 
+    public void setPhotoUrl(String photoUrl){
+        getUsersCollection().document(Objects.requireNonNull(firebaseAuth.getUid())).update("urlPicture",photoUrl);
+    }
+
 }

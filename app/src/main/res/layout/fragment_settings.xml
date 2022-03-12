@@ -16,6 +16,19 @@ tools:context=".ui.Fragments.SettingsFragment">
         android:layout_height="150dp">
     </ImageView>
 
+    <ImageButton
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/imageButtonEdit"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toTopOf="@id/textFieldUsername"
+        app:layout_constraintLeft_toRightOf="@id/profile_picture"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:background="@drawable/ic_baseline_edit_24" />
+
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textFieldUsername"
         android:layout_marginTop="50dp"

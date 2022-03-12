@@ -56,4 +56,6 @@ public class UserViewModel extends ViewModel {
         userRepository.setUserEmail(email);
     }
 
+    public void setPhotoUrl(String photoUrl){userRepository.setPhotoUrl(photoUrl);}
+
 }
