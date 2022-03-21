@@ -32,6 +32,6 @@
     <string name="nameButtonWebsite">WEBSITE</string>
     <string name="toastIfLocationHasBeenSavedInGooglePlayServices">No location has been saved in Google Play Services, please check in Google Maps that a location has been set and wait before returning to the app</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="nameButtonEditUsername">Modifier Nom d\'utilisateur</string>
-    <string name="nameButtonEditEmail">Modifier Email</string>
+    <string name="nameButtonEditUsername">Edit Username</string>
+    <string name="nameButtonEditEmail">Edit Email</string>
 </resources>
