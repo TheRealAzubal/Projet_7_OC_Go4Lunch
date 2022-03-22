@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.azubal.go4lunch.R;
+import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.utils.ToastUtil;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.firebase.ui.auth.AuthUI;
@@ -58,7 +60,13 @@ public class LoginActivity extends AppCompatActivity {
         if (result.getResultCode() == RESULT_OK) {
             // Successfully signed in
             ToastUtil.displayToastLong(getString(R.string.ToastLoginSuccessfully),getApplicationContext());
-            userViewModel.createUser();
+
+            userViewModel.getUserData().observe(this, user -> {
+                if(user == null){
+                    userViewModel.createUser();
+                }
+            });
+
             startActivityMain();
             finish();
         } else if(response == null) {
