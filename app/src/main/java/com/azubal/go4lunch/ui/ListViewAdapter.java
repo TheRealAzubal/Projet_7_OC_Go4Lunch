@@ -133,7 +133,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                 if(period.getOpen() != null && period.getClose() != null) {
 
 
-                    if (period.getOpen().getDay() == dayOfWeek) {
+                    if (period.getOpen().getDay() == dayOfWeek && period.getClose().getDay() >= dayOfWeek) {
 
                         Log.i("period", String.valueOf(restaurant.getName()));
 
