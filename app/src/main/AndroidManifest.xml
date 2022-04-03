@@ -31,6 +31,7 @@
 
         <activity
             android:name=".ui.Activities.DetailActivity"
+            android:theme="@style/DetailActivityTheme"
             android:exported="false" />
         
         <activity

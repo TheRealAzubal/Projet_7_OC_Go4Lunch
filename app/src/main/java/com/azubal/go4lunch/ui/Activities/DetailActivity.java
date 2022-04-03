@@ -1,7 +1,12 @@
 package com.azubal.go4lunch.ui.Activities;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.azubal.go4lunch.R;
 import com.azubal.go4lunch.databinding.ActivityDetailBinding;
 import com.azubal.go4lunch.ui.Fragments.DetailFragment;
 
@@ -16,6 +21,23 @@ public class DetailActivity extends AppCompatActivity {
         setBinding();
         setRestaurantIdAndBundle();
         setFragment();
+
+        ActionBar actionBar = getSupportActionBar();
+        // showing the back button in action bar
+        assert actionBar != null;
+        actionBar.setTitle(R.string.titleDetailActivity);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setBinding(){

@@ -35,6 +35,7 @@
     <string name="nameButtonCall">CALL</string>
     <string name="nameButtonWebsite">WEBSITE</string>
     <string name="toastIfLocationHasBeenSavedInGooglePlayServices">No location has been saved in Google Play Services, please check in Google Maps that a location has been set and wait before returning to the app</string>
+    <string name="titleDetailActivity">Restaurant detail</string>
 
 
 </resources>
