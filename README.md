@@ -6,12 +6,27 @@ This repository contains a mini-application for the P7 of the Android openclassr
 
 The Go4Lunch app is a collaborative app used by all employees.  It allows you to search for a restaurant in the area, then select the one of your choice by telling your colleagues.  Likewise, it is possible to consult the restaurants selected by colleagues in order to join them.  A little before lunchtime, the application notifies the various employees to invite them to join their colleagues.
 
-## Configure the project in Android Studio
+## Warning all his instructions must be followed
 
-1. Download the project code, preferably with git clone.
-2. Open Android Studio and click on "Check out project from Version Control" and click on Git.
-3. Paste the url of the git repository in the "URL" field.
-4. If necessary, modify the repository installation folder in the "Directory" field.
-5. Synchronize the project with Gradle if necessary by clicking on the elephant icon.
-6. Compile the project by clicking on the hammer icon.
-7. If necessary, select an android device and launch the project by clicking on the green arrow icon.
+#### English
+
+In the event of a problem, call this
+
+You must launch an emulator with a specific location for this prototype, this one: 24 rue de Dunkerque 75010 Paris, it is also important to open the google play services before starting the application so that a
+location is well saved, it may be necessary to wait and reopen the application otherwise no restaurant list will load in the application
+
+you must create a variable with your Google Maps api key in local.properties, MAPS_API_KEY = (your Google Maps api key), otherwise the application cannot be generated
+
+#### French
+
+En cas de problème se référer à ça
+
+Lancer obligatoirement un émulateur avec une localisation bien précise pour ce prototype, celle-ci : 24 rue de Dunkerque 75010 Paris,il est également important d'ouvrir les services google play avant de démarrer l'application pour que une
+localisation soit bien enregistré , il peut etre necessaire d'attendre et de rouvrir l'application dans le cas contraire aucune liste de restaurant ne se chargera dans l'application
+
+il faut obligatoirement créer une variable avec votre clé api Google Maps dans local.properties, MAPS_API_KEY = (votre clé api Google Maps) , sinon l'application ne pourra pas être lancée
+
+
+
+
+
