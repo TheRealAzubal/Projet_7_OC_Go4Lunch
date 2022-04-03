@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import android.app.Application;
@@ -17,6 +19,7 @@ import com.azubal.go4lunch.models.Restaurant;
 import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.repository.RestaurantRepository;
 import com.azubal.go4lunch.repository.UserRepository;
+import com.azubal.go4lunch.utils.MathOperationUtils;
 import com.azubal.go4lunch.viewmodels.RestaurantViewModel;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
 import com.google.android.gms.maps.model.LatLng;
@@ -223,8 +226,17 @@ public class ExampleInstrumentedTest {
 
     }
 
+    @Test
+    public void getDistance(){
+        LatLng latLng1 = new LatLng(48.88288288288288,2.3563697384440787);
+        LatLng latLng2 = new LatLng(48.87990360000001,2.3575559);
+        int distance = MathOperationUtils.getDistance(latLng1, latLng2);
+        assertEquals(343, distance);
+    }
 
-
-
-
+    @Test
+    public void getRating(){
+        int rating = MathOperationUtils.getRating(2);
+        assertEquals(1, rating);
+    }
 }

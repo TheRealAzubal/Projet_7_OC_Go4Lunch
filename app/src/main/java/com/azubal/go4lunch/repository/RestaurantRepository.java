@@ -20,6 +20,7 @@ import static com.azubal.go4lunch.BuildConfig.MAPS_API_KEY;
 import com.azubal.go4lunch.models.User;
 import com.azubal.go4lunch.service.ApiInterface;
 import com.azubal.go4lunch.service.ApiService;
+import com.azubal.go4lunch.utils.MathOperationUtils;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -101,15 +102,11 @@ public class RestaurantRepository {
 
                                     String place_id = response.body().getResults().get(i).getPlaceId();
 
-                                    Location originLocation = new Location("");
-                                    originLocation.setLatitude(latLng.latitude);
-                                    originLocation.setLongitude(latLng.longitude);
 
-                                    Location targetLocation = new Location("");
-                                    targetLocation.setLatitude(response.body().getResults().get(i).getGeometry().getLocation().getLat());
-                                    targetLocation.setLongitude(response.body().getResults().get(i).getGeometry().getLocation().getLng());
+                                    LatLng userLocation = new LatLng(latLng.latitude,latLng.longitude);
+                                    LatLng restaurantLocation = new LatLng(response.body().getResults().get(i).getGeometry().getLocation().getLat(),response.body().getResults().get(i).getGeometry().getLocation().getLng());
 
-                                    float distanceInMeters = originLocation.distanceTo(targetLocation);
+
 
                                     PlaceDetails resultDetail = getRestaurantDetails(place_id);
 
@@ -139,8 +136,8 @@ public class RestaurantRepository {
                                     Restaurant restaurant = new Restaurant(
                                             place_id,
                                             response.body().getResults().get(i).getName(),
-                                            rating,
-                                            "" + Math.round(distanceInMeters) + "m",
+                                            MathOperationUtils.getRating(rating),
+                                            "" + MathOperationUtils.getDistance(userLocation,restaurantLocation) + "m",
                                             resultDetail.getResult().getFormattedAddress(),
                                             resultDetail.getResult().getFormattedPhoneNumber(),
                                             response.body().getResults().get(i).getGeometry().getLocation().getLat(),

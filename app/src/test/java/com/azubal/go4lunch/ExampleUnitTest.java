@@ -10,10 +10,11 @@ import android.app.Application;
 import android.content.Context;
 
 
-
-
+import com.azubal.go4lunch.repository.RestaurantRepository;
 import com.azubal.go4lunch.repository.UserRepository;
+import com.azubal.go4lunch.utils.MathOperationUtils;
 import com.azubal.go4lunch.viewmodels.UserViewModel;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -22,5 +23,9 @@ import com.azubal.go4lunch.viewmodels.UserViewModel;
  */
 
 public class ExampleUnitTest {
+
+
+
+
 
 }

@@ -193,17 +193,6 @@ public class DetailFragment extends Fragment {
             fragmentDetailBinding.firstStar.setVisibility(View.VISIBLE);
             fragmentDetailBinding.secondStar.setVisibility(View.VISIBLE);
             fragmentDetailBinding.thirdStar.setVisibility(View.VISIBLE);
-        }else if (Math.round(restaurantLocal.getRating()) == 4){
-            fragmentDetailBinding.firstStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.secondStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.thirdStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.fourStar.setVisibility(View.VISIBLE);
-        }else if (Math.round(restaurantLocal.getRating()) == 5){
-            fragmentDetailBinding.firstStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.secondStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.thirdStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.fourStar.setVisibility(View.VISIBLE);
-            fragmentDetailBinding.fiveStar.setVisibility(View.VISIBLE);
         }
 
         userViewModel.getAllUsersPickForThisRestaurant(restaurantLocal).observe(getViewLifecycleOwner(), this::setUpRecyclerView);

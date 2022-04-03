@@ -82,17 +82,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
             holder.imgStar5.setVisibility(View.VISIBLE);
             holder.imgStar4.setVisibility(View.VISIBLE);
             holder.imgStar3.setVisibility(View.VISIBLE);
-        } else if (Math.round(restaurant.getRating()) == 4) {
-            holder.imgStar5.setVisibility(View.VISIBLE);
-            holder.imgStar4.setVisibility(View.VISIBLE);
-            holder.imgStar3.setVisibility(View.VISIBLE);
-            holder.imgStar2.setVisibility(View.VISIBLE);
-        } else if (Math.round(restaurant.getRating()) == 5) {
-            holder.imgStar5.setVisibility(View.VISIBLE);
-            holder.imgStar4.setVisibility(View.VISIBLE);
-            holder.imgStar3.setVisibility(View.VISIBLE);
-            holder.imgStar2.setVisibility(View.VISIBLE);
-            holder.imgStar1.setVisibility(View.VISIBLE);
         }
 
         Glide.with(context)
@@ -102,7 +91,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
         holder.itemView.setOnClickListener(v -> {
             final Context contextRaw = holder.itemView.getContext();
-            launchDetailRestaurant(restaurant, contextRaw);
+            launchDetailRestaurant(restaurant, contextRaw,position);
         });
 
         final Calendar c = Calendar.getInstance();
@@ -201,9 +190,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         return restaurants.size();
     }
 
-    public void launchDetailRestaurant(Restaurant restaurant, Context context) {
+    public void launchDetailRestaurant(Restaurant restaurant, Context context,int position) {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra("restaurant_id", restaurant.getId());
+        intent.putExtra("restaurantPosition",position);
         context.startActivity(intent);
     }
 

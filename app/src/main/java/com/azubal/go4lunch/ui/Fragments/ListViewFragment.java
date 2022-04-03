@@ -32,6 +32,7 @@ public class ListViewFragment extends Fragment {
     RestaurantViewModel restaurantViewModel;
     UserViewModel userViewModel;
     Boolean listIsFavorite;
+    ListViewAdapter listViewAdapter;
 
     public ListViewFragment() {}
 
@@ -143,7 +144,12 @@ public class ListViewFragment extends Fragment {
 
     public void setUpRecyclerView(List<Restaurant> restaurantList){
         RecyclerView rvRestaurants = view.findViewById(R.id.recycler_view_list_view);
-        rvRestaurants.setAdapter(new ListViewAdapter(restaurantList,this.getContext()));
+        listViewAdapter = new ListViewAdapter(restaurantList,this.getContext());
+        rvRestaurants.setAdapter(listViewAdapter);
         rvRestaurants.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        listViewAdapter.notifyItemChanged(1);
     }
+
+
 }
