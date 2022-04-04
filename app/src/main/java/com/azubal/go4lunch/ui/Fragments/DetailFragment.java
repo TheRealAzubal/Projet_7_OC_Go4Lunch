@@ -176,7 +176,7 @@ public class DetailFragment extends Fragment {
 
         Glide.with(this)
                 .load(restaurantLocal.getPhotoUrl())
-                .placeholder(R.drawable.logo_go4lunch)
+                .placeholder(R.drawable.image_not_found)
                 .centerCrop()
                 .into(fragmentDetailBinding.imageRestaurant);
 
