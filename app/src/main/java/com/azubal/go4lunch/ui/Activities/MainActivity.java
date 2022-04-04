@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             userViewModel.getUserData().observe(this, user -> {
                 if(user.getRestaurantChosenAt12PM() != null){
 
-                    userViewModel.getAllUsersPickForThisRestaurant(user.getRestaurantChosenAt12PM()).observe(this, users -> {
+                    userViewModel.getAllUsersPickForThisRestaurant(user.getRestaurantChosenAt12PM(),true).observe(this, users -> {
                         List<String> usernames = new ArrayList<>();
 
                         for (User user1 : users){

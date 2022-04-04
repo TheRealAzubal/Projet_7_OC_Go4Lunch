@@ -169,9 +169,9 @@ public class ExampleInstrumentedTest {
         MutableLiveData<List<User>> data = new MutableLiveData<>();
         data.postValue(userList);
 
-        when(userRepository.getAllUsersPickForThisRestaurant(restaurant)).thenReturn(data);
+        when(userRepository.getAllUsersPickForThisRestaurant(restaurant,true)).thenReturn(data);
 
-        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observeForever(users -> assertEquals(users.get(0).getUid(),userUid));
+        userViewModel.getAllUsersPickForThisRestaurant(restaurant,true).observeForever(users -> assertEquals(users.get(0).getUid(),userUid));
 
     }
 

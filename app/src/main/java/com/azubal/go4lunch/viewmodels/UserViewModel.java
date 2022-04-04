@@ -44,8 +44,8 @@ public class UserViewModel extends ViewModel {
         return userRepository.getAllUsers();
     }
 
-    public  MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant){
-        return userRepository.getAllUsersPickForThisRestaurant(restaurant);
+    public  MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant,Boolean withoutCurrentUser){
+        return userRepository.getAllUsersPickForThisRestaurant(restaurant,withoutCurrentUser);
     }
 
     public void setUserName(String userName){

@@ -193,7 +193,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
 
 
 
-                        userViewModel.getAllUsersPickForThisRestaurant(restaurantCurrent).observe(this, users -> {
+                        userViewModel.getAllUsersPickForThisRestaurant(restaurantCurrent,false).observe(this, users -> {
                             if (users.size() > 0 ){
                                 map.addMarker(new MarkerOptions().position(latLng).title(restaurantCurrent.getName()).zIndex(numberRestaurantInList).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_restaurant_green)));
                             }else{

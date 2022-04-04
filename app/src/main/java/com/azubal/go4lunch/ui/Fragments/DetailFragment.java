@@ -195,7 +195,7 @@ public class DetailFragment extends Fragment {
             fragmentDetailBinding.thirdStar.setVisibility(View.VISIBLE);
         }
 
-        userViewModel.getAllUsersPickForThisRestaurant(restaurantLocal).observe(getViewLifecycleOwner(), this::setUpRecyclerView);
+        userViewModel.getAllUsersPickForThisRestaurant(restaurantLocal,true).observe(getViewLifecycleOwner(), this::setUpRecyclerView);
     }
 
     private void requestPermissionPhone(){

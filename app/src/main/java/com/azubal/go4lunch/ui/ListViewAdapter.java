@@ -64,7 +64,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         holder.imgWorkmatesIcon.setVisibility(View.VISIBLE);
 
 
-        userViewModel.getAllUsersPickForThisRestaurant(restaurant).observe((LifecycleOwner) holder.itemView.getContext(), users -> holder.txViewNumberWorkmates.setText("("+users.size()+")"));
+        userViewModel.getAllUsersPickForThisRestaurant(restaurant,false).observe((LifecycleOwner) holder.itemView.getContext(), users -> holder.txViewNumberWorkmates.setText("("+users.size()+")"));
 
 
         holder.txViewNumberWorkmates.setVisibility(View.VISIBLE);

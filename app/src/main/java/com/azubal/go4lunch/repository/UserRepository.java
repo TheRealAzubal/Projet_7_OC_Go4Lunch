@@ -29,19 +29,19 @@ public class UserRepository {
         this.authUI = AuthUI.getInstance();
     }
 
-    public MutableLiveData<Boolean> isCurrentUserLoggedIn(){
+    public MutableLiveData<Boolean> isCurrentUserLoggedIn() {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
         result.postValue(firebaseAuth.getCurrentUser() != null);
         return result;
     }
 
-    public void signOut(Context context){
+    public void signOut(Context context) {
         authUI.signOut(context);
     }
 
-    public void deleteUser(Context context){
+    public void deleteUser(Context context) {
         String uid = this.firebaseAuth.getUid();
-        if(uid != null){
+        if (uid != null) {
             getUsersCollection().document(uid).delete();
         }
         authUI.delete(context);
@@ -49,13 +49,13 @@ public class UserRepository {
         getRestaurantsCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
 
 
-            for(Restaurant restaurant : queryDocumentSnapshots.toObjects(Restaurant.class)){
+            for (Restaurant restaurant : queryDocumentSnapshots.toObjects(Restaurant.class)) {
 
                 getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
 
-                    for(User user : queryDocumentSnapshots1.toObjects(User.class)){
+                    for (User user : queryDocumentSnapshots1.toObjects(User.class)) {
 
-                        if(user.getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())){
+                        if (user.getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
 
                             getListUsersPickCollection(restaurant.getId()).document(Objects.requireNonNull(uid)).delete();
                         }
@@ -66,35 +66,32 @@ public class UserRepository {
                 });
 
 
-
-
             }
 
         });
 
 
-
     }
 
     // Get the Collection Reference
-    private CollectionReference getUsersCollection(){
+    private CollectionReference getUsersCollection() {
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    private CollectionReference getRestaurantsCollection(){
+    private CollectionReference getRestaurantsCollection() {
         return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT);
     }
 
-    private CollectionReference getListUsersPickCollection(String restaurantId){
+    private CollectionReference getListUsersPickCollection(String restaurantId) {
         return FirebaseFirestore.getInstance().collection(COLLECTION_RESTAURANT).document(restaurantId).collection(COLLECTION_LIST_USERS_PICK);
     }
 
     // Create User in Firestore
     public void createUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        Log.i("createUser","A");
-        if(user != null){
-            Log.i("createUser","B");
+        Log.i("createUser", "A");
+        if (user != null) {
+            Log.i("createUser", "B");
             String urlPicture = (user.getPhotoUrl() != null) ? user.getPhotoUrl().toString() : null;
             String username = user.getDisplayName();
             String uid = user.getUid();
@@ -104,7 +101,7 @@ public class UserRepository {
         }
     }
 
-    public MutableLiveData<User> getUserData(){
+    public MutableLiveData<User> getUserData() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String uid = Objects.requireNonNull(user).getUid();
         MutableLiveData<User> result = new MutableLiveData<>();
@@ -116,11 +113,11 @@ public class UserRepository {
         return result;
     }
 
-    public MutableLiveData<List<User>> getAllUsers(){
+    public MutableLiveData<List<User>> getAllUsers() {
         MutableLiveData<List<User>> result = new MutableLiveData<>();
         getUsersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<User> userList = queryDocumentSnapshots.toObjects(User.class);
-            for (Iterator<User> iterator = userList.iterator(); iterator.hasNext();) {
+            for (Iterator<User> iterator = userList.iterator(); iterator.hasNext(); ) {
                 if (iterator.next().getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
                     // Remove the current element from the iterator and the list.
                     iterator.remove();
@@ -128,22 +125,31 @@ public class UserRepository {
             }
             result.postValue(userList);
         });
-        return  result;
+        return result;
     }
 
-    public MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant){
-        MutableLiveData<List<User>> result = new MutableLiveData<>();
-        getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
-            List<User> userList = queryDocumentSnapshots.toObjects(User.class);
-            for (Iterator<User> iterator = userList.iterator(); iterator.hasNext();) {
-                if (iterator.next().getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
-                    // Remove the current element from the iterator and the list.
-                    iterator.remove();
+    public MutableLiveData<List<User>> getAllUsersPickForThisRestaurant(Restaurant restaurant, Boolean withoutCurrentUser) {
+        if (withoutCurrentUser) {
+            MutableLiveData<List<User>> result = new MutableLiveData<>();
+            getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                List<User> userList = queryDocumentSnapshots.toObjects(User.class);
+                for (Iterator<User> iterator = userList.iterator(); iterator.hasNext(); ) {
+                    if (iterator.next().getUid().equals(Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid())) {
+                        // Remove the current element from the iterator and the list.
+                        iterator.remove();
+                    }
                 }
-            }
-            result.postValue(userList);
-        });
-        return  result;
+                result.postValue(userList);
+            });
+            return result;
+        } else{
+            MutableLiveData<List<User>> result = new MutableLiveData<>();
+            getListUsersPickCollection(restaurant.getId()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                List<User> userList = queryDocumentSnapshots.toObjects(User.class);
+                result.postValue(userList);
+            });
+            return result;
+        }
     }
 
     public void setUserEmail(String email){
