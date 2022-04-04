@@ -142,7 +142,11 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         setBindingViewAndMapFragment(inflater, container);
         getMainActivity();
         setViewModel();
+
+
         requestPermissionLocation();
+
+
         return view;
     }
 
@@ -172,6 +176,7 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         map.setMyLocationEnabled(true);
         restaurantViewModel.getPosition().observe(this, this::moveCamera);
         restaurantViewModel.getListRestaurant().observe(this, list -> {
+            map.clear();
             setMarkers(list);
             prepareDetailActivity(list);
         });
@@ -277,4 +282,9 @@ public class MapViewFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestPermissionLocation();
+    }
 }

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +48,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_list_view_item, parent, false);
         userViewModel = new ViewModelProvider((ViewModelStoreOwner) view.getContext()).get(UserViewModel.class);
-
-
         return new ViewHolder(view);
     }
 
@@ -62,18 +59,12 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         holder.txViewAddress.setText(restaurant.getAddress());
         holder.txViewDistance.setText(restaurant.getDistance());
         holder.imgWorkmatesIcon.setVisibility(View.VISIBLE);
-
-
         userViewModel.getAllUsersPickForThisRestaurant(restaurant,false).observe((LifecycleOwner) holder.itemView.getContext(), users -> holder.txViewNumberWorkmates.setText("("+users.size()+")"));
-
-
         holder.txViewNumberWorkmates.setVisibility(View.VISIBLE);
         holder.txViewAddress.setText(restaurant.getAddress());
         holder.txViewAddress.setText(restaurant.getFormatted_address());
 
-        if (Math.round(restaurant.getRating()) == 0) {
-
-        } else if (Math.round(restaurant.getRating()) == 1) {
+        if (Math.round(restaurant.getRating()) == 1) {
             holder.imgStar5.setVisibility(View.VISIBLE);
         } else if (Math.round(restaurant.getRating()) == 2) {
             holder.imgStar5.setVisibility(View.VISIBLE);
@@ -95,8 +86,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         });
 
         final Calendar c = Calendar.getInstance();
-
-
         minute = c.get(Calendar.MINUTE);
         hour = c.get(Calendar.HOUR_OF_DAY);
         year = c.get(Calendar.YEAR);
@@ -105,39 +94,20 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
         actualDateTime = new DateTime(year, monthOfYear, dayMonth, hour, minute);
 
-
-
-        Log.i("dayOfWeek", String.valueOf(dayOfWeek));
-
-
-        Boolean isClosed = true;
-
+        boolean isClosed = true;
 
         if (restaurant.getOpeningHours() == null) {
             holder.txViewOpening.setText(R.string.hoursIsUnknow);
         }else {
-
-
             for (Period period : restaurant.getOpeningHours().getPeriods()) {
                 if(period.getOpen() != null && period.getClose() != null) {
-
-
                     if (period.getOpen().getDay() == dayOfWeek && period.getClose().getDay() >= dayOfWeek) {
-
-                        Log.i("period", String.valueOf(restaurant.getName()));
-
-
                         int openTime = Integer.parseInt(period.getOpen().getTime());
                         int closeTime = Integer.parseInt(period.getClose().getTime());
                         DateTime dateTimeOpen = new DateTime(year, monthOfYear, dayMonth, openTime / 100, openTime % 100);
                         DateTime dateTimeClose = new DateTime(year, monthOfYear, dayMonth + (period.getClose().getDay() - dayOfWeek), closeTime / 100, closeTime % 100);
 
-                        Log.i("dateTimeOpen", dateTimeOpen.toString());
-                        Log.i("dateTimeClose", dateTimeClose.toString());
-                        Log.i("actualDateTime", actualDateTime.toString());
                         if (actualDateTime.isAfter(dateTimeOpen) && actualDateTime.isBefore(dateTimeClose)) {
-
-
                             holder.txViewOpening.setTextColor(Color.BLACK);
                             holder.txViewOpening.setText(context.getString(R.string.hoursOpenUntil) +" "+ new LocalTime(dateTimeClose.getHourOfDay(), dateTimeClose.getMinuteOfHour()).toString("hh:mm a"));
                             if (actualDateTime.isAfter(dateTimeClose.plusMinutes(-30))) {
@@ -146,19 +116,14 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                             }
                             isClosed = false;
                             break;
-
                         }
-
-
                         if (actualDateTime.isBefore(dateTimeOpen) && actualDateTime.isAfter(dateTimeOpen.plusMinutes(-30))) {
                             holder.txViewOpening.setTextColor(Color.GREEN);
                             holder.txViewOpening.setText(context.getString(R.string.OpeningSoon));
                             isClosed = false;
                         }
                     }
-
                 }
-
             }
         }
 
@@ -166,9 +131,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
             holder.txViewOpening.setTextColor(Color.BLACK);
             holder.txViewOpening.setText(context.getString(R.string.Closed));
         }
-
             if (restaurant.getOpeningHours() != null) {
-
                 if (restaurant.getOpeningHours().getWeekdayText().get(0).equals("Monday: Open 24 hours") &&
                         restaurant.getOpeningHours().getWeekdayText().get(1).equals("Tuesday: Open 24 hours") &&
                         restaurant.getOpeningHours().getWeekdayText().get(2).equals("Wednesday: Open 24 hours") &&
@@ -180,10 +143,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
                     holder.txViewOpening.setText(context.getString(R.string.Open24_7));
                 }
             }
-
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -228,6 +188,4 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
             imgRestaurant = view.findViewById(R.id.res_list_iv);
         }
     }
-
-
 }

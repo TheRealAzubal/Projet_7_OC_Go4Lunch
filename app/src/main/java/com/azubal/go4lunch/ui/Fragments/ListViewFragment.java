@@ -151,5 +151,9 @@ public class ListViewFragment extends Fragment {
         listViewAdapter.notifyItemChanged(1);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getRestaurantListOrRestaurantListFavorites(false);
+    }
 }
