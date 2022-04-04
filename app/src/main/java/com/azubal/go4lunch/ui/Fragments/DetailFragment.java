@@ -174,8 +174,6 @@ public class DetailFragment extends Fragment {
 
         fragmentDetailBinding.websiteButton.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(restaurantLocal.getWebsite()))));
 
-        Log.e("photoUrl",restaurantLocal.getPhotoUrl());
-
         Glide.with(this)
                 .load(restaurantLocal.getPhotoUrl())
                 .placeholder(R.drawable.logo_go4lunch)
