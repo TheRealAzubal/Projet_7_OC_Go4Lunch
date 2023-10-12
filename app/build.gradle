@@ -5,14 +5,12 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdk 32
-    buildToolsVersion "32.0.0"
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.azubal.go4lunch"
         minSdkVersion 19
-        //noinspection OldTargetApi
-        targetSdkVersion 32
+        targetSdkVersion 33
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -106,7 +104,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
-    implementation 'joda-time:joda-time:2.10.13'
+    implementation 'joda-time:joda-time:2.12.1'
     implementation 'com.google.firebase:firebase-firestore'
 
     testImplementation "org.mockito:mockito-core:4.3.1"
