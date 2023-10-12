@@ -2,9 +2,9 @@
 
 This repository contains a mini-application for the P7 of the Android openclassrooms route.
 
-![] (https://github.com/azubalapk/Openclassrooms-Project-7/blob/master/readme/Screenshot1.jpg)
-![] (https://github.com/azubalapk/Openclassrooms-Project-7/blob/master/readme/Screenshot2.jpg)
-![] (https://github.com/azubalapk/Openclassrooms-Project-7/blob/master/readme/Screenshot3.jpg)
+![](/readme/Screenshot1.jpg)
+![](/readme/Screenshot2.jpg)
+![](/readme/Screenshot3.jpg)
 
 ## Introduction
 
