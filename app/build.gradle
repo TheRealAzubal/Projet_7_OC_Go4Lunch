@@ -38,6 +38,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    namespace 'com.azubal.go4lunch'
 }
 
 dependencies {
