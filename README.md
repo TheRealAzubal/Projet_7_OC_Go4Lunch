@@ -10,6 +10,11 @@ This repository contains a mini-application for the P7 of the Android openclassr
 
 The Go4Lunch app is a collaborative app used by all employees.  It allows you to search for a restaurant in the area, then select the one of your choice by telling your colleagues.  Likewise, it is possible to consult the restaurants selected by colleagues in order to join them.  A little before lunchtime, the application notifies the various employees to invite them to join their colleagues.
 
+L’application Go4Lunch a pour principe d’être une application
+collaborative utilisée par tous les employés d'une entreprise. Elle permet de rechercher un
+restaurant dans les environs, puis de sélectionner celui de son choix en en
+faisant part à ses collègues.
+
 ## Warning all his instructions must be followed
 
 #### English
